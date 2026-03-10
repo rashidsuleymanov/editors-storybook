@@ -1,0 +1,1 @@
+export { globalColors } from "./globalColors";

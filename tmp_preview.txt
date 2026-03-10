@@ -1,0 +1,48 @@
+﻿import { getComponentSurface } from "../shared/pluginTheme";
+import { SvgIcon } from "../shared/SvgIcon";
+
+export type PreviewDirection = "back" | "next";
+
+export type PreviewControlProps = {
+  direction?: PreviewDirection;
+  theme?: string;
+};
+
+export const PreviewControl = ({ direction = "back", theme }: PreviewControlProps) => {
+  const tokens = getComponentSurface(theme);
+  const darkSurface =
+    tokens.theme === "Light" || tokens.theme === "Light Classic" || tokens.theme === "Modern Light";
+
+  const bg = darkSurface ? "rgba(0, 0, 0, 0.80)" : "rgba(255, 255, 255, 0.88)";
+  const fg = darkSurface ? "#FFFFFF" : tokens.theme === "Dark Contrast" ? "#2A2A2A" : "#444444";
+
+  return (
+    <button
+      type="button"
+      aria-label={direction === "back" ? "Back" : "Next"}
+      style={{
+        width: 40,
+        height: 40,
+        borderRadius: 96,
+        border: "none",
+        background: bg,
+        color: fg,
+        boxShadow:
+          tokens.theme === "Dark" || tokens.theme === "Dark Contrast"
+            ? "0px 4px 10px rgba(0, 0, 0, 0.40)"
+            : "0px 4px 10px rgba(0, 0, 0, 0.10)",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <SvgIcon
+        name="arrowLeft"
+        size={14}
+        color={fg}
+        monochrome
+        style={{ transform: direction === "next" ? "rotate(-90deg)" : "rotate(90deg)" }}
+      />
+    </button>
+  );
+};

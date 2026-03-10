@@ -1,0 +1,13 @@
+.ui-loader-spinner {
+  animation: ui-loader-spin 0.9s linear infinite;
+}
+
+@keyframes ui-loader-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
