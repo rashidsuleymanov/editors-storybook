@@ -74,6 +74,7 @@ export const LinkButton = ({
     margin: 0,
     padding: 0,
     lineHeight: normalizedLineHeight,
+    fontFamily: (token.text?.fontFamily as string | undefined) ?? "Arial, Helvetica, sans-serif",
     textDecorationLine: "underline",
     textDecorationStyle: "dotted",
     textDecorationColor: underlineColor,
@@ -87,9 +88,12 @@ export const LinkButton = ({
     alignSelf: "flex-start",
     width: "auto",
     minHeight: 0,
-    cursor: "pointer",
+    cursor: onClick ? "pointer" : "default",
     lineHeight: "normal",
     verticalAlign: "top",
+    padding: 0,
+    border: "none",
+    background: "transparent",
   };
 
   return (
@@ -97,6 +101,8 @@ export const LinkButton = ({
       type="button"
       className="ui-link-button"
       style={containerStyle}
+      disabled={!onClick}
+      aria-disabled={!onClick}
       onMouseEnter={() => interactive && setHovered(true)}
       onMouseLeave={() => interactive && setHovered(false)}
       onClick={onClick}

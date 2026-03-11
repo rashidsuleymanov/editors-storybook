@@ -7,7 +7,7 @@ type StoryArgs = InfoBlockProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Data Display/InfoBlock",
+  title: "Components/Data Display/Info Block",
   component: InfoBlock,
   args: {
     title: "Title",
@@ -18,14 +18,14 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    title: { control: "text", description: "Info block title" },
-    description: { control: "text", description: "Info block description" },
-    showTitle: { control: { type: "boolean" }, description: "Show title row" },
-    showDescription: { control: { type: "boolean" }, description: "Show description row" },
+    title: { control: "text", description: "Main heading text" },
+    description: { control: "text", description: "Supporting descriptive copy" },
+    showTitle: { control: { type: "boolean" }, description: "Show the title row" },
+    showDescription: { control: { type: "boolean" }, description: "Show the description row" },
     iconMode: {
       control: "select",
       options: ["none", "left", "right", "both"],
-      description: "Title icon layout",
+      description: "Icon placement around the title row",
     },
     themeMode: {
       name: "theme",
@@ -40,7 +40,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Info block with all key variants: with/without icon, right icon, title only, description only, and title + description.",
+          "Compact informational block for notices, inline explanations, and dismissible helper content.",
       },
     },
   },
@@ -66,12 +66,26 @@ export const WithoutIcon: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} iconMode="none" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Plain informational block without icons.",
+      },
+    },
+  },
 };
 
 export const IconRight: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} iconMode="right" showTitle showDescription theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Variant with a dismiss or action icon on the right.",
+      },
+    },
   },
 };
 
@@ -80,12 +94,26 @@ export const IconLeft: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} iconMode="left" showTitle showDescription theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Variant with an informational icon on the left.",
+      },
+    },
+  },
 };
 
 export const IconBoth: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} iconMode="both" showDescription={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Title row with icons on both sides.",
+      },
+    },
   },
 };
 
@@ -94,12 +122,26 @@ export const TitleOnly: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} showTitle showDescription={false} iconMode="none" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Title-only informational block.",
+      },
+    },
+  },
 };
 
 export const DescriptionOnly: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InfoBlock {...args} showTitle={false} showDescription iconMode="none" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Description-only helper text block.",
+      },
+    },
   },
 };
 

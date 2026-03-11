@@ -69,7 +69,9 @@ export const InfoBlock = ({
           <span
             style={{
               flex: "1 1 0",
+              minWidth: 0,
               color: tokens.titleColor,
+              fontFamily: "Arial, Helvetica, sans-serif",
               fontSize: tokens.titleTypography.fontSize,
               fontWeight: tokens.titleTypography.fontWeight,
               lineHeight: `${tokens.titleTypography.lineHeight}px`,
@@ -82,6 +84,8 @@ export const InfoBlock = ({
             <button
               type="button"
               aria-label="Close info"
+              aria-disabled={!onClose}
+              disabled={!onClose}
               onClick={onClose}
               style={{
                 width: 12,
@@ -93,6 +97,8 @@ export const InfoBlock = ({
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
+                opacity: onClose ? 1 : 0.5,
+                flexShrink: 0,
               }}
             >
               <CloseMinIcon color={tokens.closeColor} />
@@ -105,6 +111,7 @@ export const InfoBlock = ({
         <div
           style={{
             color: tokens.descriptionColor,
+            fontFamily: "Arial, Helvetica, sans-serif",
             fontSize: tokens.descriptionTypography.fontSize,
             fontWeight: tokens.descriptionTypography.fontWeight,
             lineHeight: `${tokens.descriptionTypography.lineHeight}px`,
@@ -117,4 +124,3 @@ export const InfoBlock = ({
     </div>
   );
 };
-

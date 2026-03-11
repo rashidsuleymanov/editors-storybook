@@ -7,7 +7,7 @@ type StoryArgs = ModalWindowProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Layout Components/ModalWindow",
+  title: "Components/Layout/Modal Window",
   component: ModalWindow,
   args: {
     title: "Title",
@@ -21,17 +21,17 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    title: { control: "text", description: "Modal title" },
-    contentLabel: { control: "text", description: "Content placeholder text" },
-    notificationText: { control: "text", description: "Notification text (multiline supported)" },
-    primaryLabel: { control: "text", description: "Primary button label" },
-    secondaryLabel: { control: "text", description: "Secondary button label" },
-    size: { control: "select", options: ["S", "M", "L"], description: "Modal size" },
-    notification: { control: { type: "boolean" }, description: "Show warning icon + notification text" },
+    title: { control: "text", description: "Main dialog title" },
+    contentLabel: { control: "text", description: "Placeholder copy for the main content area" },
+    notificationText: { control: "text", description: "Inline warning or notification message" },
+    primaryLabel: { control: "text", description: "Primary footer action label" },
+    secondaryLabel: { control: "text", description: "Secondary footer action label" },
+    size: { control: "select", options: ["S", "M", "L"], description: "Modal width preset" },
+    notification: { control: { type: "boolean" }, description: "Show the notification block above the footer" },
     footerMode: {
       control: "select",
       options: ["auto", "single", "double"],
-      description: "Footer buttons layout",
+      description: "One-button or two-button footer layout",
     },
     themeMode: {
       name: "theme",
@@ -48,7 +48,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Modal windows in S/M/L sizes with content and notification layouts.",
+          "Dialog window shell with size presets, optional notification block, and single or double action footers.",
       },
     },
   },
@@ -62,11 +62,7 @@ const resolveStoryTheme = (argsTheme: StoryArgs["themeMode"], globalTheme: strin
   return normalizePluginTheme(globalTheme);
 };
 
-const notifyModalClick = (label: string) => {
-  if (typeof window !== "undefined" && typeof window.alert === "function") {
-    window.alert(label);
-  }
-};
+const noop = () => {};
 
 const renderModal = (args: StoryArgs, globalTheme: string) => {
   const theme = resolveStoryTheme(args.themeMode, globalTheme);
@@ -74,22 +70,11 @@ const renderModal = (args: StoryArgs, globalTheme: string) => {
     <ModalWindow
       {...args}
       theme={theme}
-      onClose={() => notifyModalClick("Modal closed")}
-      onPrimaryClick={() => notifyModalClick("Primary button clicked")}
-      onSecondaryClick={() => notifyModalClick("Secondary button clicked")}
+      onClose={noop}
+      onPrimaryClick={noop}
+      onSecondaryClick={noop}
     />
   );
-};
-
-export const Medium: Story = {
-  args: {
-    size: "M",
-    notification: false,
-    footerMode: "single",
-  },
-  render: (args, context) => {
-    return renderModal(args, String(context.globals.theme ?? "Light"));
-  },
 };
 
 export const Default: Story = {
@@ -100,6 +85,13 @@ export const Default: Story = {
   },
   render: (args, context) => {
     return renderModal(args, String(context.globals.theme ?? "Light"));
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Medium modal preset for standard confirmation and settings flows.",
+      },
+    },
   },
 };
 
@@ -112,6 +104,13 @@ export const Small: Story = {
   render: (args, context) => {
     return renderModal(args, String(context.globals.theme ?? "Light"));
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Small modal for short confirmations and compact messages.",
+      },
+    },
+  },
 };
 
 export const Large: Story = {
@@ -123,6 +122,13 @@ export const Large: Story = {
   render: (args, context) => {
     return renderModal(args, String(context.globals.theme ?? "Light"));
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Large modal for richer content and double-action layouts.",
+      },
+    },
+  },
 };
 
 export const WithNotification: Story = {
@@ -133,6 +139,13 @@ export const WithNotification: Story = {
   },
   render: (args, context) => {
     return renderModal(args, String(context.globals.theme ?? "Light"));
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Modal with an inline warning or explanatory notification block.",
+      },
+    },
   },
 };
 

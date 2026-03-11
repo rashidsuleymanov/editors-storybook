@@ -10,7 +10,7 @@ type StoryArgs = LinkButtonProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Buttons/LinkButtons",
+  title: "Components/Buttons/Link Buttons",
   component: LinkButton,
   args: {
     label: "Show advanced settings",
@@ -21,18 +21,18 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     label: {
       control: "text",
-      description: "Link button label",
+      description: "Visible link-style action label",
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable hover interaction for demo",
+      description: "Allow hover feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for visual review",
     },
     themeMode: {
       name: "theme",
@@ -57,7 +57,7 @@ const meta: Meta<StoryArgs> = {
       },
       description: {
         component:
-          "Link-style button with theme-aware states.",
+          "Text-only action styled like a link. Useful for secondary inline actions inside settings and informational blocks.",
       },
     },
   },
@@ -84,7 +84,14 @@ export const Default: Story = {
 export const HoveredButtons: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <LinkButton label="Show advanced settings" interactive theme={theme} />;
+    return <LinkButton label="Show advanced settings" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo for the inline link-action style. Move the pointer over the link in the canvas.",
+      },
+    },
   },
 };
 

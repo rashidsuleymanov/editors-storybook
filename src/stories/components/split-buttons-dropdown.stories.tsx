@@ -8,7 +8,7 @@ type StoryArgs = SplitButtonProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Buttons/SplitButtons/Drop Down",
+  title: "Components/Buttons/Split Buttons/Drop Down",
   component: SplitButton,
   args: {
     label: "Button",
@@ -18,10 +18,10 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    label: { control: "text", description: "Button label" },
+    label: { control: "text", description: "Visible split-button label" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/pressed behavior",
+      description: "Allow hover and press feedback directly in the canvas",
     },
     themeMode: {
       name: "theme",
@@ -36,7 +36,7 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Split button: dropdown variant.",
+        component: "Split button with a dropdown affordance, used when the main action also exposes additional options.",
       },
     },
   },
@@ -80,7 +80,7 @@ export const Hovered: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Hover demo: move cursor over the split button.",
+        story: "Interactive hover demo for the dropdown split button. Move the pointer over the control in the canvas.",
       },
     },
   },
@@ -94,7 +94,7 @@ export const Pressed: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Click to toggle between default and pressed states.",
+        story: "Pressed-state demo toggled by clicking the control.",
       },
     },
   },
@@ -104,6 +104,13 @@ export const Disabled: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <SplitButton label={args.label} type="dropDown" state="disabled" interactive={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled dropdown split button.",
+      },
+    },
   },
 };
 

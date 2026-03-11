@@ -16,8 +16,7 @@ export type RadioProps = {
   onChange?: (next: RadioSelection) => void;
 };
 
-const nextSelection = (current: RadioSelection): RadioSelection =>
-  current === "yes" ? "no" : "yes";
+const nextSelection = (): RadioSelection => "yes";
 
 export const Radio = ({
   label = "Text",
@@ -55,7 +54,7 @@ export const Radio = ({
     flexDirection: "column",
     color: token.textColor,
     fontSize: token.fontSize,
-    fontFamily: "Arial",
+    fontFamily: "Arial, Helvetica, sans-serif",
     fontWeight: 400,
     lineHeight: `${token.lineHeight}px`,
     letterSpacing: token.letterSpacing,
@@ -69,13 +68,16 @@ export const Radio = ({
       type="button"
       role="radio"
       aria-checked={selected === "yes"}
+      aria-disabled={isDisabled}
       className={`ui-radio ${isDisabled ? "ui-radio--disabled" : ""}`}
       style={containerStyle}
+      disabled={isDisabled}
       onMouseEnter={() => interactive && setHovered(true)}
       onMouseLeave={() => interactive && setHovered(false)}
       onClick={() => {
         if (isDisabled) return;
-        onChange?.(nextSelection(selected));
+        if (selected === "yes") return;
+        onChange?.(nextSelection());
       }}
     >
       <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>

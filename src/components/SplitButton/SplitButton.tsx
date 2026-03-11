@@ -58,11 +58,17 @@ export const SplitButton = ({
     border: "none",
     background: baseBg,
     color: textColor,
+    fontFamily: "Arial, Helvetica, sans-serif",
     fontSize: tokens.theme.includes("Modern") ? 12 : 11,
     lineHeight: "16px",
     fontWeight: type === "tabs" ? 400 : 700,
     letterSpacing: tokens.theme.includes("Modern") ? 0.24 : 0.22,
     cursor: isDisabled ? "not-allowed" : "pointer",
+    boxSizing: "border-box",
+    whiteSpace: "nowrap",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
   };
 
   return (
@@ -108,8 +114,6 @@ export const SplitButton = ({
               ...commonButtonStyle,
               minWidth: 48,
               padding: isModern ? "0 8px 0 2px" : "0 12px",
-              display: "inline-flex",
-              alignItems: "center",
               gap: 4,
             }}
           >
@@ -132,6 +136,7 @@ export const SplitButton = ({
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
+                boxSizing: "border-box",
                 cursor: isDisabled ? "not-allowed" : "pointer",
               }}
             >
@@ -172,11 +177,12 @@ export const SplitButton = ({
               border: "none",
               borderLeft: `1px solid ${tokens.border}`,
               background: baseBg,
-              color: textColor,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: isDisabled ? "not-allowed" : "pointer",
+                color: textColor,
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                boxSizing: "border-box",
+                cursor: isDisabled ? "not-allowed" : "pointer",
             }}
           >
             <SvgIcon

@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import colors from "../../data/colors";
 import { referenceThemeColors } from "../../data/reference-theme-colors";
 import { DocPage } from "../_shared/DocPage";
 
@@ -14,12 +13,11 @@ const tokenGroups = [
 ] as const;
 
 const meta: Meta = {
-  title: "Pages/Colors",
+  title: "Foundations/Colors",
   parameters: {
     docs: {
       description: {
-        component:
-          "Theme color palettes and semantic color tokens.",
+        component: "Semantic token comparison by theme.",
       },
     },
   },
@@ -28,157 +26,178 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-const normalizeSwatch = (rawValue: string) => {
-  const value = String(rawValue);
-  const [hexRaw, alphaRaw] = value.split("|").map((part) => part.trim());
-  const hex = hexRaw.startsWith("#") ? hexRaw : `#${hexRaw}`;
+const themeEntries = Object.entries(referenceThemeColors);
 
-  if (!alphaRaw) {
-    return { swatch: hex, display: value };
-  }
-
-  const alphaValue = Number.parseInt(alphaRaw.replace("%", ""), 10);
-  if (Number.isNaN(alphaValue)) {
-    return { swatch: hex, display: value };
-  }
-
-  const normalizedAlpha = alphaValue / 100;
-  const r = Number.parseInt(hex.slice(1, 3), 16);
-  const g = Number.parseInt(hex.slice(3, 5), 16);
-  const b = Number.parseInt(hex.slice(5, 7), 16);
-  return {
-    swatch: `rgba(${r}, ${g}, ${b}, ${normalizedAlpha.toFixed(2)})`,
-    display: `${hex} / ${alphaValue}%`,
-  };
-};
+const prettifyTokenName = (tokenName: string, prefix: string) =>
+  tokenName
+    .replace(prefix, "")
+    .replace(/^-+/, "")
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase());
 
 export const Palette: Story = {
   render: () => (
-    <DocPage
-      title="Colors"
-      description="Light and Light Classic tokens are from the additional export where tokens were separated from the Main sheet."
-    >
-      <div style={{ display: "grid", gap: 24 }}>
-        <div style={{ display: "grid", gap: 16 }}>
-          {Object.entries(referenceThemeColors).map(([themeName, themeTokens]) => (
-            <div
-              key={themeName}
+    <DocPage title="Colors" description="Сравнение семантических токенов по темам.">
+      <div style={{ display: "grid", gap: 20 }}>
+        {tokenGroups.map((group) => {
+          const tokenNames = Array.from(
+            new Set(
+              themeEntries.flatMap(([, tokens]) =>
+                Object.keys(tokens).filter((tokenName) => tokenName.startsWith(group.prefix)),
+              ),
+            ),
+          ).sort((a, b) => a.localeCompare(b));
+
+          if (tokenNames.length === 0) {
+            return null;
+          }
+
+          return (
+            <section
+              key={group.prefix}
               style={{
                 border: "1px solid var(--page-border, #d1d5db)",
                 borderRadius: 12,
                 overflow: "hidden",
-                background: "var(--page-surface, #f7f7f7)",
+                background: "var(--page-bg, #ffffff)",
               }}
             >
               <div
                 style={{
-                  padding: 12,
+                  padding: "12px 14px",
                   fontWeight: 700,
                   borderBottom: "1px solid var(--page-border, #d1d5db)",
+                  background: "var(--page-surface, #f7f7f7)",
                 }}
               >
-                {themeName} tokens
+                {group.label}
               </div>
 
-              <div style={{ display: "grid", gap: 16, padding: 12 }}>
-                {tokenGroups.map((group) => {
-                  const groupItems = Object.entries(themeTokens)
-                    .filter(([name]) => name.startsWith(group.prefix))
-                    .sort(([a], [b]) => a.localeCompare(b));
-
-                  if (groupItems.length === 0) return null;
-
-                  return (
-                    <div key={`${themeName}-${group.prefix}`} style={{ display: "grid", gap: 8 }}>
-                      <div style={{ fontWeight: 700, fontSize: 13 }}>{group.label}</div>
-                      <div
-                        style={{
-                          display: "grid",
-                          gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
-                          gap: 8,
-                        }}
-                      >
-                        {groupItems.map(([tokenName, tokenValue]) => (
-                          <div
-                            key={tokenName}
-                            style={{
-                              border: "1px solid var(--page-border, #d1d5db)",
-                              borderRadius: 8,
-                              overflow: "hidden",
-                              background: "var(--page-bg, #ffffff)",
-                            }}
-                          >
-                            <div style={{ height: 32, background: tokenValue }} />
-                            <div style={{ padding: 8, display: "grid", gap: 4 }}>
-                              <div style={{ fontSize: 11, fontWeight: 700 }}>{tokenName}</div>
-                              <div style={{ fontSize: 11, color: "var(--page-muted, rgba(0,0,0,0.6))" }}>
-                                {tokenValue}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div
-          style={{
-            border: "1px solid var(--page-border, #d1d5db)",
-            borderRadius: 12,
-            overflow: "hidden",
-            background: "var(--page-surface, #f7f7f7)",
-          }}
-        >
-          <div
-            style={{
-              padding: 12,
-              fontWeight: 700,
-              borderBottom: "1px solid var(--page-border, #d1d5db)",
-            }}
-          >
-            Main export palette (legacy list)
-          </div>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))",
-              gap: 8,
-              padding: 12,
-            }}
-          >
-            {colors.items.map((item, index) => {
-              const key = `${item.name}-${item.value}-${index}`;
-              const swatch = normalizeSwatch(String(item.value));
-
-              return (
+              <div style={{ overflowX: "auto" }}>
                 <div
-                  key={key}
                   style={{
-                    border: "1px solid var(--page-border, #d1d5db)",
-                    borderRadius: 8,
-                    overflow: "hidden",
-                    background: "var(--page-bg, #ffffff)",
+                    minWidth: 760,
+                    display: "grid",
+                    gridTemplateColumns: `220px repeat(${themeEntries.length}, minmax(220px, 1fr))`,
                   }}
                 >
-                  <div style={{ height: 38, background: swatch.swatch }} />
-                  <div style={{ padding: 8, display: "grid", gap: 4 }}>
-                    <div style={{ fontWeight: 700, fontSize: 12 }}>{item.name}</div>
-                    <div style={{ fontSize: 11, color: "var(--page-muted, rgba(0,0,0,0.6))" }}>
-                      {swatch.display}
-                    </div>
+                  <div
+                    style={{
+                      padding: "10px 12px",
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: "var(--page-muted, rgba(0,0,0,0.7))",
+                      borderBottom: "1px solid var(--page-border, #d1d5db)",
+                    }}
+                  >
+                    Token
                   </div>
+                  {themeEntries.map(([themeName]) => (
+                    <div
+                      key={`${group.prefix}-${themeName}-header`}
+                      style={{
+                        padding: "10px 12px",
+                        fontSize: 12,
+                        fontWeight: 700,
+                        color: "var(--page-muted, rgba(0,0,0,0.7))",
+                        borderBottom: "1px solid var(--page-border, #d1d5db)",
+                        borderLeft: "1px solid var(--page-border, #d1d5db)",
+                      }}
+                    >
+                      {themeName}
+                    </div>
+                  ))}
+
+                  {tokenNames.map((tokenName, index) => (
+                    <FragmentRow
+                      key={tokenName}
+                      index={index}
+                      tokenLabel={prettifyTokenName(tokenName, group.prefix)}
+                      tokenName={tokenName}
+                    />
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-        </div>
+              </div>
+            </section>
+          );
+        })}
+
       </div>
     </DocPage>
   ),
 };
 
+type FragmentRowProps = {
+  index: number;
+  tokenLabel: string;
+  tokenName: string;
+};
+
+const FragmentRow = ({ index, tokenLabel, tokenName }: FragmentRowProps) => {
+  const rowBackground = index % 2 === 0 ? "var(--page-bg, #ffffff)" : "var(--page-surface, #fafafa)";
+
+  return (
+    <>
+      <div
+        style={{
+          padding: "10px 12px",
+          fontSize: 12,
+          fontWeight: 700,
+          background: rowBackground,
+          borderBottom: "1px solid var(--page-border, #d1d5db)",
+        }}
+      >
+        <div>{tokenLabel}</div>
+        <div style={{ marginTop: 2, fontSize: 11, fontWeight: 400, color: "var(--page-muted, rgba(0,0,0,0.6))" }}>
+          {tokenName}
+        </div>
+      </div>
+
+      {themeEntries.map(([themeName, tokens]) => {
+        const rawValue = tokens[tokenName as keyof typeof tokens];
+
+        return (
+          <div
+            key={`${themeName}-${tokenName}`}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "56px 1fr",
+              gap: 10,
+              alignItems: "center",
+              padding: "10px 12px",
+              background: rowBackground,
+              borderLeft: "1px solid var(--page-border, #d1d5db)",
+              borderBottom: "1px solid var(--page-border, #d1d5db)",
+            }}
+          >
+            {rawValue ? (
+              <>
+                <div
+                  style={{
+                    height: 28,
+                    borderRadius: 6,
+                    border: "1px solid rgba(0,0,0,0.08)",
+                    background: String(rawValue),
+                  }}
+                />
+                <div style={{ fontSize: 11, color: "var(--page-muted, rgba(0,0,0,0.75))" }}>{String(rawValue)}</div>
+              </>
+            ) : (
+              <>
+                <div
+                  style={{
+                    height: 28,
+                    borderRadius: 6,
+                    border: "1px dashed var(--page-border, #d1d5db)",
+                    background: "transparent",
+                  }}
+                />
+                <div style={{ fontSize: 11, color: "var(--page-muted, rgba(0,0,0,0.5))" }}>Not set</div>
+              </>
+            )}
+          </div>
+        );
+      })}
+    </>
+  );
+};

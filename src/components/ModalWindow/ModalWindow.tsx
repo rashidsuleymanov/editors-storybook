@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { PluginTheme } from "../shared/pluginTheme";
 import { resolveComponentTheme } from "../shared/pluginTheme";
 import { Header } from "../Header/Header";
@@ -264,6 +264,15 @@ const sizeToContentHeight: Record<ModalWindowSize, number> = {
   L: 423,
 };
 
+const frameRadiusByTheme: Record<PluginTheme, number> = {
+  Light: 2,
+  "Light Classic": 2,
+  Dark: 2,
+  "Dark Contrast": 2,
+  "Modern Light": 4,
+  "Modern Dark": 4,
+};
+
 const WarningGlyph = () => (
   <svg width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden>
     <path
@@ -300,6 +309,7 @@ const ModalButton = ({
 
   const isPressed = pressedByMouse || pressedFlash;
   const isHovered = hovered && !isPressed;
+  const isDisabled = typeof onClick !== "function";
 
   const background = isPressed
     ? tokens.pressedBg ?? tokens.hoverBg ?? tokens.bg
@@ -322,39 +332,45 @@ const ModalButton = ({
   return (
     <button
       type="button"
-      onClick={() => {
-        onClick?.();
-        setPressedFlash(true);
-        if (flashTimer.current) window.clearTimeout(flashTimer.current);
-        flashTimer.current = window.setTimeout(() => setPressedFlash(false), 160);
-      }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => {
-        setHovered(false);
-        setPressedByMouse(false);
-      }}
-      onMouseDown={() => setPressedByMouse(true)}
-      onMouseUp={() => setPressedByMouse(false)}
-      style={{
-        height: tokens.size,
-        minWidth: tokens.minWidth,
-        padding: `0 ${tokens.px}px`,
-        borderRadius: tokens.radius,
+	      disabled={isDisabled}
+	      aria-disabled={isDisabled}
+	      onClick={() => {
+	        if (isDisabled) return;
+	        onClick?.();
+	        setPressedFlash(true);
+	        if (flashTimer.current) window.clearTimeout(flashTimer.current);
+	        flashTimer.current = window.setTimeout(() => setPressedFlash(false), 160);
+	      }}
+	      onMouseEnter={() => !isDisabled && setHovered(true)}
+	      onMouseLeave={() => {
+	        setHovered(false);
+	        setPressedByMouse(false);
+	      }}
+	      onMouseDown={() => !isDisabled && setPressedByMouse(true)}
+	      onMouseUp={() => setPressedByMouse(false)}
+	      style={{
+	        height: tokens.size,
+	        minWidth: tokens.minWidth,
+	        padding: `0 ${tokens.px}px`,
+	        borderRadius: tokens.radius,
         border: borderColor ? `1px solid ${borderColor}` : "1px solid transparent",
         background,
         color: textColor,
+        fontFamily: "Arial, Helvetica, sans-serif",
         fontSize: tokens.fontSize,
-        fontWeight: 700,
-        lineHeight: "16px",
-        letterSpacing: tokens.letterSpacing,
-        cursor: "pointer",
-        display: "inline-flex",
-        alignItems: "center",
-        justifyContent: "center",
-        whiteSpace: "nowrap",
-        transition: "background-color 120ms ease, color 120ms ease, border-color 120ms ease",
-      }}
-    >
+	        fontWeight: 700,
+	        lineHeight: "16px",
+	        letterSpacing: tokens.letterSpacing,
+	        boxSizing: "border-box",
+	        cursor: isDisabled ? "default" : "pointer",
+	        display: "inline-flex",
+	        alignItems: "center",
+	        justifyContent: "center",
+	        whiteSpace: "nowrap",
+	        opacity: isDisabled ? 0.5 : 1,
+	        transition: "background-color 120ms ease, color 120ms ease, border-color 120ms ease",
+	      }}
+	    >
       {label}
     </button>
   );
@@ -374,6 +390,8 @@ export const ModalWindow = ({
   onPrimaryClick,
   onSecondaryClick,
 }: ModalWindowProps) => {
+  const titleId = useId();
+  const modalRef = useRef<HTMLDivElement | null>(null);
   const resolvedTheme = resolveComponentTheme(theme);
   const tokens = modalTokensByTheme[resolvedTheme];
   const isModern = resolvedTheme === "Modern Light" || resolvedTheme === "Modern Dark";
@@ -382,19 +400,68 @@ export const ModalWindow = ({
   const contentHeight = notification ? 76 : sizeToContentHeight[size];
   const primaryButton = primaryButtonByTheme[resolvedTheme];
   const secondaryButton = secondaryButtonByTheme[resolvedTheme];
+  const footerPaddingY = isModern ? 12 : 16;
+
+  useEffect(() => {
+    const root = modalRef.current;
+    if (!root) return;
+
+    const focusable = Array.from(
+      root.querySelectorAll<HTMLButtonElement>('button:not([disabled])')
+    );
+
+    if (focusable.length === 0) return;
+    if (root.contains(document.activeElement)) return;
+
+    focusable[0].focus();
+  }, []);
 
   return (
     <div
+      ref={modalRef}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={titleId}
+      tabIndex={-1}
+      onKeyDown={(event) => {
+        if (event.key === "Escape") onClose?.();
+        if (event.key !== "Tab") return;
+
+        const root = modalRef.current;
+        if (!root) return;
+
+        const focusable = Array.from(
+          root.querySelectorAll<HTMLButtonElement>('button:not([disabled])')
+        );
+
+        if (focusable.length === 0) return;
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const active = document.activeElement;
+
+        if (event.shiftKey && active === first) {
+          event.preventDefault();
+          last.focus();
+        }
+
+        if (!event.shiftKey && active === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }}
       style={{
         width: modalWidth,
         background: tokens.frameBg,
-        borderRadius: 3,
+        borderRadius: frameRadiusByTheme[resolvedTheme],
         border: `1px solid ${tokens.frameBorder}`,
         overflow: "hidden",
         boxSizing: "border-box",
       }}
     >
-      <Header title={title} variant="window" width={modalWidth} theme={resolvedTheme} onClose={onClose} />
+      <div id={titleId}>
+        <Header title={title} variant="window" width={modalWidth} theme={resolvedTheme} onClose={onClose} />
+      </div>
 
       <div
         style={{
@@ -403,6 +470,7 @@ export const ModalWindow = ({
           display: "flex",
           flexDirection: "column",
           gap: 16,
+          boxSizing: "border-box",
         }}
       >
         {notification ? (
@@ -418,6 +486,7 @@ export const ModalWindow = ({
             <div
               style={{
                 color: tokens.notificationText,
+                fontFamily: "Arial, Helvetica, sans-serif",
                 fontSize: isModern ? 12 : 11,
                 fontWeight: 400,
                 lineHeight: "16px",
@@ -436,6 +505,7 @@ export const ModalWindow = ({
               alignItems: "center",
               justifyContent: "center",
               color: tokens.contentText,
+              fontFamily: "Arial, Helvetica, sans-serif",
               fontSize: isModern ? 12 : 11,
               fontWeight: 400,
               lineHeight: "16px",
@@ -452,13 +522,14 @@ export const ModalWindow = ({
         <div style={{ height: 1, background: tokens.divider }} />
         <div
           style={{
-            height: 47,
-            padding: 16,
+            minHeight: primaryButton.size + footerPaddingY * 2,
+            padding: `${footerPaddingY}px 16px`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             gap: 10,
             boxSizing: "border-box",
+            flexWrap: "wrap",
           }}
         >
           <ModalButton label={primaryLabel} tokens={primaryButton} onClick={onPrimaryClick} />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useId, useState } from "react";
 import { resolveComponentTheme } from "../shared/pluginTheme";
 import { SvgIcon } from "../shared/SvgIcon";
 import { textFieldTokens } from "../../data/text-field";
@@ -35,6 +35,8 @@ export const TextField = ({
   isHovered = false,
   onChange,
 }: TextFieldProps) => {
+  const inputId = useId();
+  const captionId = useId();
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
   const resolvedTheme = resolveComponentTheme(theme);
@@ -44,10 +46,9 @@ export const TextField = ({
   const isError = state === "error";
   const isFocused = state === "focused" || state === "typing" || focused;
   const isHover = state === "hover" || isHovered || (interactive && hovered);
-  const hasTypedValue = value.length > 0 || state === "typing" || state === "filled";
+  const hasTypedValue = value.length > 0 || state === "filled";
   const isHiddenPlaceholder = placeholderState === "hidden";
-  const shownValue = value.length > 0 ? value : hasTypedValue ? placeholder : "";
-  const showPlaceholderText = !isHiddenPlaceholder && shownValue.length === 0;
+  const showPlaceholderText = !isHiddenPlaceholder && value.length === 0;
   const hiddenDotsCount = 6;
 
   const borderColor = isError
@@ -60,7 +61,8 @@ export const TextField = ({
 
   return (
     <div style={{ width: 165, display: "grid", gap: 4 }}>
-      <div
+      <label
+        htmlFor={inputId}
         style={{
           color: tokens.titleColor,
           fontWeight: tokens.titleWeight,
@@ -70,7 +72,7 @@ export const TextField = ({
         }}
       >
         {label}
-      </div>
+      </label>
       <div
         onMouseEnter={() => interactive && setHovered(true)}
         onMouseLeave={() => interactive && setHovered(false)}
@@ -98,7 +100,7 @@ export const TextField = ({
                 fontSize: tokens.typography.fontSize,
                 lineHeight: `${tokens.typography.lineHeight}px`,
                 letterSpacing: tokens.typography.letterSpacing,
-                fontFamily: "Arial",
+                fontFamily: "Arial, Helvetica, sans-serif",
                 pointerEvents: "none",
               }}
             >
@@ -122,9 +124,11 @@ export const TextField = ({
           ) : (
             <input
               type="text"
+              id={inputId}
               disabled={isDisabled}
-              value={shownValue}
+              value={value}
               placeholder=""
+              aria-describedby={captionId}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               onChange={(event) => onChange?.(event.target.value)}
@@ -136,7 +140,7 @@ export const TextField = ({
                 fontSize: tokens.typography.fontSize,
                 lineHeight: `${tokens.typography.lineHeight}px`,
                 letterSpacing: tokens.typography.letterSpacing,
-                fontFamily: "Arial",
+                fontFamily: "Arial, Helvetica, sans-serif",
                 caretColor: tokens.cursorColor,
                 color: isDisabled
                   ? tokens.disabledTextColor
@@ -156,6 +160,7 @@ export const TextField = ({
       </div>
       {isError ? (
         <div
+          id={captionId}
           style={{
             color: tokens.errorTextColor,
             fontSize: tokens.captionTypography.fontSize,
@@ -167,6 +172,7 @@ export const TextField = ({
         </div>
       ) : (
         <div
+          id={captionId}
           style={{
             color: tokens.captionColor,
             fontSize: tokens.captionTypography.fontSize,

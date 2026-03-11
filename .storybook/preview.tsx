@@ -1,4 +1,4 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from "@storybook/react-vite";
 import { globalColors } from "../src/themes/globalColors";
 import { themeTokens } from "../src/data/theme-tokens";
 
@@ -55,7 +55,7 @@ const preview: Preview = {
   globalTypes: {
     theme: {
       name: "Theme",
-      description: "Dialog Buttons theme",
+      description: "Global Storybook theme",
       defaultValue: "Light",
       toolbar: {
         icon: "paintbrush",
@@ -75,33 +75,29 @@ const preview: Preview = {
     options: {
       storySort: {
         order: [
-          "Pages",
-          ["Typography", "Colors", "Icons", "Panel", "Editors"],
+          "Foundations",
+          ["Typography", "Colors", "Icons", "Panel"],
           "Components",
           [
-            "Interactive Elements",
+            "Buttons",
             [
-              "Buttons",
-              [
-                "DialogButtons",
-                "PanelButtons",
-                "IconButtons",
-                "LinkButtons",
-                "SplitButtons",
-              ],
-              "ContextMenu",
-              "Preview",
+              "Dialog Buttons",
+              "Panel Buttons",
+              "Icon Buttons",
+              "Link Buttons",
+              "Split Buttons",
+              ["Drop Down", "Icon Left", "Tabs"],
             ],
-            "Form Controls",
-            ["Checkbox", "Radio", "Switches", "Slider", "TextField", "TextArea"],
+            "Actions",
+            ["Context Menu", "Preview Controls"],
+            "Form",
+            ["Checkbox", "Radio", "Switches", "Slider", "Text Field", "Text Area"],
             "Data Display",
-            ["Cards", "InfoBlock", "Tabs"],
-            "Layout Components",
-            ["Header", "ModalWindow", "Scroll"],
-            "Status Components",
-            ["Loader"],
-            "UI Components",
-            ["Tooltip"],
+            ["Cards", "Info Block", "Tabs"],
+            "Layout",
+            ["Header", "Modal Window", "Scroll"],
+            "Feedback",
+            ["Loader", "Tooltip"],
           ],
           "*",
         ],

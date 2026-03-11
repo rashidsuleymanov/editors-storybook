@@ -105,6 +105,8 @@ export const PanelButton = ({
   const containerStyle: CSSProperties = {
     ...(token.container ?? {}),
     width: scale ? "100%" : (token.container?.width as CSSProperties["width"]),
+    paddingTop: 0,
+    paddingBottom: 0,
     boxSizing: "border-box",
     border: "none",
     cursor:
@@ -147,7 +149,19 @@ export const PanelButton = ({
           size={size === 30 ? 20 : 16}
         />
       ) : (
-        <span style={{ ...(token.text ?? {}) }}>{label}</span>
+        <span
+          style={{
+            ...(token.text ?? {}),
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            width: "100%",
+            whiteSpace: "nowrap",
+            fontFamily: (token.text?.fontFamily as string | undefined) ?? "Arial, Helvetica, sans-serif",
+          }}
+        >
+          {label}
+        </span>
       )}
     </button>
   );

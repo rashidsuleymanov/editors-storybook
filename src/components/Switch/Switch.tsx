@@ -40,6 +40,13 @@ export const Switch = ({
         if (isDisabled) return;
         onChange?.(!checked);
       }}
+      onKeyDown={(event) => {
+        if (isDisabled) return;
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault();
+          onChange?.(!checked);
+        }
+      }}
       style={{
         width: 30,
         height: 16,
@@ -50,6 +57,7 @@ export const Switch = ({
         alignItems: "center",
         justifyContent: checked ? "flex-end" : "flex-start",
         padding: 1,
+        boxSizing: "border-box",
         cursor: isDisabled ? "default" : "pointer",
         opacity: token.opacity ?? 1,
         transition: "all 120ms ease",
@@ -61,6 +69,7 @@ export const Switch = ({
           height: 12,
           borderRadius: 6,
           background: token.thumb,
+          flexShrink: 0,
         }}
       />
     </button>

@@ -8,7 +8,7 @@ type StoryArgs = ScrollProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Layout Components/Scroll",
+  title: "Components/Layout/Scroll",
   component: Scroll,
   args: {
     orientation: "vertical",
@@ -28,29 +28,29 @@ const meta: Meta<StoryArgs> = {
     orientation: {
       control: "select",
       options: ["vertical", "horizontal"],
-      description: "Scroll orientation",
+      description: "Vertical or horizontal scrollbar layout",
     },
-    size: { control: "select", options: ["XS", "S", "M"], description: "Lift thickness (XS/S/M)" },
+    size: { control: "select", options: ["XS", "S", "M"], description: "Scrollbar thickness preset" },
     type: {
       control: "select",
       options: ["withButtons", "withoutButtons"],
-      description: "With arrows or without arrows",
+      description: "Scrollbar with arrow buttons or without them",
     },
     state: {
       control: "select",
       options: ["default", "hover", "pressed"],
-      description: "Base visual state (used when interactive=false)",
+      description: "Static visual state used when interactive mode is off",
     },
-    length: { control: "number", description: "Total scrollbar length in px" },
-    viewportSize: { control: "number", description: "Viewport size for thumb ratio" },
-    contentSize: { control: "number", description: "Content size for thumb ratio" },
-    step: { control: "number", description: "Scroll step for buttons/keys" },
+    length: { control: "number", description: "Rendered scrollbar length in px" },
+    viewportSize: { control: "number", description: "Visible viewport size used to compute the thumb ratio" },
+    contentSize: { control: "number", description: "Scrollable content size used to compute the thumb ratio" },
+    step: { control: "number", description: "Scroll increment for arrow buttons and keyboard input" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable hover/pressed/drag/click/wheel interactions",
+      description: "Allow hover, drag, click, wheel, and arrow-button interaction in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover state (demo)" },
-    isPressed: { control: { type: "boolean" }, description: "Force pressed state (demo)" },
+    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
+    isPressed: { control: { type: "boolean" }, description: "Force pressed appearance for review" },
     value: { table: { disable: true } },
     defaultValue: { table: { disable: true } },
     onValueChange: { table: { disable: true } },
@@ -66,7 +66,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Scroll split by kit groups: `WithBtn M`, `WithoutBtn M/S/XS`. Interactive story supports hover, pressed, click, drag and wheel.",
+          "Scrollbar variants for panel and canvas-like areas. Includes with-buttons and without-buttons styles, multiple thicknesses, and an interactive demo with dragging and wheel input.",
       },
     },
   },
@@ -152,6 +152,13 @@ export const WithButtonsM: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Scroll {...args} type="withButtons" size="M" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Medium scrollbar with arrow buttons.",
+      },
+    },
+  },
 };
 
 export const WithoutButtonsM: Story = {
@@ -159,6 +166,13 @@ export const WithoutButtonsM: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Scroll {...args} type="withoutButtons" size="M" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Medium scrollbar without arrow buttons.",
+      },
+    },
   },
 };
 
@@ -168,6 +182,13 @@ export const WithoutButtonsS: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Scroll {...args} type="withoutButtons" size="S" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Slim scrollbar without arrow buttons.",
+      },
+    },
+  },
 };
 
 export const WithoutButtonsXS: Story = {
@@ -175,6 +196,13 @@ export const WithoutButtonsXS: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Scroll {...args} type="withoutButtons" size="XS" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Extra-slim scrollbar for dense layouts.",
+      },
+    },
   },
 };
 
@@ -193,6 +221,13 @@ export const Horizontal: Story = {
         theme={theme}
       />
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Horizontal scrollbar variant with arrow buttons.",
+      },
+    },
   },
 };
 

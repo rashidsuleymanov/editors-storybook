@@ -1,35 +1,22 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+    <main className="app-shell">
+      <section className="app-card">
+        <p className="app-eyebrow">Plugin UI</p>
+        <h1 className="app-title">Storybook workspace</h1>
+        <p className="app-copy">
+          This package is intended to be reviewed and maintained through Storybook.
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+        <div className="app-actions" aria-label="Available commands">
+          <code>npm run storybook</code>
+          <code>npm run build-storybook</code>
+          <code>npm run lint</code>
+        </div>
+      </section>
+    </main>
+  );
 }
 
-export default App
+export default App;

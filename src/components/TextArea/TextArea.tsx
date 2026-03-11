@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type CSSProperties } from "react";
+import { useEffect, useId, useMemo, useState, type CSSProperties } from "react";
 import { resolveComponentTheme } from "../shared/pluginTheme";
 import { textAreaTokens } from "../../data/text-area";
 import "./TextArea.css";
@@ -97,15 +97,12 @@ export const TextArea = ({
   onChange,
   onCopy,
 }: TextAreaProps) => {
+  const textareaId = useId();
+  const captionId = useId();
   const [hovered, setHovered] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [localValue, setLocalValue] = useState(value);
   const resolvedTheme = resolveComponentTheme(theme);
   const tokens = textAreaTokens[resolvedTheme];
-
-  useEffect(() => {
-    setLocalValue(value);
-  }, [value]);
 
   useEffect(() => {
     if (!copied) return;
@@ -135,7 +132,8 @@ export const TextArea = ({
       {showLabel || showCopyButton ? (
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", minHeight: 20 }}>
           {showLabel ? (
-            <span
+            <label
+              htmlFor={textareaId}
               style={{
                 color: tokens.labelColor,
                 fontWeight: tokens.labelWeight,
@@ -145,7 +143,7 @@ export const TextArea = ({
               }}
             >
               {label}
-            </span>
+            </label>
           ) : (
             <span />
           )}
@@ -153,8 +151,8 @@ export const TextArea = ({
             <button
               type="button"
               onClick={async () => {
-                await copyToClipboard(localValue);
-                onCopy?.(localValue);
+                await copyToClipboard(value);
+                onCopy?.(value);
                 setCopied(true);
               }}
               disabled={isDisabled}
@@ -195,14 +193,13 @@ export const TextArea = ({
         }}
       >
         <textarea
+          id={textareaId}
           className="ui-textarea__input"
           disabled={isDisabled}
-          value={localValue}
+          aria-describedby={showCaption ? captionId : undefined}
+          value={value}
           wrap={forceScroll ? "off" : "soft"}
-          onChange={(event) => {
-            setLocalValue(event.target.value);
-            onChange?.(event.target.value);
-          }}
+          onChange={(event) => onChange?.(event.target.value)}
           onMouseEnter={() => interactive && setHovered(true)}
           onMouseLeave={() => interactive && setHovered(false)}
           style={{
@@ -214,7 +211,7 @@ export const TextArea = ({
             resize: "none",
             background: "transparent",
             color: isDisabled ? tokens.disabledTextColor : tokens.textColor,
-            fontFamily: "Arial",
+            fontFamily: "Arial, Helvetica, sans-serif",
             fontSize: tokens.textTypography.fontSize,
             lineHeight: `${tokens.textTypography.lineHeight}px`,
             letterSpacing: tokens.textTypography.letterSpacing,
@@ -235,6 +232,7 @@ export const TextArea = ({
 
       {showCaption ? (
         <span
+          id={captionId}
           style={{
             color: tokens.captionColor,
             fontSize: tokens.captionTypography.fontSize,

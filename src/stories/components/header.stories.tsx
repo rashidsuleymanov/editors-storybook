@@ -7,7 +7,7 @@ type StoryArgs = HeaderProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Layout Components/Header",
+  title: "Components/Layout/Header",
   component: Header,
   args: {
     title: "Title",
@@ -16,12 +16,12 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    title: { control: "text", description: "Header title" },
-    width: { control: "number", description: "Header width" },
+    title: { control: "text", description: "Visible header title" },
+    width: { control: "number", description: "Rendered header width" },
     variant: {
       control: "select",
       options: ["panel", "window"],
-      description: "Header layout type",
+      description: "Panel header or standalone window header layout",
     },
     themeMode: {
       name: "theme",
@@ -34,7 +34,7 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Header component with two variants: panel and window.",
+        component: "Header shell used at the top of plugin panels and standalone windows.",
       },
     },
   },
@@ -60,6 +60,13 @@ export const Window: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Header {...args} variant="window" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Standalone window-style header with different chrome treatment.",
+      },
+    },
   },
 };
 

@@ -8,7 +8,7 @@ type StoryArgs = SplitButtonProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Buttons/SplitButtons/Tabs",
+  title: "Components/Buttons/Split Buttons/Tabs",
   component: SplitButton,
   args: {
     label: "Label",
@@ -18,10 +18,10 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    label: { control: "text", description: "Tab label" },
+    label: { control: "text", description: "Visible tab-style label" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/pressed behavior",
+      description: "Allow hover and press feedback directly in the canvas",
     },
     themeMode: {
       name: "theme",
@@ -36,7 +36,7 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Split button: tabs variant.",
+        component: "Split-button tab style used for compact segmented or tab-like actions.",
       },
     },
   },
@@ -80,7 +80,7 @@ export const Hovered: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Hover demo: move cursor over the tab button.",
+        story: "Interactive hover demo for the tab-style split button. Move the pointer over the control in the canvas.",
       },
     },
   },
@@ -94,7 +94,7 @@ export const Pressed: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Click to toggle between default and pressed states.",
+        story: "Pressed-state demo toggled by clicking the control.",
       },
     },
   },
@@ -104,6 +104,13 @@ export const Disabled: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <SplitButton label={args.label} type="tabs" state="disabled" interactive={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled tab-style split button.",
+      },
+    },
   },
 };
 

@@ -7,7 +7,7 @@ import {
 import { normalizePluginTheme } from "../_shared/theme";
 
 const meta: Meta<DialogButtonProps> = {
-  title: "Components/Interactive Elements/Buttons/DialogButtons",
+  title: "Components/Buttons/Dialog Buttons",
   component: DialogButton,
   args: {
     label: "Button",
@@ -23,12 +23,12 @@ const meta: Meta<DialogButtonProps> = {
   argTypes: {
     label: {
       control: "text",
-      description: "Button text label",
+      description: "Visible action label",
     },
     size: {
       control: "select",
       options: [22, 24],
-      description: "Dialog button size",
+      description: "Compact or regular dialog button height",
       table: {
         defaultValue: { summary: "24" },
       },
@@ -36,33 +36,33 @@ const meta: Meta<DialogButtonProps> = {
     variant: {
       control: "select",
       options: ["primary", "secondary"],
-      description: "Button style variant",
+      description: "Primary for the main action, secondary for alternative actions",
       table: {
         defaultValue: { summary: "primary" },
       },
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/pressed interactions",
+      description: "Allow the story to react to hover and click in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for visual review",
     },
     isClicked: {
       control: { type: "boolean" },
-      description: "Force pressed state (demo)",
+      description: "Force pressed appearance for visual review",
     },
     isDisabled: {
       control: { type: "boolean" },
-      description: "Disable the button",
+      description: "Show the disabled state",
     },
     isLoading: {
       control: { type: "boolean" },
-      description: "Show loading state",
+      description: "Replace the label with the loading indicator",
     },
     scale: {
       table: { disable: true },
@@ -81,7 +81,7 @@ const meta: Meta<DialogButtonProps> = {
     docs: {
       description: {
         component:
-          "DialogButtons are compact action buttons used in dialogs and toolbars. They support multiple themes, sizes, and visual states for consistent plugin UI.",
+          "Dialog action buttons used in modal footers and compact plugin flows. Use primary for confirm actions and secondary for cancel or auxiliary actions.",
       },
     },
   },
@@ -113,11 +113,7 @@ const resolveDialogTheme = (rawTheme: string | undefined): NonNullable<DialogBut
   return normalized === "Modern Dark" ? "Dark" : normalized;
 };
 
-const notifyButtonClick = () => {
-  if (typeof window !== "undefined" && typeof window.alert === "function") {
-    window.alert("Button clicked");
-  }
-};
+const noop = () => {};
 
 const ClickedRuntimeDemo = ({
   theme,
@@ -158,7 +154,7 @@ const ClickedRuntimeDemo = ({
 
 const Template = (args: DialogButtonProps, rawTheme: string | undefined) => {
   const theme = resolveDialogTheme(rawTheme);
-  return <DialogButton {...args} theme={theme} onClick={notifyButtonClick} />;
+  return <DialogButton {...args} theme={theme} onClick={noop} />;
 };
 
 export const Default: Story = {
@@ -178,7 +174,7 @@ export const PrimaryButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Primary dialog buttons for the main action.",
+        story: "Primary buttons for the main decision in a dialog.",
       },
     },
   },
@@ -197,7 +193,7 @@ export const SecondaryButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Secondary dialog buttons for alternative actions.",
+        story: "Secondary buttons for cancel, back, or less prominent actions.",
       },
     },
   },
@@ -208,15 +204,15 @@ export const HoveredButtons: Story = {
     const theme = resolveDialogTheme(String(context.globals.theme ?? "Light"));
     return (
       <Wrapper isScale={false}>
-        <DialogButton label="Hovered Small" size={22} variant="primary" interactive theme={theme} />
-        <DialogButton label="Hovered Normal" size={24} variant="primary" interactive theme={theme} />
+        <DialogButton label="Hovered Small" size={22} variant="primary" theme={theme} />
+        <DialogButton label="Hovered Normal" size={24} variant="primary" theme={theme} />
       </Wrapper>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Hover preview: move cursor over the buttons.",
+        story: "Interactive hover demo for both dialog button sizes. Move the pointer over each button in the canvas.",
       },
     },
   },
@@ -230,7 +226,7 @@ export const ClickedButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Runtime pressed state demo: click button to show Clicked state.",
+        story: "Pressed-state demo. Click a button to preview the active press moment.",
       },
     },
   },
@@ -249,7 +245,7 @@ export const DisabledButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Disabled buttons cannot be interacted with.",
+        story: "Disabled buttons keep layout but should not invite interaction.",
       },
     },
   },
@@ -268,7 +264,7 @@ export const LoadingButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Loading buttons show a spinner and block interaction.",
+        story: "Loading state for actions that are already in progress.",
       },
     },
   },
@@ -287,7 +283,7 @@ export const ScaleButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Scale stretches dialog buttons to the container width.",
+        story: "Full-width layout variant for dense footers or narrow dialog flows.",
       },
     },
   },

@@ -1,42 +1,64 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app-shell {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(74, 135, 231, 0.12), transparent 32%),
+    linear-gradient(180deg, #f6f7f9 0%, #eceff3 100%);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-card {
+  width: min(560px, 100%);
+  padding: 32px;
+  border: 1px solid #d8dadc;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 18px 48px rgba(22, 28, 45, 0.08);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+.app-eyebrow {
+  margin: 0 0 8px;
+  color: #4a87e7;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.22px;
+  line-height: 16px;
+  text-transform: uppercase;
 }
 
-.card {
-  padding: 2em;
+.app-title {
+  margin: 0;
+  color: #202020;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.1;
 }
 
-.read-the-docs {
-  color: #888;
+.app-copy {
+  margin: 12px 0 0;
+  color: #555;
+  font-size: 14px;
+  line-height: 20px;
+}
+
+.app-actions {
+  margin-top: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.app-actions code {
+  padding: 8px 12px;
+  border: 1px solid #d8dadc;
+  border-radius: 6px;
+  background: #f7f7f7;
+  color: #202020;
+  font-size: 12px;
+  line-height: 16px;
 }

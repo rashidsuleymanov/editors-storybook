@@ -11,7 +11,7 @@ type StoryArgs = PanelButtonProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Buttons/PanelButtons",
+  title: "Components/Buttons/Panel Buttons",
   component: PanelButton,
   args: {
     label: "Button",
@@ -23,42 +23,42 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     label: {
       control: "text",
-      description: "Button text label",
+      description: "Visible action label",
     },
     size: {
       control: "select",
       options: [24, 30],
-      description: "Panel button size",
+      description: "Default or larger panel button height",
       table: {
         defaultValue: { summary: "24" },
       },
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/pressed interactions",
+      description: "Allow hover and click feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for visual review",
     },
     isClicked: {
       control: { type: "boolean" },
-      description: "Force pressed state (demo)",
+      description: "Force pressed appearance for visual review",
     },
     isDisabled: {
       control: { type: "boolean" },
-      description: "Disable the button",
+      description: "Show the disabled state",
     },
     isLoading: {
       control: { type: "boolean" },
-      description: "Show loader state",
+      description: "Show the loading indicator instead of the normal label",
     },
     scale: {
       control: { type: "boolean" },
-      description: "Stretch button to the full row width",
+      description: "Stretch the button to fill the available row",
     },
     themeMode: {
       name: "theme",
@@ -80,7 +80,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Panel buttons in 24/30 sizes with all core states.",
+          "Panel action buttons used inside plugin side panels. Includes compact and larger heights plus hover, pressed, disabled, loading, and stretched states.",
       },
     },
   },
@@ -159,15 +159,15 @@ export const HoveredButtons: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return (
       <Wrapper isScale={false}>
-        <PanelButton label="Hovered Small" size={24} interactive theme={theme} />
-        <PanelButton label="Hovered Normal" size={30} interactive theme={theme} />
+        <PanelButton label="Hovered Small" size={24} theme={theme} />
+        <PanelButton label="Hovered Normal" size={30} theme={theme} />
       </Wrapper>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Hover preview: move cursor over the buttons.",
+        story: "Interactive hover demo for both panel button sizes. Move the pointer over each button in the canvas.",
       },
     },
   },
@@ -181,7 +181,7 @@ export const ClickedButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Runtime pressed state demo: click button to show Clicked state.",
+        story: "Pressed-state demo. Click the buttons to preview the active press moment.",
       },
     },
   },
@@ -197,6 +197,13 @@ export const DisabledButtons: Story = {
       </Wrapper>
     );
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled panel actions that keep layout without inviting interaction.",
+      },
+    },
+  },
 };
 
 export const IsLoadingButtons: Story = {
@@ -209,6 +216,13 @@ export const IsLoadingButtons: Story = {
       </Wrapper>
     );
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Loading state for long-running panel actions.",
+      },
+    },
+  },
 };
 
 export const ScaleButtons: Story = {
@@ -220,6 +234,13 @@ export const ScaleButtons: Story = {
         <PanelButton label="Scale Normal" size={30} scale theme={theme} />
       </Wrapper>
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Full-width layout variant for dense side-panel flows.",
+      },
+    },
   },
 };
 

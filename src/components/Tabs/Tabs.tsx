@@ -44,15 +44,21 @@ export const Tabs = ({
   );
   const isModern = resolvedTheme === "Modern Light" || resolvedTheme === "Modern Dark";
 
+  const focusTabByOffset = (currentIndex: number, offset: number) => {
+    const nextIndex = (currentIndex + offset + items.length) % items.length;
+    onChange?.(items[nextIndex].id);
+  };
+
   return (
     <div
       className="ui-tabs"
+      role="tablist"
       style={{
         display: "inline-flex",
         background: "transparent",
       }}
     >
-      {items.map((item) => {
+      {items.map((item, index) => {
         const isActive = item.id === activeId;
         const effectiveHoveredId =
           interactive && runtimeHoveredId
@@ -69,41 +75,67 @@ export const Tabs = ({
           <button
             key={item.id}
             type="button"
+            role="tab"
+            aria-selected={isActive}
+            tabIndex={isActive ? 0 : -1}
             onMouseEnter={() => interactive && setRuntimeHoveredId(item.id)}
             onMouseLeave={() => interactive && setRuntimeHoveredId(null)}
             onClick={() => onChange?.(item.id)}
-            style={{
-              appearance: "none",
-              WebkitAppearance: "none",
-              position: "relative",
-              height: 40,
-              padding: 0,
-              border: `1px solid ${tokens.border}`,
-              borderBottom:
-                isActive || showIndicator ? "none" : `1px solid ${tokens.border}`,
-              background: bg,
-              color: tokens.text,
-              display: "inline-flex",
-              flexDirection: "column",
-              alignItems: "stretch",
-              justifyContent: "flex-start",
-              cursor: "pointer",
+            onKeyDown={(event) => {
+              if (event.key === "ArrowRight") {
+                event.preventDefault();
+                focusTabByOffset(index, 1);
+              }
+
+              if (event.key === "ArrowLeft") {
+                event.preventDefault();
+                focusTabByOffset(index, -1);
+              }
+
+              if (event.key === "Home") {
+                event.preventDefault();
+                onChange?.(items[0].id);
+              }
+
+              if (event.key === "End") {
+                event.preventDefault();
+                onChange?.(items[items.length - 1].id);
+              }
             }}
-          >
-            <span
-              style={{
-                height: contentHeight,
+	            style={{
+	              appearance: "none",
+	              WebkitAppearance: "none",
+	              position: "relative",
+	              height: 40,
+	              padding: 0,
+	              border: `1px solid ${tokens.border}`,
+	              borderBottom:
+	                isActive || showIndicator ? "none" : `1px solid ${tokens.border}`,
+	              background: bg,
+	              color: tokens.text,
+	              boxSizing: "border-box",
+	              display: "inline-flex",
+	              flexDirection: "column",
+	              alignItems: "stretch",
+	              justifyContent: "flex-start",
+	              cursor: onChange ? "pointer" : "default",
+	            }}
+	          >
+	            <span
+	              style={{
+	                height: contentHeight,
                 padding: "0 12px",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: 4,
-                fontSize: tokens.typography.fontSize,
-                fontWeight: tokens.typography.fontWeight,
-                lineHeight: `${tokens.typography.lineHeight}px`,
-                letterSpacing: tokens.typography.letterSpacing,
-                color: tokens.text,
-                whiteSpace: "nowrap",
+	                gap: 4,
+	                fontSize: tokens.typography.fontSize,
+	                fontFamily: "Arial, Helvetica, sans-serif",
+	                fontWeight: tokens.typography.fontWeight,
+	                lineHeight: `${tokens.typography.lineHeight}px`,
+	                letterSpacing: tokens.typography.letterSpacing,
+	                color: tokens.text,
+	                whiteSpace: "nowrap",
               }}
             >
               {withIcon ? (

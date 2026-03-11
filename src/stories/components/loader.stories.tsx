@@ -7,7 +7,7 @@ type StoryArgs = LoaderProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Status Components/Loader",
+  title: "Components/Feedback/Loader",
   component: Loader,
   args: {
     size: "S",
@@ -16,9 +16,9 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    size: { control: "select", options: ["S", "M"], description: "Loader size" },
-    label: { control: "text", description: "Loader text" },
-    overlay: { control: { type: "boolean" }, description: "Use overlay variant" },
+    size: { control: "select", options: ["S", "M"], description: "Compact or regular loader size" },
+    label: { control: "text", description: "Visible loading message" },
+    overlay: { control: { type: "boolean" }, description: "Use the blocking overlay presentation" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -30,7 +30,7 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Loader component with S and M sizes, plus overlay mode.",
+        component: "Loader for inline busy states and blocking overlay states.",
       },
     },
   },
@@ -58,6 +58,13 @@ export const Medium: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Loader {...args} size="M" overlay={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Regular inline loader size.",
+      },
+    },
+  },
 };
 
 export const OverlayLoader: Story = {
@@ -65,6 +72,13 @@ export const OverlayLoader: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Loader size="M" overlay label="Loading..." theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Blocking overlay loader for modal or full-surface waiting states.",
+      },
+    },
   },
 };
 

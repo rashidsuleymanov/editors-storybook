@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { Checkbox, type CheckboxProps } from "../../components/Checkbox/Checkbox";
 import { checkboxSelections, checkboxStates } from "../../data/checkbox";
 import { normalizePluginTheme, pluginThemeOptions } from "../_shared/theme";
@@ -9,7 +10,7 @@ type StoryArgs = CheckboxProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Form Controls/Checkbox",
+  title: "Components/Form/Checkbox",
   component: Checkbox,
   args: {
     label: "Checkbox",
@@ -19,14 +20,14 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    label: { control: "text", description: "Checkbox label" },
-    selected: { control: "select", options: checkboxSelections, description: "Selection state" },
-    state: { control: "select", options: checkboxStates, description: "Visual state" },
+    label: { control: "text", description: "Visible checkbox label" },
+    selected: { control: "select", options: checkboxSelections, description: "Unchecked, checked, or indeterminate state" },
+    state: { control: "select", options: checkboxStates, description: "Rendered visual state" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable hover and click behavior",
+      description: "Allow hover and toggle behavior directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover state (demo)" },
+    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -57,12 +58,35 @@ export const Default: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InteractiveCheckbox key={String(args.selected ?? "no")} args={args} theme={theme} />;
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const checkbox = canvas.getByRole("checkbox", { name: "Checkbox" });
+
+    await expect(checkbox).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(checkbox);
+    await expect(checkbox).toHaveAttribute("aria-checked", "true");
+  },
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Checkbox control for independent on/off selections, including checked, indeterminate, and disabled states.",
+      },
+    },
+  },
 };
 
 export const Checked: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Checkbox label="Selected" selected="yes" state="default" interactive theme={theme} />;
+    return <InteractiveCheckbox key="checked-checkbox" args={{ ...args, label: "Selected", selected: "yes", state: "default", interactive: true }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive checked-state demo for an active standalone selection.",
+      },
+    },
   },
 };
 
@@ -71,12 +95,26 @@ export const Disabled: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Checkbox label="Disabled" selected="no" state="disabled" interactive={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled checkbox that preserves layout without allowing selection changes.",
+      },
+    },
+  },
 };
 
 export const Indeterminate: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Checkbox label="Indeterminate" selected="partial" state="default" interactive theme={theme} />;
+    return <InteractiveCheckbox key="indeterminate-checkbox" args={{ ...args, label: "Indeterminate", selected: "partial", state: "default", interactive: true }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive indeterminate-state demo for partial selection in grouped lists.",
+      },
+    },
   },
 };
 

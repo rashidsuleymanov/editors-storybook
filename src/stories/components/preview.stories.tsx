@@ -8,7 +8,7 @@ type StoryArgs = PreviewControlProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Preview",
+  title: "Components/Actions/Preview Controls",
   component: PreviewControl,
   args: {
     direction: "back",
@@ -19,14 +19,14 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    direction: { control: "select", options: ["back", "next"], description: "Arrow direction (single-button stories)" },
+    direction: { control: "select", options: ["back", "next"], description: "Arrow direction for single-button previews" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable hover/pressed interaction",
+      description: "Allow hover and click feedback directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover state" },
-    isClicked: { control: { type: "boolean" }, description: "Force pressed state" },
-    isDisabled: { control: { type: "boolean" }, description: "Disable control" },
+    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
+    isClicked: { control: { type: "boolean" }, description: "Force pressed appearance for review" },
+    isDisabled: { control: { type: "boolean" }, description: "Show the disabled state" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -38,7 +38,7 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Preview navigation controls (Back/Next).",
+        component: "Pair of compact navigation controls used in preview galleries and step-through viewers.",
       },
     },
   },
@@ -56,11 +56,7 @@ const ControlsRow = ({ children }: { children: ReactNode }) => (
   <div style={{ display: "inline-flex", alignItems: "center", gap: 40 }}>{children}</div>
 );
 
-const notifyPreviewClick = () => {
-  if (typeof window !== "undefined" && typeof window.alert === "function") {
-    window.alert("Preview control clicked");
-  }
-};
+const noop = () => {};
 
 export const Default: Story = {
   render: (args, context) => {
@@ -74,7 +70,7 @@ export const Default: Story = {
           isHovered={args.isHovered}
           isClicked={args.isClicked}
           isDisabled={args.isDisabled}
-          onClick={notifyPreviewClick}
+          onClick={noop}
         />
         <PreviewControl
           direction="next"
@@ -83,7 +79,7 @@ export const Default: Story = {
           isHovered={args.isHovered}
           isClicked={args.isClicked}
           isDisabled={args.isDisabled}
-          onClick={notifyPreviewClick}
+          onClick={noop}
         />
       </ControlsRow>
     );
@@ -101,9 +97,16 @@ export const Back: Story = {
         isHovered={args.isHovered}
         isClicked={args.isClicked}
         isDisabled={args.isDisabled}
-        onClick={notifyPreviewClick}
+        onClick={noop}
       />
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Single back control.",
+      },
+    },
   },
 };
 
@@ -118,9 +121,16 @@ export const Next: Story = {
         isHovered={args.isHovered}
         isClicked={args.isClicked}
         isDisabled={args.isDisabled}
-        onClick={notifyPreviewClick}
+        onClick={noop}
       />
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Single next control.",
+      },
+    },
   },
 };
 
@@ -133,6 +143,13 @@ export const Disabled: Story = {
         <PreviewControl direction="next" theme={theme} interactive={false} isDisabled />
       </ControlsRow>
     );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled pair used when navigation is unavailable.",
+      },
+    },
   },
 };
 

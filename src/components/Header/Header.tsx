@@ -91,6 +91,8 @@ export const Header = ({
   const isWindow = variant === "window";
   const divider = isPanel ? tokens.panelDivider : tokens.windowDivider;
   const titleWeight = isWindow ? (tokens.windowWeight ?? 700) : 700;
+  const canCollapse = typeof onCollapse === "function";
+  const canClose = typeof onClose === "function";
 
   return (
     <div
@@ -112,6 +114,7 @@ export const Header = ({
           justifyContent: isPanel ? "space-between" : "center",
           gap: 8,
           position: "relative",
+          boxSizing: "border-box",
         }}
       >
         {isWindow ? <span style={{ width: 20, height: 20, flexShrink: 0 }} aria-hidden /> : null}
@@ -119,11 +122,16 @@ export const Header = ({
           style={{
             color: tokens.text,
             fontSize: 12,
+            fontFamily: "Arial, Helvetica, sans-serif",
             fontWeight: titleWeight,
             lineHeight: "16px",
             letterSpacing: 0.24,
             textAlign: isWindow ? "center" : "left",
             flex: 1,
+            minWidth: 0,
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            whiteSpace: "nowrap",
           }}
         >
           {title}
@@ -133,6 +141,8 @@ export const Header = ({
             <button
               type="button"
               aria-label="Collapse panel"
+              aria-disabled={!canCollapse}
+              disabled={!canCollapse}
               onClick={onCollapse}
               style={{
                 width: 24,
@@ -140,10 +150,12 @@ export const Header = ({
                 border: "none",
                 background: "transparent",
                 padding: 0,
-                cursor: "pointer",
+                cursor: canCollapse ? "pointer" : "default",
                 display: "inline-flex",
                 alignItems: "center",
                 justifyContent: "center",
+                opacity: canCollapse ? 1 : 0.5,
+                flexShrink: 0,
               }}
             >
               <PanelCollapseIcon color={tokens.text} />
@@ -152,6 +164,8 @@ export const Header = ({
           <button
             type="button"
             aria-label="Close"
+            aria-disabled={!canClose}
+            disabled={!canClose}
             onClick={onClose}
             style={{
               width: isModern && isPanel ? 24 : 20,
@@ -159,11 +173,12 @@ export const Header = ({
               border: "none",
               background: "transparent",
               padding: 0,
-              cursor: "pointer",
+              cursor: canClose ? "pointer" : "default",
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
               flexShrink: 0,
+              opacity: canClose ? 1 : 0.5,
             }}
           >
             {isModern && isPanel ? (

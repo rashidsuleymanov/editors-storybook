@@ -97,6 +97,7 @@ export const Slider = ({
           min={min}
           max={max}
           value={safeValue}
+          aria-label="Slider"
           disabled={disabled}
           onChange={(event) => onChange?.(Number(event.target.value))}
           style={{
@@ -118,7 +119,7 @@ export const Slider = ({
             textAlign: "right",
             color: tokens.label.color,
             fontSize: tokens.label.fontSize,
-            fontFamily: "Arial",
+            fontFamily: "Arial, Helvetica, sans-serif",
             fontWeight: 400,
             lineHeight: `${tokens.label.lineHeight}px`,
             letterSpacing: tokens.label.letterSpacing,

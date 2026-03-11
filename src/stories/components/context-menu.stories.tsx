@@ -7,7 +7,7 @@ type StoryArgs = ContextMenuProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/ContextMenu",
+  title: "Components/Actions/Context Menu",
   component: ContextMenu,
   args: {
     themeMode: "Auto",
@@ -25,7 +25,8 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Context menu with item variants: no icon, left icon, and dual icon.",
+        component:
+          "Context menu for compact action lists. Includes plain items, left-icon items, submenu-style dual-icon items, and disabled rows.",
       },
     },
   },

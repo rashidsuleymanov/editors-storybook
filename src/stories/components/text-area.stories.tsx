@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { TextArea, type TextAreaProps } from "../../components/TextArea/TextArea";
 import { normalizePluginTheme, pluginThemeOptions } from "../_shared/theme";
 
@@ -8,7 +9,7 @@ type StoryArgs = TextAreaProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Form Controls/TextArea",
+  title: "Components/Form/Text Area",
   component: TextArea,
   args: {
     label: "Title",
@@ -24,26 +25,26 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    label: { control: "text", description: "Top label" },
-    caption: { control: "text", description: "Bottom caption text" },
-    value: { control: "text", description: "Text content" },
+    label: { control: "text", description: "Label above the text area" },
+    caption: { control: "text", description: "Supporting text below the field" },
+    value: { control: "text", description: "Current controlled text value" },
     state: {
       control: "select",
       options: ["default", "hover", "disabled", "scroll", "no-scroll"],
-      description: "Visual state",
+      description: "Rendered visual state",
     },
-    width: { control: "number", description: "Outer width" },
-    height: { control: "number", description: "Text area height" },
-    showLabel: { control: { type: "boolean" }, description: "Show title row" },
-    showCaption: { control: { type: "boolean" }, description: "Show caption under the field" },
-    showCopyButton: { control: { type: "boolean" }, description: "Show copy icon button" },
+    width: { control: "number", description: "Outer component width" },
+    height: { control: "number", description: "Visible text area height" },
+    showLabel: { control: { type: "boolean" }, description: "Show the label row" },
+    showCaption: { control: { type: "boolean" }, description: "Show the caption below the field" },
+    showCopyButton: { control: { type: "boolean" }, description: "Show the copy action button" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover behavior",
+      description: "Allow hover behavior directly in the canvas",
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for visual review",
     },
     themeMode: {
       name: "theme",
@@ -59,7 +60,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Text area with fixed sizing, themed scrollbar, optional copy action, and caption.",
+          "Multi-line text field with optional copy action, caption, and themed scroll treatment for longer content.",
       },
     },
   },
@@ -84,12 +85,28 @@ export const Default: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InteractiveArea key={String(args.value ?? "")} args={args} theme={theme} />;
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("textbox");
+
+    await expect(input).toBeInTheDocument();
+    await userEvent.clear(input);
+    await userEvent.type(input, "Short note");
+    await expect(input).toHaveValue("Short note");
+  },
 };
 
 export const HoveredArea: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <TextArea {...args} state="hover" interactive={false} theme={theme} />;
+    return <InteractiveArea key="hovered-area" args={{ ...args, state: "default", interactive: true, isHovered: false }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo for the default text-area shell. Move the pointer over the control in the canvas.",
+      },
+    },
   },
 };
 
@@ -98,12 +115,26 @@ export const ScrollArea: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextArea {...args} state="scroll" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed scroll reference state for longer content.",
+      },
+    },
+  },
 };
 
 export const NoScrollArea: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextArea {...args} state="no-scroll" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed no-scroll reference state without visible scrollbar treatment.",
+      },
+    },
   },
 };
 
@@ -112,6 +143,13 @@ export const DisabledArea: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextArea {...args} state="disabled" interactive={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed disabled reference state that preserves layout without accepting input.",
+      },
+    },
+  },
 };
 
 export const NoCaption: Story = {
@@ -119,12 +157,26 @@ export const NoCaption: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextArea {...args} showCaption={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Variant without supporting caption text.",
+      },
+    },
+  },
 };
 
 export const NoCopyButton: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextArea {...args} showCopyButton={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Variant without the copy action button.",
+      },
+    },
   },
 };
 

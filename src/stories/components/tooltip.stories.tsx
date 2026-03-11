@@ -7,7 +7,7 @@ type StoryArgs = TooltipProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/UI Components/Tooltip",
+  title: "Components/Feedback/Tooltip",
   component: Tooltip,
   args: {
     text: "Texts",
@@ -26,7 +26,8 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Tooltip component with theme-aware styling.",
+        component:
+          "Compact tooltip for short helper text near controls and icon buttons. Use it for hints, not for long explanatory copy.",
       },
     },
   },

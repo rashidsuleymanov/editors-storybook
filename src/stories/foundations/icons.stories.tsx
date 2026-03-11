@@ -3,7 +3,7 @@ import { SvgIcon } from "../../components/shared/SvgIcon";
 import { iconSvgs } from "../../data/icon-svgs";
 
 const meta: Meta = {
-  title: "Pages/Icons",
+  title: "Foundations/Icons",
   parameters: {
     docs: {
       description: {

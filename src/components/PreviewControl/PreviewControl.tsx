@@ -77,6 +77,7 @@ export const PreviewControl = ({
     <button
       type="button"
       aria-label={direction === "back" ? "Back" : "Next"}
+      aria-disabled={isDisabled || !onClick}
       disabled={isDisabled}
       onClick={onClick}
       onMouseEnter={() => interactive && !isDisabled && setHovered(true)}
@@ -96,10 +97,11 @@ export const PreviewControl = ({
         background: resolvedTheme.bg,
         color: resolvedTheme.fg,
         boxShadow,
+        boxSizing: "border-box",
         display: "inline-flex",
         alignItems: "center",
         justifyContent: "center",
-        cursor: isDisabled ? "not-allowed" : "pointer",
+        cursor: isDisabled ? "not-allowed" : onClick ? "pointer" : "default",
         opacity: isDisabled ? 0.45 : 1,
         transform: resolvedPressed ? "translateY(0.5px)" : "none",
         transition: "box-shadow 120ms ease, transform 120ms ease, opacity 120ms ease",

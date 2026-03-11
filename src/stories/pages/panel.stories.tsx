@@ -9,7 +9,15 @@ import {
 } from "../../data/panel";
 
 const meta: Meta = {
-  title: "Pages/Panel",
+  title: "Foundations/Panel",
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Panel shell sizes and header/body proportions used by plugin side panels.",
+      },
+    },
+  },
 };
 
 export default meta;
@@ -155,12 +163,26 @@ export const BasicSize: Story = {
     const resolvedTheme = resolveStoryTheme(context);
     return <PanelByPreset preset="Basic" theme={resolvedTheme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Base narrow panel preset for compact plugin flows.",
+      },
+    },
+  },
 };
 
 export const WideSize: Story = {
   render: (_, context) => {
     const resolvedTheme = resolveStoryTheme(context);
     return <PanelByPreset preset="Wide" theme={resolvedTheme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Wide panel preset for layouts that need additional content width.",
+      },
+    },
   },
 };
 

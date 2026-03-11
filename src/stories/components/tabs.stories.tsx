@@ -19,22 +19,22 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    activeId: { control: "text", description: "Active tab id" },
+    activeId: { control: "text", description: "Currently selected tab id" },
     state: {
       control: "select",
       options: ["default", "hover"],
-      description: "Visual state",
+      description: "Rendered visual state used for reference-only tab styling",
     },
     hoveredId: {
       control: "text",
-      description: "When state=hover, which tab id should be rendered as hovered",
+      description: "Tab id used when the hover state is forced for reference",
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover behavior",
+      description: "Allow hover and selection changes in the canvas",
     },
-    withIcon: { control: { type: "boolean" }, description: "Show icon in tabs" },
-    items: { control: "object", description: "Tab items" },
+    withIcon: { control: { type: "boolean" }, description: "Show leading icons in the tab labels" },
+    items: { control: "object", description: "Tab definitions with ids and labels" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -47,7 +47,8 @@ const meta: Meta<StoryArgs> = {
   parameters: {
     docs: {
       description: {
-        component: "Tabs component with selected, hover, and icon variants.",
+        component:
+          "Horizontal tabs for compact mode switching inside panels and dialogs, with optional icons and live hover behavior.",
       },
     },
   },
@@ -78,19 +79,40 @@ export const IconTabs: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InteractiveTabs args={{ ...args, withIcon: true }} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Tabs with leading icons for richer navigation labels.",
+      },
+    },
+  },
 };
 
 export const HoveredTabs: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Tabs {...args} state="hover" hoveredId="table" interactive activeId="paragraph" theme={theme} />;
+    return <InteractiveTabs args={{ ...args, state: "default", activeId: "paragraph", interactive: true }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo where a non-selected tab can be highlighted. Move the pointer over another tab in the canvas.",
+      },
+    },
   },
 };
 
 export const HoveredSelected: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Tabs {...args} state="hover" interactive activeId="paragraph" hoveredId="paragraph" theme={theme} />;
+    return <InteractiveTabs args={{ ...args, state: "default", activeId: "paragraph", interactive: true }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo when the selected tab is also under the pointer. Move the pointer over the active tab in the canvas.",
+      },
+    },
   },
 };
 

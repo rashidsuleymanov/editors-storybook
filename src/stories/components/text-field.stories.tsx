@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { TextField, type TextFieldProps } from "../../components/TextField/TextField";
 import { normalizePluginTheme, pluginThemeOptions } from "../_shared/theme";
 
@@ -8,7 +9,7 @@ type StoryArgs = TextFieldProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Form Controls/TextField",
+  title: "Components/Form/Text Field",
   component: TextField,
   args: {
     label: "Title",
@@ -24,27 +25,27 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    label: { control: "text", description: "Field title" },
-    caption: { control: "text", description: "Caption text" },
-    errorText: { control: "text", description: "Error message" },
-    placeholder: { control: "text", description: "Placeholder" },
-    value: { control: "text", description: "Input value" },
+    label: { control: "text", description: "Label above the field" },
+    caption: { control: "text", description: "Supporting text below the field" },
+    errorText: { control: "text", description: "Validation message for the error state" },
+    placeholder: { control: "text", description: "Placeholder text shown inside the field" },
+    value: { control: "text", description: "Current controlled input value" },
     state: {
       control: "select",
       options: ["default", "hover", "focused", "typing", "filled", "error", "disabled"],
-      description: "Visual state",
+      description: "Rendered visual state of the field",
     },
     placeholderState: {
       control: "select",
       options: ["default", "hidden"],
-      description: "Placeholder view",
+      description: "Show the placeholder normally or hide it for a denser layout",
     },
-    withIconRight: { control: { type: "boolean" }, description: "Show right icon" },
+    withIconRight: { control: { type: "boolean" }, description: "Show the trailing icon button" },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/focus interactions",
+      description: "Allow hover/focus behavior directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover state (demo)" },
+    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -58,7 +59,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Text field with label, caption, hover/focus/error states, icon-right, and hidden mode.",
+          "Single-line input with label, caption, error messaging, optional trailing icon, and theme-aware control states.",
       },
     },
   },
@@ -83,12 +84,28 @@ export const Default: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InteractiveField key={String(args.value ?? "")} args={args} theme={theme} />;
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole("textbox");
+
+    await expect(input).toHaveValue("");
+    await userEvent.click(input);
+    await userEvent.type(input, "Plugin");
+    await expect(input).toHaveValue("Plugin");
+  },
 };
 
 export const HoveredField: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <TextField label="Hovered field" state="default" interactive theme={theme} />;
+    return <InteractiveField key="hovered-field" args={{ ...args, label: "Hovered field", state: "default", interactive: true, isHovered: false }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo for the default single-line field. Move the pointer over the control in the canvas.",
+      },
+    },
   },
 };
 
@@ -97,12 +114,26 @@ export const FocusedField: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextField label="Focused field" state="focused" interactive={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed focused reference state used when the field is ready for typing.",
+      },
+    },
+  },
 };
 
 export const ErrorField: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextField label="Field with error" state="error" interactive={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed error reference state with validation messaging and error border.",
+      },
+    },
   },
 };
 
@@ -111,6 +142,13 @@ export const DisabledField: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextField label="Disabled field" state="disabled" interactive={false} theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed disabled reference state that preserves layout but removes interaction.",
+      },
+    },
+  },
 };
 
 export const IconRightField: Story = {
@@ -118,12 +156,26 @@ export const IconRightField: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <TextField label="Icon right field" withIconRight theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Field with a trailing icon action.",
+      },
+    },
+  },
 };
 
 export const HiddenPlaceholderField: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <InteractiveField key={`${args.value ?? ""}-hidden`} args={{ ...args, label: "Hidden placeholder", placeholderState: "hidden" }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Variant with hidden placeholder treatment for denser layouts.",
+      },
+    },
   },
 };
 

@@ -11,7 +11,7 @@ type StoryArgs = PluginIconButtonProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Interactive Elements/Buttons/IconButtons",
+  title: "Components/Buttons/Icon Buttons",
   component: PluginIconButton,
   args: {
     type: "outline",
@@ -23,25 +23,25 @@ const meta: Meta<StoryArgs> = {
     type: {
       control: "select",
       options: ["outline", "solid", "rightExpander"],
-      description: "Icon button type",
+      description: "Visual style and icon-button role",
       table: {
         defaultValue: { summary: "outline" },
       },
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover/pressed interactions",
+      description: "Allow hover and click feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for visual review",
     },
     isClicked: {
       control: { type: "boolean" },
-      description: "Force pressed state (demo)",
+      description: "Force pressed appearance for visual review",
     },
     themeMode: {
       name: "theme",
@@ -63,7 +63,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Icon buttons with Outline, Solid, and Right Expander variants.",
+          "Compact icon-only actions for panel chrome and small utility controls. Includes outline, solid, and right-expander variants.",
       },
     },
   },
@@ -112,12 +112,26 @@ export const OutlineButtons: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <PluginIconButton type="outline" state="default" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Outline icon action for low-emphasis utility controls.",
+      },
+    },
+  },
 };
 
 export const SolidButtons: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <PluginIconButton type="solid" state="default" theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Solid icon action with stronger emphasis.",
+      },
+    },
   },
 };
 
@@ -126,17 +140,24 @@ export const RightExpanderButtons: Story = {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <PluginIconButton type="rightExpander" state="default" theme={theme} />;
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Chevron-style expander used for disclosure and nested sections.",
+      },
+    },
+  },
 };
 
 export const HoveredButtons: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <PluginIconButton type="rightExpander" interactive theme={theme} />;
+    return <PluginIconButton type="rightExpander" theme={theme} />;
   },
   parameters: {
     docs: {
       description: {
-        story: "Hover preview: move cursor over the button.",
+        story: "Interactive hover demo for the icon-only control. Move the pointer over the button in the canvas.",
       },
     },
   },
@@ -150,7 +171,7 @@ export const ClickedButtons: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Runtime pressed state demo: click button to show Clicked state.",
+        story: "Pressed-state demo for the right-expander variant.",
       },
     },
   },

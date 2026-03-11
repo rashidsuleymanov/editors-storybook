@@ -6,7 +6,7 @@ import {
 } from "../../data/typography";
 
 const meta: Meta = {
-  title: "Pages/Typography",
+  title: "Foundations/Typography",
   parameters: {
     docs: {
       description: {

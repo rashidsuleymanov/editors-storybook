@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { expect, userEvent, within } from "storybook/test";
 import { Radio, type RadioProps } from "../../components/Radio/Radio";
 import { normalizePluginTheme, pluginThemeOptions } from "../_shared/theme";
 
@@ -8,7 +9,7 @@ type StoryArgs = RadioProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Form Controls/Radio",
+  title: "Components/Form/Radio",
   component: Radio,
   args: {
     label: "Default radio button",
@@ -20,28 +21,28 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     label: {
       control: "text",
-      description: "Radio label",
+      description: "Visible radio label",
     },
     selected: {
       control: "select",
       options: ["no", "yes"],
-      description: "Selection state",
+      description: "Unchecked or selected state",
     },
     state: {
       control: "select",
       options: ["default", "hover", "disabled"],
-      description: "Visual state",
+      description: "Rendered visual state",
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable hover and click behavior",
+      description: "Allow hover and selection behavior directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
       control: { type: "boolean" },
-      description: "Force hover state (demo)",
+      description: "Force hover appearance for review",
     },
     themeMode: {
       name: "theme",
@@ -63,7 +64,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component:
-          "Radio control with clear state-based stories.",
+          "Radio control for mutually exclusive choices. Use it inside groups where one option should stay selected.",
       },
     },
   },
@@ -107,6 +108,14 @@ export const Default: Story = {
     state: "default",
     interactive: true,
   },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const radio = canvas.getByRole("radio", { name: "Default radio button" });
+
+    await expect(radio).toHaveAttribute("aria-checked", "false");
+    await userEvent.click(radio);
+    await expect(radio).toHaveAttribute("aria-checked", "true");
+  },
 };
 
 export const Checked: Story = {
@@ -122,6 +131,13 @@ export const Checked: Story = {
     selected: "yes",
     state: "default",
     interactive: true,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Selected radio option inside a choice group.",
+      },
+    },
   },
 };
 
@@ -140,6 +156,13 @@ export const Hovered: Story = {
     interactive: true,
     isHovered: false,
   },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo for an unselected radio option. Move the pointer over the control in the canvas.",
+      },
+    },
+  },
 };
 
 export const Disabled: Story = {
@@ -155,6 +178,13 @@ export const Disabled: Story = {
     selected: "no",
     state: "disabled",
     interactive: false,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Disabled radio option that remains visible but unavailable.",
+      },
+    },
   },
 };
 

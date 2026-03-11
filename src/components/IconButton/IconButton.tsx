@@ -77,7 +77,8 @@ export const PluginIconButton = ({
     ...(token.container ?? {}),
     boxSizing: "border-box",
     border: "none",
-    cursor: "pointer",
+    background: (token.container?.background as CSSProperties["background"]) ?? "transparent",
+    cursor: onClick ? "pointer" : "default",
   };
 
   const iconColor = token.iconColor ?? "rgba(0, 0, 0, 0.8)";
@@ -108,6 +109,7 @@ export const PluginIconButton = ({
       onMouseUp={() => interactive && setPressed(false)}
       onClick={onClick}
       aria-label="Icon button"
+      aria-disabled={!onClick}
     >
       {type === "rightExpander" ? (
         <SvgIcon

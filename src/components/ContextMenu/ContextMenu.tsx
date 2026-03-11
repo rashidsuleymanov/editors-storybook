@@ -36,6 +36,7 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
         borderRadius: 2,
         padding: "4px 0",
         display: "inline-grid",
+        boxSizing: "border-box",
       }}
     >
       {items.map((item) => {
@@ -47,9 +48,10 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
             key={item.id}
             type="button"
             disabled={item.disabled}
-            onMouseEnter={() => setHovered(item.id)}
+            onMouseEnter={() => !item.disabled && setHovered(item.id)}
             onMouseLeave={() => setHovered(null)}
             style={{
+              width: "100%",
               minHeight: 26,
               border: "none",
               borderRadius: 0,
@@ -59,6 +61,8 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
               display: "flex",
               alignItems: "center",
               gap: 4,
+              boxSizing: "border-box",
+              fontFamily: "Arial, Helvetica, sans-serif",
               fontSize: 11,
               lineHeight: "16px",
               letterSpacing: 0.22,
@@ -71,7 +75,7 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
                 <SvgIcon name="highlight" size={14} color={iconColor} monochrome />
               </span>
             ) : null}
-            <span style={{ flex: 1 }}>{item.label}</span>
+            <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>
             {item.type === "iconsBoth" ? (
               <span style={{ width: 20, display: "inline-flex", justifyContent: "center" }}>
                 <SvgIcon

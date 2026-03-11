@@ -53,7 +53,7 @@ export const Checkbox = ({
     flexDirection: "column",
     color: token.textColor,
     fontSize: 11,
-    fontFamily: "Arial",
+    fontFamily: "Arial, Helvetica, sans-serif",
     fontWeight: 400,
     lineHeight: "16px",
     letterSpacing: 0.22,
@@ -66,10 +66,12 @@ export const Checkbox = ({
       type="button"
       role="checkbox"
       aria-checked={selected === "partial" ? "mixed" : selected === "yes"}
+      aria-disabled={isDisabled}
       className={`ui-checkbox ${isDisabled ? "ui-checkbox--disabled" : ""}`}
       style={containerStyle}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      disabled={isDisabled}
+      onMouseEnter={() => interactive && !isDisabled && setHovered(true)}
+      onMouseLeave={() => interactive && setHovered(false)}
       onClick={() => {
         if (isDisabled) return;
         onChange?.(nextSelection(selected));

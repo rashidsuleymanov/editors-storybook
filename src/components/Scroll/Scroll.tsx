@@ -87,6 +87,7 @@ export const Scroll = ({
   const [runtimePressed, setRuntimePressed] = useState(false);
   const [dragging, setDragging] = useState(false);
   const [internalValue, setInternalValue] = useState(defaultValue);
+  const pressResetTimerRef = useRef<number | null>(null);
 
   const dragDataRef = useRef<{ pointerStart: number; valueStart: number } | null>(null);
   const isHorizontal = orientation === "horizontal";
@@ -125,6 +126,22 @@ export const Scroll = ({
     const clamped = clamp(next, 0, maxValue);
     if (!controlled) setInternalValue(clamped);
     onValueChange?.(clamped);
+  };
+
+  useEffect(
+    () => () => {
+      if (pressResetTimerRef.current) window.clearTimeout(pressResetTimerRef.current);
+    },
+    [],
+  );
+
+  const flashPressed = () => {
+    if (pressResetTimerRef.current) window.clearTimeout(pressResetTimerRef.current);
+    setRuntimePressed(true);
+    pressResetTimerRef.current = window.setTimeout(() => {
+      setRuntimePressed(false);
+      pressResetTimerRef.current = null;
+    }, 120);
   };
 
   useEffect(() => {
@@ -174,15 +191,13 @@ export const Scroll = ({
     const targetThumbStart = clamp(offset - thumbLength / 2, 0, travel);
     const ratio = targetThumbStart / travel;
     setValue(ratio * maxValue);
-    setRuntimePressed(true);
-    window.setTimeout(() => setRuntimePressed(false), 120);
+    flashPressed();
   };
 
   const moveByStep = (direction: -1 | 1) => {
     if (!interactive) return;
     setValue(currentValue + direction * step);
-    setRuntimePressed(true);
-    window.setTimeout(() => setRuntimePressed(false), 120);
+    flashPressed();
   };
 
   const rootStyle: CSSProperties = {
@@ -220,19 +235,19 @@ export const Scroll = ({
     cursor: interactive ? (isHorizontal ? "ew-resize" : "ns-resize") : "default",
   };
 
-  const buttonStyle: CSSProperties = {
-    width: metrics.button,
-    height: metrics.button,
-    border: `1px solid ${buttonTokens.border}`,
-    borderRadius: 1,
-    background: buttonTokens.bg,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    boxSizing: "border-box",
-    cursor: interactive ? "pointer" : "default",
-    padding: 0,
-  };
+	  const buttonStyle: CSSProperties = {
+	    width: metrics.button,
+	    height: metrics.button,
+	    border: `1px solid ${buttonTokens.border}`,
+	    borderRadius: 1,
+	    background: buttonTokens.bg,
+	    display: "inline-flex",
+	    alignItems: "center",
+	    justifyContent: "center",
+	    boxSizing: "border-box",
+	    cursor: interactive && maxValue > 0 ? "pointer" : "default",
+	    padding: 0,
+	  };
 
   return (
     <div
@@ -241,6 +256,7 @@ export const Scroll = ({
       aria-valuemin={0}
       aria-valuemax={maxValue}
       aria-valuenow={Math.round(currentValue)}
+      aria-disabled={!interactive}
       tabIndex={interactive ? 0 : -1}
       style={rootStyle}
       onMouseEnter={() => interactive && setRuntimeHovered(true)}
@@ -271,10 +287,12 @@ export const Scroll = ({
       }}
     >
       {showButtons ? (
-        <button
-          type="button"
-          style={buttonStyle}
-          onClick={() => moveByStep(-1)}
+	        <button
+	          type="button"
+	          aria-label={isHorizontal ? "Scroll left" : "Scroll up"}
+	          style={buttonStyle}
+	          disabled={!interactive || maxValue === 0}
+	          onClick={() => moveByStep(-1)}
           onMouseDown={() => interactive && setRuntimePressed(true)}
           onMouseUp={() => interactive && setRuntimePressed(false)}
         >
@@ -295,10 +313,12 @@ export const Scroll = ({
       </div>
 
       {showButtons ? (
-        <button
-          type="button"
-          style={buttonStyle}
-          onClick={() => moveByStep(1)}
+	        <button
+	          type="button"
+	          aria-label={isHorizontal ? "Scroll right" : "Scroll down"}
+	          style={buttonStyle}
+	          disabled={!interactive || maxValue === 0}
+	          onClick={() => moveByStep(1)}
           onMouseDown={() => interactive && setRuntimePressed(true)}
           onMouseUp={() => interactive && setRuntimePressed(false)}
         >

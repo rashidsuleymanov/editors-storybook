@@ -8,7 +8,7 @@ type StoryArgs = SwitchProps & {
 };
 
 const meta: Meta<StoryArgs> = {
-  title: "Components/Form Controls/Switches",
+  title: "Components/Form/Switches",
   component: Switch,
   args: {
     checked: false,
@@ -17,15 +17,15 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    checked: { control: { type: "boolean" }, description: "On/off value" },
+    checked: { control: { type: "boolean" }, description: "Current on/off value" },
     state: {
       control: "select",
       options: ["default", "hover", "disabled"],
-      description: "Visual state",
+      description: "Rendered visual state",
     },
     interactive: {
       control: { type: "boolean" },
-      description: "Enable runtime hover interaction",
+      description: "Allow hover and toggle behavior directly in the canvas",
     },
     themeMode: {
       name: "theme",
@@ -40,6 +40,7 @@ const meta: Meta<StoryArgs> = {
     docs: {
       description: {
         component: "Switch control with on/off values and state variants.",
+        
       },
     },
   },
@@ -65,10 +66,17 @@ export const Default: Story = {
   },
 };
 
-export const HoveredSwitches: Story = {
+export const HoveredSwitch: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Switch checked={Boolean(args.checked)} state="hover" interactive={false} theme={theme} />;
+    return <InteractiveSwitch args={{ ...args, state: "default", interactive: true }} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Interactive hover demo for the switch. Move the pointer over the control in the canvas.",
+      },
+    },
   },
 };
 
@@ -76,6 +84,13 @@ export const DisabledSwitches: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <Switch checked={Boolean(args.checked)} state="disabled" interactive={false} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Fixed disabled reference state for the switch.",
+      },
+    },
   },
 };
 

@@ -30,6 +30,7 @@ export const Loader = ({
         gap: size === "M" ? 12 : 8,
         padding: overlay ? "24px 32px" : 0,
         borderRadius: overlay ? 8 : 0,
+        boxSizing: "border-box",
         background: overlay
           ? tokens.theme === "Light"
             ? "rgba(68, 68, 68, 0.95)"
@@ -59,6 +60,7 @@ export const Loader = ({
       <span
         style={{
           color: fg,
+          fontFamily: "Arial, Helvetica, sans-serif",
           fontSize,
           lineHeight: `${lineHeight}px`,
           letterSpacing: size === "M" ? 0.3 : tokens.theme.includes("Modern") ? 0.24 : 0.22,

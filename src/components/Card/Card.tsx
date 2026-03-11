@@ -24,7 +24,8 @@ export type CardProps = {
 };
 
 const DEFAULT_TAGS = ["His", "Her", "Label", "Label", "Label", "Label"];
-const DEFAULT_TITLE = "His English teacher says that he is a good pupil great student...";
+const DEFAULT_TITLE =
+  "His English teacher says that he is a good pupil and a great student who always participates in class discussions and finishes his work carefully";
 
 const ICON_BY_TYPE: Record<CardType, "common / chevron" | "common / chevron (2)"> = {
   close: "common / chevron",
@@ -35,7 +36,7 @@ const ICON_BY_TYPE: Record<CardType, "common / chevron" | "common / chevron (2)"
 const titleTextStyle: CSSProperties = {
   flex: "1 1 0",
   fontSize: 11,
-  fontFamily: "Arial",
+  fontFamily: "Arial, Helvetica, sans-serif",
   fontWeight: 400,
   lineHeight: "12px",
   letterSpacing: 0.22,
@@ -43,6 +44,19 @@ const titleTextStyle: CSSProperties = {
   display: "-webkit-box",
   WebkitLineClamp: 2,
   WebkitBoxOrient: "vertical",
+};
+
+const expandedTitleTextStyle: CSSProperties = {
+  flex: "1 1 auto",
+  fontSize: 11,
+  fontFamily: "Arial, Helvetica, sans-serif",
+  fontWeight: 400,
+  lineHeight: "12px",
+  letterSpacing: 0.22,
+  display: "block",
+  whiteSpace: "normal",
+  overflow: "visible",
+  overflowWrap: "anywhere",
 };
 
 const rowStyle: CSSProperties = {
@@ -55,7 +69,7 @@ const rowStyle: CSSProperties = {
 const buttonLabelStyle: CSSProperties = {
   textAlign: "center",
   fontSize: 11,
-  fontFamily: "Arial",
+  fontFamily: "Arial, Helvetica, sans-serif",
   fontWeight: 700,
   lineHeight: "16px",
   letterSpacing: 0.22,
@@ -81,6 +95,7 @@ export const Card = ({
   const resolvedTheme = resolveCardTheme(theme);
   const tokens = cardsByTheme[resolvedTheme];
   const canToggle = typeof onToggle === "function";
+  const canAction = typeof onAction === "function";
 
   const resolvedState: CardState = interactive && isHovered ? "hover" : state;
 
@@ -98,6 +113,7 @@ export const Card = ({
     resolvedState === "hover"
       ? tokens.actionPrimaryHoverBackground
       : tokens.actionPrimaryBackground;
+  const isExpanded = type !== "close";
 
   const containerStyle: CSSProperties = {
     width: stretch ? "100%" : minWidth,
@@ -112,7 +128,7 @@ export const Card = ({
     alignItems: type === "close" ? "center" : "flex-start",
     justifyContent: "center",
     gap: type === "close" ? 4 : 10,
-    cursor: interactive ? "pointer" : "default",
+    cursor: "default",
     transition: "background-color 120ms ease",
   };
 
@@ -125,7 +141,7 @@ export const Card = ({
     background: tokens.chipBackground,
     color: tokens.chipTextColor,
     fontSize: 11,
-    fontFamily: "Arial",
+    fontFamily: "Arial, Helvetica, sans-serif",
     fontWeight: 400,
     lineHeight: "16px",
     letterSpacing: 0.22,
@@ -146,7 +162,7 @@ export const Card = ({
     alignItems: "center",
     justifyContent: "center",
     transition: "background-color 120ms ease",
-    cursor: "pointer",
+    cursor: canAction ? "pointer" : "default",
   };
 
   const actionSecondaryStyle: CSSProperties = {
@@ -161,7 +177,7 @@ export const Card = ({
     alignItems: "center",
     justifyContent: "center",
     transition: "background-color 120ms ease",
-    cursor: "pointer",
+    cursor: canAction ? "pointer" : "default",
   };
 
   const handleRowKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -176,18 +192,22 @@ export const Card = ({
     <div
       className="ui-card"
       style={containerStyle}
-      onMouseEnter={() => setIsHovered(true)}
+      onMouseEnter={() => interactive && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div
-        style={{ ...rowStyle, cursor: canToggle ? "pointer" : "default" }}
+        style={{
+          ...rowStyle,
+          alignItems: isExpanded ? "flex-start" : "center",
+          cursor: canToggle ? "pointer" : "default",
+        }}
         onClick={onToggle}
         onKeyDown={handleRowKeyDown}
         role={canToggle ? "button" : undefined}
         tabIndex={canToggle ? 0 : undefined}
         aria-expanded={canToggle ? type !== "close" : undefined}
       >
-        <div style={{ ...titleTextStyle, color: tokens.textColor }}>{title}</div>
+        <div style={{ ...(isExpanded ? expandedTitleTextStyle : titleTextStyle), color: tokens.textColor }}>{title}</div>
         <SvgIcon name={ICON_BY_TYPE[type]} size={20} color={tokens.iconColor} monochrome />
       </div>
 
@@ -209,7 +229,7 @@ export const Card = ({
             ))}
           </div>
           <div style={{ width: "100%" }}>
-            <button type="button" style={actionPrimaryStyle} onClick={onAction}>
+            <button type="button" style={actionPrimaryStyle} onClick={onAction} disabled={!canAction}>
               <span style={{ ...buttonLabelStyle, color: tokens.actionPrimaryTextColor }}>{actionLabel}</span>
             </button>
           </div>
@@ -223,7 +243,7 @@ export const Card = ({
               width: "100%",
               color: tokens.subTextColor,
               fontSize: 11,
-              fontFamily: "Arial",
+              fontFamily: "Arial, Helvetica, sans-serif",
               fontWeight: 400,
               lineHeight: "12px",
               letterSpacing: 0.22,
@@ -236,7 +256,7 @@ export const Card = ({
             {helperText}
           </div>
           <div style={{ width: "100%" }}>
-            <button type="button" style={actionSecondaryStyle} onClick={onAction}>
+            <button type="button" style={actionSecondaryStyle} onClick={onAction} disabled={!canAction}>
               <span style={{ ...buttonLabelStyle, color: tokens.actionSecondaryTextColor }}>{actionLabel}</span>
             </button>
           </div>
