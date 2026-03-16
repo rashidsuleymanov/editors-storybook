@@ -4,13 +4,12 @@
 }
 
 .ui-textarea__input::-webkit-scrollbar-track {
-  background: var(--ui-textarea-scroll-track);
-  border: 1px solid var(--ui-textarea-scroll-border);
-  border-radius: 1px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
 }
 
 .ui-textarea__input::-webkit-scrollbar-thumb {
   background: var(--ui-textarea-scroll-thumb);
   border-radius: 1px;
 }
-

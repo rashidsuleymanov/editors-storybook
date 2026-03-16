@@ -72,7 +72,7 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
           >
             {item.type !== "noIcon" ? (
               <span style={{ width: 20, display: "inline-flex", justifyContent: "center" }}>
-                <SvgIcon name="highlight" size={14} color={iconColor} monochrome />
+                <SvgIcon name="highlight" size={20} color={iconColor} monochrome />
               </span>
             ) : null}
             <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>

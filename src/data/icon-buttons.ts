@@ -859,7 +859,7 @@ const iconButtons = {
           'background': '#585858',
           'overflow': 'hidden',
           'borderRadius': 4,
-          'outline': '1px #686868 solid',
+          'outline': '1px #404040 solid',
           'outlineOffset': '-1px',
           'justifyContent': 'center',
           'alignItems': 'center',
@@ -877,7 +877,7 @@ const iconButtons = {
           'background': '#686868',
           'overflow': 'hidden',
           'borderRadius': 4,
-          'outline': '1px #4A87E7 solid',
+          'outline': '1px #404040 solid',
           'outlineOffset': '-1px',
           'justifyContent': 'center',
           'alignItems': 'center',
@@ -954,7 +954,7 @@ const iconButtons = {
           'gap': 4,
           'display': 'inline-flex'
         },
-        'iconColor': 'rgba(0, 0, 0, 0.8)',
+        'iconColor': '#EAEAEA',
         'direction': 'down'
       },
       'Hover': {
@@ -965,14 +965,14 @@ const iconButtons = {
           'background': '#585858',
           'overflow': 'hidden',
           'borderRadius': 4,
-          'outline': '1px #686868 solid',
+          'outline': '1px #404040 solid',
           'outlineOffset': '-1px',
           'justifyContent': 'center',
           'alignItems': 'center',
           'gap': 4,
           'display': 'inline-flex'
         },
-        'iconColor': 'rgba(0, 0, 0, 0.8)',
+        'iconColor': '#EAEAEA',
         'direction': 'down'
       },
       'Pressed': {
@@ -983,14 +983,14 @@ const iconButtons = {
           'background': '#686868',
           'overflow': 'hidden',
           'borderRadius': 4,
-          'outline': '1px #4A87E7 solid',
+          'outline': '1px #404040 solid',
           'outlineOffset': '-1px',
           'justifyContent': 'center',
           'alignItems': 'center',
           'gap': 4,
           'display': 'inline-flex'
         },
-        'iconColor': 'rgba(0, 0, 0, 0.8)',
+        'iconColor': '#EAEAEA',
         'direction': 'up'
       }
     }

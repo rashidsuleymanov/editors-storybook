@@ -71,15 +71,25 @@ const parseColorToRgb = (value: string): { r: number; g: number; b: number } | n
   return null;
 };
 
-const pickLoaderColor = (background: string | undefined, fallbackTheme: string): string => {
+const pickLoaderColor = (
+  background: string | undefined,
+  fallbackTheme: string,
+  variant: DialogButtonVariant
+): string => {
+  if (variant === "primary") {
+    if (fallbackTheme === "Classic Light") return "#FFFFFF";
+    if (fallbackTheme === "Dark") return "rgba(255, 255, 255, 0.8)";
+  }
+
   if (background) {
     const rgb = parseColorToRgb(background);
     if (rgb) {
       const luminance = (0.2126 * rgb.r + 0.7152 * rgb.g + 0.0722 * rgb.b) / 255;
-      return luminance < 0.62 ? "rgba(255, 255, 255, 0.9)" : "#0F0F0F";
+      return luminance < 0.62 ? "#FFFFFF" : "#0F0F0F";
     }
   }
-  return fallbackTheme.includes("Dark") ? "rgba(255, 255, 255, 0.9)" : "#0F0F0F";
+
+  return fallbackTheme.includes("Dark") ? "#FFFFFF" : "#0F0F0F";
 };
 
 const LoaderGlyph = ({ size, color }: { size: 16 | 20; color: string }) => {

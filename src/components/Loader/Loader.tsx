@@ -35,7 +35,7 @@ export const Loader = ({
           ? tokens.theme === "Light"
             ? "rgba(68, 68, 68, 0.95)"
             : tokens.theme === "Light Classic"
-            ? "rgba(0, 0, 0, 0.65)"
+            ? "#000000a6"
             : tokens.theme === "Modern Light"
             ? "#383838"
             : tokens.theme === "Modern Dark"

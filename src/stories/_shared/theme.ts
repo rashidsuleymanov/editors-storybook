@@ -1,10 +1,10 @@
 export const pluginThemeOptions = [
   "Light",
   "Light Classic",
-  "Modern Light",
-  "Modern Dark",
   "Dark",
   "Dark Contrast",
+  "Modern Light",
+  "Modern Dark",
 ] as const;
 
 type PluginTheme = (typeof pluginThemeOptions)[number];

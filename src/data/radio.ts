@@ -150,17 +150,17 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
   "Modern Light": {
     default: {
       no: {
-        outerFill: "white",
-        outerStroke: "#969696",
+        outerFill: "#FFFFFF",
+        outerStroke: "#7F7F7F",
         textColor: "#383838",
         fontSize: 12,
         lineHeight: 16,
         letterSpacing: 0.24,
       },
       yes: {
-        outerFill: "#4A87E7",
-        outerStroke: "#4A87E7",
-        dotFill: "white",
+        outerFill: "#FFFFFF",
+        outerStroke: "#7F7F7F",
+        dotFill: "#383838",
         textColor: "#383838",
         fontSize: 12,
         lineHeight: 16,
@@ -169,7 +169,7 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
     },
     hover: {
       no: {
-        outerFill: "#F9F9F9",
+        outerFill: "#F3F3F3",
         outerStroke: "#969696",
         textColor: "#383838",
         fontSize: 12,
@@ -177,9 +177,9 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
         letterSpacing: 0.24,
       },
       yes: {
-        outerFill: "#2566D5",
-        outerStroke: "#2566D5",
-        dotFill: "white",
+        outerFill: "#F3F3F3",
+        outerStroke: "#969696",
+        dotFill: "#383838",
         textColor: "#383838",
         fontSize: 12,
         lineHeight: 16,
@@ -196,8 +196,8 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
         letterSpacing: 0.24,
       },
       yes: {
-        outerFill: "#4A87E7",
-        outerStroke: "#4A87E7",
+        outerFill: "#F3F3F3",
+        outerStroke: "#969696",
         dotFill: "white",
         textColor: "#383838",
         fontSize: 12,
@@ -217,9 +217,9 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
         letterSpacing: 0.24,
       },
       yes: {
-        outerFill: "#6E9FEC",
-        outerStroke: "#6E9FEC",
-        dotFill: "#404040",
+        outerFill: "#404040",
+        outerStroke: "#969696",
+        dotFill: "#969696",
         textColor: "#F3F3F3",
         fontSize: 12,
         lineHeight: 16,
@@ -236,9 +236,9 @@ export const radioTokens: Record<RadioTheme, Record<RadioState, Record<RadioSele
         letterSpacing: 0.24,
       },
       yes: {
-        outerFill: "#4A87E7",
-        outerStroke: "#4A87E7",
-        dotFill: "#404040",
+        outerFill: "#585858",
+        outerStroke: "#969696",
+        dotFill: "#969696",
         textColor: "#F3F3F3",
         fontSize: 12,
         lineHeight: 16,

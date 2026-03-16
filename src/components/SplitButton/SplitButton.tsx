@@ -117,7 +117,7 @@ export const SplitButton = ({
               gap: 4,
             }}
           >
-            <SvgIcon name="copy" size={isModern ? 20 : 16} color={textColor} monochrome />
+            <SvgIcon name="highlight" size={20} color={textColor} monochrome />
             <span>{label}</span>
           </button>
           {isModern ? (

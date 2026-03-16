@@ -33,49 +33,6 @@ const ICON_BY_TYPE: Record<CardType, "common / chevron" | "common / chevron (2)"
   openWithText: "common / chevron (2)",
 };
 
-const titleTextStyle: CSSProperties = {
-  flex: "1 1 0",
-  fontSize: 11,
-  fontFamily: "Arial, Helvetica, sans-serif",
-  fontWeight: 400,
-  lineHeight: "12px",
-  letterSpacing: 0.22,
-  overflow: "hidden",
-  display: "-webkit-box",
-  WebkitLineClamp: 2,
-  WebkitBoxOrient: "vertical",
-};
-
-const expandedTitleTextStyle: CSSProperties = {
-  flex: "1 1 auto",
-  fontSize: 11,
-  fontFamily: "Arial, Helvetica, sans-serif",
-  fontWeight: 400,
-  lineHeight: "12px",
-  letterSpacing: 0.22,
-  display: "block",
-  whiteSpace: "normal",
-  overflow: "visible",
-  overflowWrap: "anywhere",
-};
-
-const rowStyle: CSSProperties = {
-  width: "100%",
-  display: "flex",
-  alignItems: "center",
-  gap: 4,
-};
-
-const buttonLabelStyle: CSSProperties = {
-  textAlign: "center",
-  fontSize: 11,
-  fontFamily: "Arial, Helvetica, sans-serif",
-  fontWeight: 700,
-  lineHeight: "16px",
-  letterSpacing: 0.22,
-  whiteSpace: "nowrap",
-};
-
 export const Card = ({
   type = "close",
   state = "default",
@@ -97,7 +54,53 @@ export const Card = ({
   const canToggle = typeof onToggle === "function";
   const canAction = typeof onAction === "function";
 
+  const fontSize = resolvedTheme.includes("Modern") ? 12 : 11;
+
   const resolvedState: CardState = interactive && isHovered ? "hover" : state;
+
+
+  const titleTextStyle: CSSProperties = {
+    flex: "1 1 0",
+    fontSize: fontSize,
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: 400,
+    lineHeight: "12px",
+    letterSpacing: 0.22,
+    overflow: "hidden",
+    display: "-webkit-box",
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: "vertical",
+  };
+
+  const expandedTitleTextStyle: CSSProperties = {
+    flex: "1 1 auto",
+    fontSize: fontSize,
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: 400,
+    lineHeight: "12px",
+    letterSpacing: 0.22,
+    display: "block",
+    whiteSpace: "normal",
+    overflow: "visible",
+    overflowWrap: "anywhere",
+  };
+
+  const rowStyle: CSSProperties = {
+    width: "100%",
+    display: "flex",
+    alignItems: "center",
+    gap: 4,
+  };
+
+  const buttonLabelStyle: CSSProperties = {
+    textAlign: "center",
+    fontSize: fontSize,
+    fontFamily: "Arial, Helvetica, sans-serif",
+    fontWeight: 700,
+    lineHeight: "16px",
+    letterSpacing: 0.22,
+    whiteSpace: "nowrap",
+  };
 
   const containerBackground =
     type === "close" && resolvedState === "hover"
@@ -140,7 +143,7 @@ export const Card = ({
     border: `1px solid ${tokens.chipBorder}`,
     background: tokens.chipBackground,
     color: tokens.chipTextColor,
-    fontSize: 11,
+    fontSize: fontSize,
     fontFamily: "Arial, Helvetica, sans-serif",
     fontWeight: 400,
     lineHeight: "16px",
@@ -242,7 +245,7 @@ export const Card = ({
             style={{
               width: "100%",
               color: tokens.subTextColor,
-              fontSize: 11,
+              fontSize: fontSize,
               fontFamily: "Arial, Helvetica, sans-serif",
               fontWeight: 400,
               lineHeight: "12px",

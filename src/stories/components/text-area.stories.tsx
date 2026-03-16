@@ -99,12 +99,12 @@ export const Default: Story = {
 export const HoveredArea: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <InteractiveArea key="hovered-area" args={{ ...args, state: "default", interactive: true, isHovered: false }} theme={theme} />;
+    return <InteractiveArea key="hovered-area" args={{ ...args, state: "default", interactive: false, isHovered: false }} theme={theme} />;
   },
   parameters: {
     docs: {
       description: {
-        story: "Interactive hover demo for the default text-area shell. Move the pointer over the control in the canvas.",
+        story: "Hover is disabled for the text area. Only the copy button has hover feedback.",
       },
     },
   },

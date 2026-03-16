@@ -112,18 +112,9 @@ export const PluginIconButton = ({
       aria-disabled={!onClick}
     >
       {type === "rightExpander" ? (
-        <SvgIcon
-          name="chevron"
-          size={6}
-          color={iconColor}
-          monochrome
-          style={{
-            transform: direction === "up" ? "rotate(180deg)" : "none",
-            transition: "transform 120ms linear",
-          }}
-        />
+        <SvgIcon name="highlight" size={20} color={iconColor} monochrome />
       ) : (
-        <SvgIcon name="copy" size={14} color={iconColor} monochrome />
+        <SvgIcon name="highlight" size={20} color={iconColor} monochrome />
       )}
     </button>
   );

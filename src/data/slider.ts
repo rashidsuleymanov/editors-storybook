@@ -110,7 +110,7 @@ export const sliderTokens: Record<PluginTheme, SliderThemeTokens> = {
     thumb: {
       size: 18,
       fill: "#6E9FEC",
-      stroke: "#404040",
+      stroke: "#FFFFFF",
       strokeWidth: 3,
       shadow: "0 4px 12px rgba(0, 32, 51, 0.10), 0 8px 100px rgba(0, 32, 51, 0.14)",
     },

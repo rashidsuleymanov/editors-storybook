@@ -96,14 +96,23 @@ export const Default: Story = {
 };
 
 export const HoveredField: Story = {
+  args: {
+    state: "hover",
+    isHovered: true,
+    interactive: false,
+  },
   render: (args, context) => {
-    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <InteractiveField key="hovered-field" args={{ ...args, label: "Hovered field", state: "default", interactive: true, isHovered: false }} theme={theme} />;
+    const theme = resolveStoryTheme(
+      args.themeMode,
+      String(context.globals.theme ?? "Light")
+    );
+
+    return <TextField {...args} theme={theme} />;
   },
   parameters: {
     docs: {
       description: {
-        story: "Interactive hover demo for the default single-line field. Move the pointer over the control in the canvas.",
+        story: "Fixed hover reference state for the single-line field.",
       },
     },
   },

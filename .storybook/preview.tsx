@@ -62,10 +62,10 @@ const preview: Preview = {
         items: [
           "Light",
           "Light Classic",
-          "Modern Light",
-          "Modern Dark",
           "Dark",
           "Dark Contrast",
+          "Modern Light",
+          "Modern Dark",
         ],
       },
     },
@@ -108,6 +108,12 @@ const preview: Preview = {
         inline: true,
       },
       toc: true,
+      controls: {
+        expanded: true,
+      },
+      canvas: {
+        withToolbar: true,
+      },
     },
     controls: {
       expanded: true,
