@@ -20,8 +20,8 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     title: { control: "text", description: "Main heading text" },
     description: { control: "text", description: "Supporting descriptive copy" },
-    showTitle: { control: { type: "boolean" }, description: "Show the title row" },
-    showDescription: { control: { type: "boolean" }, description: "Show the description row" },
+    showTitle: { control: "boolean", description: "Show the title row" },
+    showDescription: { control: "boolean", description: "Show the description row" },
     iconMode: {
       control: "select",
       options: ["none", "left", "right", "both"],
@@ -144,5 +144,6 @@ export const DescriptionOnly: Story = {
     },
   },
 };
+
 
 

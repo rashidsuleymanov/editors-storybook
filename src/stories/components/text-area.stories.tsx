@@ -35,15 +35,15 @@ const meta: Meta<StoryArgs> = {
     },
     width: { control: "number", description: "Outer component width" },
     height: { control: "number", description: "Visible text area height" },
-    showLabel: { control: { type: "boolean" }, description: "Show the label row" },
-    showCaption: { control: { type: "boolean" }, description: "Show the caption below the field" },
-    showCopyButton: { control: { type: "boolean" }, description: "Show the copy action button" },
+    showLabel: { control: "boolean", description: "Show the label row" },
+    showCaption: { control: "boolean", description: "Show the caption below the field" },
+    showCopyButton: { control: "boolean", description: "Show the copy action button" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover behavior directly in the canvas",
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for visual review",
     },
     themeMode: {
@@ -179,5 +179,6 @@ export const NoCopyButton: Story = {
     },
   },
 };
+
 
 

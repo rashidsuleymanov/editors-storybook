@@ -40,12 +40,12 @@ const meta: Meta<StoryArgs> = {
       options: ["default", "hidden"],
       description: "Show the placeholder normally or hide it for a denser layout",
     },
-    withIconRight: { control: { type: "boolean" }, description: "Show the trailing icon button" },
+    withIconRight: { control: "boolean", description: "Show the trailing icon button" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover/focus behavior directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
+    isHovered: { control: "boolean", description: "Force hover appearance for review" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -187,6 +187,7 @@ export const HiddenPlaceholderField: Story = {
     },
   },
 };
+
 
 
 

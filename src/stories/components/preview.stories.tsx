@@ -21,12 +21,12 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     direction: { control: "select", options: ["back", "next"], description: "Arrow direction for single-button previews" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and click feedback directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
-    isClicked: { control: { type: "boolean" }, description: "Force pressed appearance for review" },
-    isDisabled: { control: { type: "boolean" }, description: "Show the disabled state" },
+    isHovered: { control: "boolean", description: "Force hover appearance for review" },
+    isClicked: { control: "boolean", description: "Force pressed appearance for review" },
+    isDisabled: { control: "boolean", description: "Show the disabled state" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -152,5 +152,6 @@ export const Disabled: Story = {
     },
   },
 };
+
 
 

@@ -17,7 +17,7 @@ const meta: Meta<StoryArgs> = {
   },
   argTypes: {
     items: { control: "object", description: "Menu items" },
-    interactive: { control: { type: "boolean" }, description: "Enable real hover/press in canvas" },
+    interactive: { control: "boolean", description: "Enable real hover/press in canvas" },
     isHoveredIndex: {
       control: { type: "number", min: 0 },
       description: "Force-hover item by index (0-based) for docs preview",
@@ -116,5 +116,6 @@ export const NoIconItems: Story = {
     return <ContextMenu {...args} theme={theme} />;
   },
 };
+
 
 

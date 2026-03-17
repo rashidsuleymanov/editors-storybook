@@ -22,8 +22,8 @@ const meta: Meta<StoryArgs> = {
     value: { control: { type: "range", min: 0, max: 100 }, description: "Current slider value" },
     min: { control: "number", description: "Minimum allowed value" },
     max: { control: "number", description: "Maximum allowed value" },
-    showValue: { control: { type: "boolean" }, description: "Show the numeric value on the right" },
-    disabled: { control: { type: "boolean" }, description: "Show the disabled state" },
+    showValue: { control: "boolean", description: "Show the numeric value on the right" },
+    disabled: { control: "boolean", description: "Show the disabled state" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -113,5 +113,6 @@ export const Max: Story = {
     },
   },
 };
+
 
 

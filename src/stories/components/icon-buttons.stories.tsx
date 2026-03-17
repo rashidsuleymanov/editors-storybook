@@ -29,18 +29,18 @@ const meta: Meta<StoryArgs> = {
       },
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and click feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for visual review",
     },
     isClicked: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force pressed appearance for visual review",
     },
     themeMode: {
@@ -196,6 +196,7 @@ export const ClickedButtons: Story = {
     },
   },
 };
+
 
 
 

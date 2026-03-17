@@ -17,14 +17,14 @@ const meta: Meta<StoryArgs> = {
     themeMode: "Auto",
   },
   argTypes: {
-    checked: { control: { type: "boolean" }, description: "Current on/off value" },
+    checked: { control: "boolean", description: "Current on/off value" },
     state: {
       control: "select",
       options: ["default", "hover", "disabled"],
       description: "Rendered visual state",
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and toggle behavior directly in the canvas",
     },
     themeMode: {
@@ -93,6 +93,7 @@ export const DisabledSwitches: Story = {
     },
   },
 };
+
 
 
 

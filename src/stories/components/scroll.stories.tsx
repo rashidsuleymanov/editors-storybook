@@ -46,11 +46,11 @@ const meta: Meta<StoryArgs> = {
     contentSize: { control: "number", description: "Scrollable content size used to compute the thumb ratio" },
     step: { control: "number", description: "Scroll increment for arrow buttons and keyboard input" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover, drag, click, wheel, and arrow-button interaction in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
-    isPressed: { control: { type: "boolean" }, description: "Force pressed appearance for review" },
+    isHovered: { control: "boolean", description: "Force hover appearance for review" },
+    isPressed: { control: "boolean", description: "Force pressed appearance for review" },
     value: { table: { disable: true } },
     defaultValue: { table: { disable: true } },
     onValueChange: { table: { disable: true } },
@@ -230,4 +230,5 @@ export const Horizontal: Story = {
     },
   },
 };
+
 

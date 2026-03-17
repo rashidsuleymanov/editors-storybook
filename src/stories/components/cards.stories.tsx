@@ -35,7 +35,7 @@ const meta: Meta<StoryArgs> = {
       description: "Expanded layout: tags + action button, or helper text + action button",
     },
     startExpanded: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Open the card on first render",
     },
     state: {
@@ -44,11 +44,11 @@ const meta: Meta<StoryArgs> = {
       description: "Static visual state used when interactive mode is off",
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and expand/collapse interaction in the canvas",
     },
     stretch: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Let the card fill the available row width",
     },
     minWidth: {
@@ -235,5 +235,6 @@ export const StretchLayout: Story = {
     },
   },
 };
+
 
 

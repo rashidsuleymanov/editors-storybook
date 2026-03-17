@@ -24,14 +24,14 @@ const meta: Meta<StoryArgs> = {
       description: "Visible link-style action label",
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for visual review",
     },
     themeMode: {
@@ -94,6 +94,7 @@ export const HoveredButtons: Story = {
     },
   },
 };
+
 
 
 

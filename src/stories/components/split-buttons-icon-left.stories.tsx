@@ -20,7 +20,7 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     label: { control: "text", description: "Visible split-button label" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and press feedback directly in the canvas",
     },
     themeMode: {
@@ -113,5 +113,6 @@ export const Disabled: Story = {
     },
   },
 };
+
 
 

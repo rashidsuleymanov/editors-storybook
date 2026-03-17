@@ -18,7 +18,7 @@ const meta: Meta<StoryArgs> = {
   argTypes: {
     size: { control: "select", options: ["S", "M"], description: "Compact or regular loader size" },
     label: { control: "text", description: "Visible loading message" },
-    overlay: { control: { type: "boolean" }, description: "Use the blocking overlay presentation" },
+    overlay: { control: "boolean", description: "Use the blocking overlay presentation" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -81,4 +81,5 @@ export const OverlayLoader: Story = {
     },
   },
 };
+
 

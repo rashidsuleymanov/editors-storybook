@@ -34,14 +34,14 @@ const meta: Meta<StoryArgs> = {
       description: "Rendered visual state",
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and selection behavior directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for review",
     },
     themeMode: {
@@ -187,5 +187,6 @@ export const Disabled: Story = {
     },
   },
 };
+
 
 

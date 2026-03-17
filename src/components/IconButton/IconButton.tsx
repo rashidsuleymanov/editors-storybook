@@ -82,10 +82,6 @@ export const PluginIconButton = ({
   };
 
   const iconColor = token.iconColor ?? "rgba(0, 0, 0, 0.8)";
-  const direction =
-    resolvedState === "pressed"
-      ? "up"
-      : (token.direction ?? "down");
 
   const stateClass =
     resolvedState === "hover"

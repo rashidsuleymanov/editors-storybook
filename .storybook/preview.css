@@ -190,22 +190,34 @@ body {
   border-color: var(--page-border) !important;
 }
 
-html[data-plugin-theme="dark"] .sbdocs .docblock-argstable button,
-html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable button,
-html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable button {
-  background: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* Boolean toggle: adapt to dark page themes */
-html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]),
-html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]),
-html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]) {
-  filter: invert(1) hue-rotate(180deg) !important;
-}
-
 .sbdocs .docblock-argstable input::placeholder,
 .sbdocs .docblock-argstable textarea::placeholder {
   color: var(--page-muted) !important;
+}
+
+/* Storybook boolean switch: keep native shape, but tune contrast for dark docs pages. */
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]),
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]),
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) {
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: inset 0 0 0 1px var(--page-border) !important;
+}
+
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) span,
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) span,
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) span {
+  color: rgba(255, 255, 255, 0.62) !important;
+}
+
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:checked ~ span:last-of-type,
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:not(:checked) ~ span:first-of-type,
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:checked ~ span:last-of-type,
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:not(:checked) ~ span:first-of-type,
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:checked ~ span:last-of-type,
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"][role="switch"]) input:not(:checked) ~ span:first-of-type {
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #1e1e1e !important;
+  box-shadow: none !important;
 }
 
 .sbdocs .docblock-code-toggle,

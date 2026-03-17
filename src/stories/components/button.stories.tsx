@@ -42,26 +42,26 @@ const meta: Meta<DialogButtonProps> = {
       },
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow the story to react to hover and click in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for visual review",
     },
     isClicked: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force pressed appearance for visual review",
     },
     isDisabled: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Show the disabled state",
     },
     isLoading: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Replace the label with the loading indicator",
     },
     scale: {
@@ -288,6 +288,7 @@ export const ScaleButtons: Story = {
     },
   },
 };
+
 
 
 

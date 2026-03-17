@@ -30,10 +30,10 @@ const meta: Meta<StoryArgs> = {
       description: "Tab id used when the hover state is forced for reference",
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and selection changes in the canvas",
     },
-    withIcon: { control: { type: "boolean" }, description: "Show leading icons in the tab labels" },
+    withIcon: { control: "boolean", description: "Show leading icons in the tab labels" },
     items: { control: "object", description: "Tab definitions with ids and labels" },
     themeMode: {
       name: "theme",
@@ -115,6 +115,7 @@ export const HoveredSelected: Story = {
     },
   },
 };
+
 
 
 

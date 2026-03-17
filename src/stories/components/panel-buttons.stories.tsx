@@ -34,30 +34,30 @@ const meta: Meta<StoryArgs> = {
       },
     },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and click feedback directly in the canvas",
       table: {
         defaultValue: { summary: "true" },
       },
     },
     isHovered: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force hover appearance for visual review",
     },
     isClicked: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Force pressed appearance for visual review",
     },
     isDisabled: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Show the disabled state",
     },
     isLoading: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Show the loading indicator instead of the normal label",
     },
     scale: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Stretch the button to fill the available row",
     },
     themeMode: {
@@ -243,6 +243,7 @@ export const ScaleButtons: Story = {
     },
   },
 };
+
 
 
 

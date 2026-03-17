@@ -24,10 +24,10 @@ const meta: Meta<StoryArgs> = {
     selected: { control: "select", options: checkboxSelections, description: "Unchecked, checked, or indeterminate state" },
     state: { control: "select", options: checkboxStates, description: "Rendered visual state" },
     interactive: {
-      control: { type: "boolean" },
+      control: "boolean",
       description: "Allow hover and toggle behavior directly in the canvas",
     },
-    isHovered: { control: { type: "boolean" }, description: "Force hover appearance for review" },
+    isHovered: { control: "boolean", description: "Force hover appearance for review" },
     themeMode: {
       name: "theme",
       control: "select",
@@ -117,5 +117,6 @@ export const Indeterminate: Story = {
     },
   },
 };
+
 
 

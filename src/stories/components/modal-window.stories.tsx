@@ -27,7 +27,7 @@ const meta: Meta<StoryArgs> = {
     primaryLabel: { control: "text", description: "Primary footer action label" },
     secondaryLabel: { control: "text", description: "Secondary footer action label" },
     size: { control: "select", options: ["S", "M", "L"], description: "Modal width preset" },
-    notification: { control: { type: "boolean" }, description: "Show the notification block above the footer" },
+    notification: { control: "boolean", description: "Show the notification block above the footer" },
     footerMode: {
       control: "select",
       options: ["auto", "single", "double"],
@@ -148,4 +148,5 @@ export const WithNotification: Story = {
     },
   },
 };
+
 

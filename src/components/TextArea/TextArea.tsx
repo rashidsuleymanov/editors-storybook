@@ -124,7 +124,7 @@ export const TextArea = ({
   const isDisabled = state === "disabled";
   const forceScroll = state === "scroll";
   const forceNoScroll = state === "no-scroll";
-  const isHover = false;
+  const isHover = state === "hover" || isHovered || (interactive && hovered);
   const borderColor = isHover && !isDisabled ? tokens.hoverBorder : tokens.border;
   const copyButtonSize = tokens.copyIconStyle === "modern" ? 24 : 20;
   const copyHoverBackground =
