@@ -148,7 +148,7 @@ const data = {
     },
     {
       "name": "Primary dialog button",
-      "value": "4A87E7"
+      "value": "4473CA"
     },
     {
       "name": "Loader",
@@ -168,11 +168,11 @@ const data = {
     },
     {
       "name": "Primary button hover",
-      "value": "2566D5"
+      "value": "2A5BB9"
     },
     {
       "name": "Primary button pressed",
-      "value": "1E53AE"
+      "value": "1D4FAF"
     },
     {
       "name": "Toolbar",
@@ -188,7 +188,7 @@ const data = {
     },
     {
       "name": "Control focus",
-      "value": "2566D5"
+      "value": "4473CA"
     },
     {
       "name": "Preview hover",
@@ -236,7 +236,7 @@ const data = {
     },
     {
       "name": "Primary dialog button",
-      "value": "6E9FEC"
+      "value": "4A7BE0"
     },
     {
       "name": "Loader",
@@ -256,11 +256,11 @@ const data = {
     },
     {
       "name": "Primary button hover",
-      "value": "4A87E7"
+      "value": "366CDA"
     },
     {
       "name": "Primary button pressed",
-      "value": "446ECA"
+      "value": "2A5BB9"
     },
     {
       "name": "Toolbar",
@@ -272,7 +272,7 @@ const data = {
     },
     {
       "name": "Control focus",
-      "value": "4A87E7"
+      "value": "4A7BE0"
     },
     {
       "name": "Normal",

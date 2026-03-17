@@ -32,14 +32,8 @@
   animation: ui-plugin-spin 0.9s linear infinite;
 }
 
-.ui-panel-button--hover,
-.ui-icon-button--hover {
-  filter: brightness(1.03);
-}
-
 .ui-panel-button--pressed,
 .ui-icon-button--pressed {
-  filter: brightness(0.9);
   transform: translateY(0.5px);
 }
 

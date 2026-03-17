@@ -52,11 +52,11 @@ export const Checkbox = ({
     display: "flex",
     flexDirection: "column",
     color: token.textColor,
-    fontSize: 11,
+    fontSize: resolvedTheme.startsWith("Modern") ? 12 : 11,
     fontFamily: "Arial, Helvetica, sans-serif",
     fontWeight: 400,
     lineHeight: "16px",
-    letterSpacing: 0.22,
+    letterSpacing: resolvedTheme.startsWith("Modern") ? 0.24 : 0.22,
     wordWrap: "break-word",
     textAlign: "left",
   };

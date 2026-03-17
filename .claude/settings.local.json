@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find d:/Workspace/editors-storybook/node_modules/@storybook/react -type f \\\\\\(-name *.tsx -o -name *.ts \\\\\\))",
+      "Bash(find d:/Workspace/editors-storybook/node_modules -type d -name *control*)",
+      "Bash(find d:/Workspace/editors-storybook/node_modules -type d -name *manager*)",
+      "Bash(find d:/Workspace/editors-storybook/node_modules -type f \\\\\\(-name *.js -o -name *.tsx -o -name *.ts \\\\\\))",
+      "Bash(xargs grep:*)"
+    ]
+  }
+}

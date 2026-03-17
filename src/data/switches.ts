@@ -2,6 +2,7 @@ import { type PluginTheme } from "../components/shared/pluginTheme";
 
 type SwitchVisual = {
   track: string;
+  trackBorder?: string;
   thumb: string;
   opacity?: number;
 };
@@ -72,30 +73,30 @@ export const switchTokens: Record<PluginTheme, Record<SwitchState, SwitchStateTo
   },
   "Modern Light": {
     default: {
-      off: { track: "#92B7F0", thumb: "#FFFFFF" },
-      on: { track: "#4A87E7", thumb: "#FFFFFF" },
+      off: { track: "#FFFFFF", trackBorder: "#7F7F7F", thumb: "#7F7F7F" },
+      on: { track: "#4473CA", thumb: "#FFFFFF" },
     },
     hover: {
-      off: { track: "#92B7F0", thumb: "#FFFFFF" },
-      on: { track: "#4A87E7", thumb: "#FFFFFF" },
+      off: { track: "#FFFFFF", trackBorder: "#7F7F7F", thumb: "#7F7F7F" },
+      on: { track: "#4473CA", thumb: "#FFFFFF" },
     },
     disabled: {
-      off: { track: "#92B7F0", thumb: "#FFFFFF", opacity: 0.4 },
-      on: { track: "#4A87E7", thumb: "#FFFFFF", opacity: 0.4 },
+      off: { track: "#FFFFFF", trackBorder: "#7F7F7F", thumb: "#7F7F7F", opacity: 0.4 },
+      on: { track: "#4473CA", thumb: "#FFFFFF", opacity: 0.4 },
     },
   },
   "Modern Dark": {
     default: {
-      off: { track: "#92B7F0", thumb: "#404040" },
-      on: { track: "#6E9FEC", thumb: "#404040" },
+      off: { track: "#404040", trackBorder: "#969696", thumb: "#969696" },
+      on: { track: "#4A7BE0", thumb: "#404040" },
     },
     hover: {
-      off: { track: "#92B7F0", thumb: "#404040" },
-      on: { track: "#6E9FEC", thumb: "#404040" },
+      off: { track: "#404040", trackBorder: "#969696", thumb: "#969696" },
+      on: { track: "#4A7BE0", thumb: "#404040" },
     },
     disabled: {
-      off: { track: "#92B7F0", thumb: "#404040", opacity: 0.4 },
-      on: { track: "#6E9FEC", thumb: "#404040", opacity: 0.4 },
+      off: { track: "#404040", trackBorder: "#969696", thumb: "#969696", opacity: 0.4 },
+      on: { track: "#4A7BE0", thumb: "#404040", opacity: 0.4 },
     },
   },
 };

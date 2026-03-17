@@ -89,10 +89,10 @@ export const sliderTokens: Record<PluginTheme, SliderThemeTokens> = {
   },
   "Modern Light": {
     offTrack: "#E1E1E1",
-    onTrack: "#4A87E7",
+    onTrack: "#4473CA",
     thumb: {
       size: 18,
-      fill: "#4A87E7",
+      fill: "#4473CA",
       stroke: "#FFFFFF",
       strokeWidth: 3,
       shadow: "0 4px 12px rgba(0, 32, 51, 0.10), 0 8px 100px rgba(0, 32, 51, 0.14)",
@@ -106,10 +106,10 @@ export const sliderTokens: Record<PluginTheme, SliderThemeTokens> = {
   },
   "Modern Dark": {
     offTrack: "#686868",
-    onTrack: "#6E9FEC",
+    onTrack: "#4A7BE0",
     thumb: {
       size: 18,
-      fill: "#6E9FEC",
+      fill: "#4A7BE0",
       stroke: "#FFFFFF",
       strokeWidth: 3,
       shadow: "0 4px 12px rgba(0, 32, 51, 0.10), 0 8px 100px rgba(0, 32, 51, 0.14)",

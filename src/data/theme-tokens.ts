@@ -2,7 +2,7 @@ export const themeTokens = {
   "Light": {
     pageBg: '#FFFFFF',
     pageSurface: '#F7F7F7',
-    pageSurfaceAlt: '#EFEFEF',
+    pageSurfaceAlt: '#F9F9F9',
     pageBorder: '#DFDFDF',
     pageFg: 'rgba(0, 0, 0, 0.80)',
     pageMuted: 'rgba(0, 0, 0, 0.60)',
@@ -10,7 +10,7 @@ export const themeTokens = {
   "Light Classic": {
     pageBg: '#FFFFFF',
     pageSurface: '#F1F1F1',
-    pageSurfaceAlt: '#F1F1F1',
+    pageSurfaceAlt: '#D8DADC',
     pageBorder: '#CBCBCB',
     pageFg: '#444444',
     pageMuted: '#A5A5A5',
@@ -18,7 +18,7 @@ export const themeTokens = {
   "Modern Light": {
     pageBg: '#FFFFFF',
     pageSurface: '#F3F3F3',
-    pageSurfaceAlt: '#FFFFFF',
+    pageSurfaceAlt: '#F9F9F9',
     pageBorder: '#E1E1E1',
     pageFg: '#383838',
     pageMuted: undefined,
@@ -26,7 +26,7 @@ export const themeTokens = {
   "Modern Dark": {
     pageBg: '#404040',
     pageSurface: '#404040',
-    pageSurfaceAlt: '#404040',
+    pageSurfaceAlt: '#585858',
     pageBorder: '#686868',
     pageFg: '#E8E8E8',
     pageMuted: 'rgba(232, 232, 232, 0.70)',
@@ -34,7 +34,7 @@ export const themeTokens = {
   "Dark": {
     pageBg: '#333333',
     pageSurface: '#333333',
-    pageSurfaceAlt: '#333333',
+    pageSurfaceAlt: '#555555',
     pageBorder: '#666666',
     pageFg: 'rgba(255, 255, 255, 0.80)',
     pageMuted: 'rgba(255, 255, 255, 0.60)',
@@ -42,7 +42,7 @@ export const themeTokens = {
   "Dark Contrast": {
     pageBg: '#1E1E1E',
     pageSurface: '#1E1E1E',
-    pageSurfaceAlt: '#1E1E1E',
+    pageSurfaceAlt: '#424242',
     pageBorder: '#696969',
     pageFg: '#E8E8E8',
     pageMuted: '#B8B8B8',

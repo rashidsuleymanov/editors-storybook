@@ -51,7 +51,7 @@ export const Switch = ({
         width: 30,
         height: 16,
         borderRadius: 8,
-        border: "none",
+        border: token.trackBorder ? `1px solid ${token.trackBorder}` : "none",
         background: token.track,
         display: "inline-flex",
         alignItems: "center",

@@ -176,13 +176,31 @@ body {
   color: var(--page-fg) !important;
 }
 
-.sbdocs .docblock-argstable input,
+.sbdocs .docblock-argstable input:not([type="checkbox"]),
 .sbdocs .docblock-argstable select,
-.sbdocs .docblock-argstable textarea,
-.sbdocs .docblock-argstable button {
+.sbdocs .docblock-argstable textarea {
   background: var(--page-bg) !important;
   color: var(--page-fg) !important;
   border-color: var(--page-border) !important;
+}
+
+.sbdocs .docblock-argstable button {
+  background: rgba(0, 0, 0, 0.07) !important;
+  color: var(--page-fg) !important;
+  border-color: var(--page-border) !important;
+}
+
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable button,
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable button,
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable button {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Boolean toggle: adapt to dark page themes */
+html[data-plugin-theme="dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]),
+html[data-plugin-theme="dark-contrast"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]),
+html[data-plugin-theme="modern-dark"] .sbdocs .docblock-argstable label:has(input[type="checkbox"]) {
+  filter: invert(1) hue-rotate(180deg) !important;
 }
 
 .sbdocs .docblock-argstable input::placeholder,

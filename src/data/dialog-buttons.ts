@@ -922,7 +922,7 @@ const data = {
             "paddingRight": 32,
             "paddingTop": 11,
             "paddingBottom": 11,
-            "background": "rgba(255, 255, 255, 0.50)",
+            "background": "rgba(255, 255, 255, 0.80)",
             "overflow": "hidden",
             "borderRadius": 1,
             "flexDirection": "column",
@@ -1053,7 +1053,7 @@ const data = {
             "paddingRight": 32,
             "paddingTop": 11,
             "paddingBottom": 11,
-            "background": "rgba(255, 255, 255, 0.50)",
+            "background": "rgba(255, 255, 255, 0.80)",
             "overflow": "hidden",
             "borderRadius": 1,
             "flexDirection": "column",
@@ -2046,9 +2046,9 @@ const data = {
         },
         "Loader": {
           "container": {
-            "width": 53,
             "height": 24,
-            "minWidth": 48,
+            "minWidth": 53,
+            "width": 118,
             "paddingLeft": 12,
             "paddingRight": 12,
             "background": "white",
@@ -2067,7 +2067,7 @@ const data = {
         "Default": {
           "container": {
             "height": 22,
-            "minWidth": 48,
+            "minWidth": 53,
             "paddingLeft": 12,
             "paddingRight": 12,
             "background": "white",
@@ -2183,9 +2183,9 @@ const data = {
         },
         "Loader": {
           "container": {
-            "width": 53,
             "height": 22,
             "minWidth": 48,
+            "width": 118,
             "paddingLeft": 12,
             "paddingRight": 12,
             "background": "white",
@@ -2315,7 +2315,6 @@ const data = {
         },
         "Loader": {
           "container": {
-            "width": 53,
             "height": 24,
             "minWidth": 48,
             "paddingLeft": 12,
@@ -2339,7 +2338,7 @@ const data = {
             "minWidth": 48,
             "paddingLeft": 12,
             "paddingRight": 12,
-            "background": "#366CDA",
+            "background": "#4473CA",
             "overflow": "hidden",
             "borderRadius": 4,
             "justifyContent": "center",
@@ -2445,7 +2444,6 @@ const data = {
         },
         "Loader": {
           "container": {
-            "width": 53,
             "height": 22,
             "minWidth": 48,
             "paddingLeft": 12,

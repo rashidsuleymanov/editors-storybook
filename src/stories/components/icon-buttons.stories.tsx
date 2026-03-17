@@ -135,6 +135,26 @@ export const SolidButtons: Story = {
   },
 };
 
+export const SolidStates: Story = {
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return (
+      <div style={{ display: "flex", gap: 12 }}>
+        <PluginIconButton type="solid" state="default" interactive={false} theme={theme} />
+        <PluginIconButton type="solid" state="hover" interactive={false} theme={theme} />
+        <PluginIconButton type="solid" state="pressed" interactive={false} theme={theme} />
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Solid variant in all visual states: Default, Hover, and Pressed.",
+      },
+    },
+  },
+};
+
 export const RightExpanderButtons: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));

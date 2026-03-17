@@ -58,7 +58,7 @@ export const tabsByTheme: Record<PluginTheme, TabsThemeTokens> = {
     selectedBg: "#FFFFFF",
     hoverBg: "#F9F9F9",
     typography: { fontSize: 12, fontWeight: 500, lineHeight: 20, letterSpacing: 0.24 },
-    indicatorColor: "#4A87E7",
+    indicatorColor: "#4473CA",
     indicatorHeight: 3,
   },
   "Modern Dark": {
@@ -68,7 +68,7 @@ export const tabsByTheme: Record<PluginTheme, TabsThemeTokens> = {
     selectedBg: "#404040",
     hoverBg: "#585858",
     typography: { fontSize: 12, fontWeight: 500, lineHeight: 20, letterSpacing: 0.24 },
-    indicatorColor: "#6E9FEC",
+    indicatorColor: "#4A7BE0",
     indicatorHeight: 3,
   },
 };

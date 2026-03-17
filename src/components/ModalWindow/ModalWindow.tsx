@@ -145,11 +145,11 @@ const primaryButtonByTheme: Record<PluginTheme, ModalButtonTokens> = {
     fontSize: 11,
   },
   "Modern Light": {
-    bg: "#4A87E7",
+    bg: "#4473CA",
     text: "#FFFFFF",
-    hoverBg: "#2566D5",
-    pressedBg: "#1E53AE",
-    pressedBorder: "#2566D5",
+    hoverBg: "#2A5BB9",
+    pressedBg: "#1D4FAF",
+    pressedBorder: "#2A5BB9",
     radius: 4,
     size: 24,
     minWidth: 48,
@@ -158,11 +158,11 @@ const primaryButtonByTheme: Record<PluginTheme, ModalButtonTokens> = {
     fontSize: 12,
   },
   "Modern Dark": {
-    bg: "#6E9FEC",
+    bg: "#4A7BE0",
     text: "#FFFFFF",
-    hoverBg: "#4A87E7",
+    hoverBg: "#366CDA",
     pressedBg: "#2D66CC",
-    pressedBorder: "#4A87E7",
+    pressedBorder: "#4A7BE0",
     radius: 4,
     size: 24,
     minWidth: 48,
@@ -228,7 +228,7 @@ const secondaryButtonByTheme: Record<PluginTheme, ModalButtonTokens> = {
     border: "#E1E1E1",
     hoverBg: "#F9F9F9",
     pressedBg: "#EAEAEA",
-    pressedBorder: "#2566D5",
+    pressedBorder: "#2A5BB9",
     radius: 4,
     size: 24,
     minWidth: 48,
@@ -242,7 +242,7 @@ const secondaryButtonByTheme: Record<PluginTheme, ModalButtonTokens> = {
     border: "#686868",
     hoverBg: "#585858",
     pressedBg: "#686868",
-    pressedBorder: "#6E9FEC",
+    pressedBorder: "#4A7BE0",
     radius: 4,
     size: 24,
     minWidth: 48,
@@ -413,7 +413,7 @@ export const ModalWindow = ({
     if (focusable.length === 0) return;
     if (root.contains(document.activeElement)) return;
 
-    focusable[0].focus();
+    focusable[focusable.length - 1].focus();
   }, []);
 
   return (

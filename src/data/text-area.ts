@@ -116,7 +116,7 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
   "Modern Light": {
     background: "#FFFFFF",
     border: "#E1E1E1",
-    hoverBorder: "#4A87E7",
+    hoverBorder: "#4473CA",
     disabledBackground: "#F3F3F3",
     disabledOpacity: 1,
     textColor: "#383838",
@@ -137,7 +137,7 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
   "Modern Dark": {
     background: "#404040",
     border: "#686868",
-    hoverBorder: "#6E9FEC",
+    hoverBorder: "#4A7BE0",
     disabledBackground: "#2A2A2A",
     disabledOpacity: 1,
     textColor: "#F3F3F3",

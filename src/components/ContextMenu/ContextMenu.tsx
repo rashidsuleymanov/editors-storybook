@@ -14,6 +14,11 @@ export type ContextMenuItem = {
 export type ContextMenuProps = {
   items?: ContextMenuItem[];
   theme?: string;
+  interactive?: boolean;
+  /** Force hover appearance for the item at this zero-based index (for docs/previews) */
+  isHoveredIndex?: number;
+  /** Force pressed appearance for the item at this zero-based index (for docs/previews) */
+  isClickedIndex?: number;
 };
 
 const DEFAULT_ITEMS: ContextMenuItem[] = [
@@ -23,9 +28,25 @@ const DEFAULT_ITEMS: ContextMenuItem[] = [
   { id: "4", label: "Menu item", type: "iconLeft", disabled: true },
 ];
 
-export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) => {
+export const ContextMenu = ({
+  items = DEFAULT_ITEMS,
+  theme,
+  interactive = true,
+  isHoveredIndex,
+  isClickedIndex,
+}: ContextMenuProps) => {
   const tokens = getComponentSurface(theme);
   const [hovered, setHovered] = useState<string | null>(null);
+  const [pressed, setPressed] = useState<string | null>(null);
+
+  const pressedBgByTheme: Record<string, string> = {
+    Light: "#CBCBCB",
+    "Light Classic": "#7D858C",
+    Dark: "#666666",
+    "Dark Contrast": "#666666",
+    "Modern Light": "#EAEAEA",
+    "Modern Dark": "#686868",
+  };
 
   return (
     <div
@@ -39,23 +60,35 @@ export const ContextMenu = ({ items = DEFAULT_ITEMS, theme }: ContextMenuProps) 
         boxSizing: "border-box",
       }}
     >
-      {items.map((item) => {
-        const isHovered = hovered === item.id && !item.disabled;
+      {items.map((item, index) => {
+        const forcedHover = typeof isHoveredIndex === "number" && isHoveredIndex === index;
+        const forcedPressed = typeof isClickedIndex === "number" && isClickedIndex === index;
+        const isItemHovered = (hovered === item.id && interactive) || forcedHover;
+        const isItemPressed = (pressed === item.id && interactive) || forcedPressed;
         const iconColor = item.disabled ? tokens.muted : tokens.fg;
+        const bg = item.disabled
+          ? "transparent"
+          : isItemPressed
+            ? pressedBgByTheme[tokens.theme] ?? tokens.surfaceAlt
+            : isItemHovered
+              ? tokens.surfaceAlt
+              : "transparent";
 
         return (
           <button
             key={item.id}
             type="button"
             disabled={item.disabled}
-            onMouseEnter={() => !item.disabled && setHovered(item.id)}
-            onMouseLeave={() => setHovered(null)}
+            onMouseEnter={() => interactive && !item.disabled && setHovered(item.id)}
+            onMouseLeave={() => interactive && setHovered(null)}
+            onMouseDown={() => interactive && !item.disabled && setPressed(item.id)}
+            onMouseUp={() => interactive && setPressed(null)}
             style={{
               width: "100%",
               minHeight: 26,
               border: "none",
               borderRadius: 0,
-              background: isHovered ? tokens.surfaceAlt : "transparent",
+              background: bg,
               padding: item.type === "noIcon" ? "5px 20px" : "3px 10px 3px 10px",
               color: item.disabled ? tokens.muted : tokens.fg,
               display: "flex",

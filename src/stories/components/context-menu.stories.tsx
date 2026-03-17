@@ -11,9 +11,21 @@ const meta: Meta<StoryArgs> = {
   component: ContextMenu,
   args: {
     themeMode: "Auto",
+    interactive: true,
+    isHoveredIndex: undefined,
+    isClickedIndex: undefined,
   },
   argTypes: {
     items: { control: "object", description: "Menu items" },
+    interactive: { control: { type: "boolean" }, description: "Enable real hover/press in canvas" },
+    isHoveredIndex: {
+      control: { type: "number", min: 0 },
+      description: "Force-hover item by index (0-based) for docs preview",
+    },
+    isClickedIndex: {
+      control: { type: "number", min: 0 },
+      description: "Force-pressed item by index (0-based) for docs preview",
+    },
     themeMode: {
       name: "theme",
       control: "select",

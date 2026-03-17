@@ -180,7 +180,7 @@ export const DialogButton = ({
   const text = current?.text ?? fallback?.text ?? {};
   const isLoader = resolvedState === "loader";
   const textColor = (text.color as string | undefined) ?? "#ffffff";
-  const loaderColor = pickLoaderColor(container.background as string | undefined, theme);
+  const loaderColor = pickLoaderColor(container.background as string | undefined, theme, variant);
   const resolvedHeight = (container.height as number | undefined) ?? size;
   const loaderSize: 16 | 20 = resolvedHeight >= 30 ? 20 : 16;
   const textOpacity = text.opacity as number | undefined;

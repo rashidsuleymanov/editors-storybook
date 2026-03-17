@@ -24,11 +24,10 @@ export const SplitButton = ({
   const tokens = getComponentSurface(theme);
   const [hovered, setHovered] = useState(false);
   const [pressed, setPressed] = useState(false);
+  const [hoveredIcon, setHoveredIcon] = useState(false);
+  const [pressedIcon, setPressedIcon] = useState(false);
 
   const isDisabled = state === "disabled";
-  const isPressed = state === "pressed" || (interactive && pressed && !isDisabled);
-  const isHover = state === "hover" || (interactive && hovered && !isDisabled);
-
   const isModern = tokens.theme.includes("Modern");
   const radius = isModern ? 4 : 1;
 
@@ -37,32 +36,63 @@ export const SplitButton = ({
     "Light Classic": "#7D858C",
     Dark: "#666666",
     "Dark Contrast": "#666666",
-    "Modern Light": "#DCE7FA",
-    "Modern Dark": "#375478",
+    "Modern Light": "#EAEAEA",
+    "Modern Dark": "#686868",
   };
 
   const defaultBg = tokens.bg;
   const hoverBg = tokens.surfaceAlt;
   const pressedBg = pressedBgByTheme[tokens.theme] ?? tokens.surfaceAlt;
-  const baseBg = isPressed ? pressedBg : isHover ? hoverBg : defaultBg;
+
+  // For tabs, the whole wrapper shares hover/press state
+  const isTabsPressed = state === "pressed" || (interactive && pressed && !isDisabled);
+  const isTabsHover = state === "hover" || (interactive && hovered && !isDisabled);
+
+  // For dropDown/iconLeft, icon part tracks independently
+  const isIconPressed = state === "pressed" || (interactive && pressedIcon && !isDisabled);
+  const isIconHover = state === "hover" || (interactive && hoveredIcon && !isDisabled);
 
   const defaultText = tokens.fg;
   const pressedText =
     tokens.theme === "Light Classic" || tokens.theme === "Modern Dark"
       ? "#FFFFFF"
       : defaultText;
-  const textColor = isDisabled ? tokens.muted : isPressed ? pressedText : defaultText;
+
+  // Issue 11: icon in iconLeft type uses #F3F3F3 for Modern Dark
+  const iconDefaultColor =
+    type === "iconLeft" && tokens.theme === "Modern Dark" ? "#F3F3F3" : defaultText;
+
+  const tabsTextColor = isDisabled
+    ? tokens.muted
+    : isTabsPressed
+      ? pressedText
+      : defaultText;
+
+  const iconTextColor = isDisabled
+    ? tokens.muted
+    : isIconPressed
+      ? pressedText
+      : iconDefaultColor;
+
+  const buttonPartBg =
+    type === "tabs"
+      ? isTabsPressed
+        ? pressedBg
+        : isTabsHover
+          ? hoverBg
+          : defaultBg
+      : defaultBg;
+
+  const iconPartBg = isIconPressed ? pressedBg : isIconHover ? hoverBg : defaultBg;
 
   const commonButtonStyle: CSSProperties = {
     height: 24,
     border: "none",
-    background: baseBg,
-    color: textColor,
     fontFamily: "Arial, Helvetica, sans-serif",
-    fontSize: tokens.theme.includes("Modern") ? 12 : 11,
+    fontSize: isModern ? 12 : 11,
     lineHeight: "16px",
-    fontWeight: type === "tabs" ? 400 : 700,
-    letterSpacing: tokens.theme.includes("Modern") ? 0.24 : 0.22,
+    fontWeight: isModern ? 400 : type === "tabs" ? 400 : 700,
+    letterSpacing: isModern ? 0.24 : 0.22,
     cursor: isDisabled ? "not-allowed" : "pointer",
     boxSizing: "border-box",
     whiteSpace: "nowrap",
@@ -71,21 +101,39 @@ export const SplitButton = ({
     justifyContent: "center",
   };
 
+  const iconPartStyle: CSSProperties = {
+    ...commonButtonStyle,
+    background: iconPartBg,
+    color: iconTextColor,
+  };
+
+  const iconMouseProps = interactive && !isDisabled
+    ? {
+        onMouseEnter: () => setHoveredIcon(true),
+        onMouseLeave: () => { setHoveredIcon(false); setPressedIcon(false); },
+        onMouseDown: () => setPressedIcon(true),
+        onMouseUp: () => setPressedIcon(false),
+      }
+    : {};
+
   return (
     <div
-      onMouseEnter={() => interactive && setHovered(true)}
+      onMouseEnter={() => interactive && type === "tabs" && setHovered(true)}
       onMouseLeave={() => {
         if (!interactive) return;
         setHovered(false);
         setPressed(false);
       }}
-      onMouseDown={() => interactive && !isDisabled && setPressed(true)}
-      onMouseUp={() => interactive && !isDisabled && setPressed(false)}
+      onMouseDown={() => interactive && !isDisabled && type === "tabs" && setPressed(true)}
+      onMouseUp={() => interactive && !isDisabled && type === "tabs" && setPressed(false)}
       style={{
         display: "inline-flex",
         borderRadius: type === "tabs" ? 31 : radius,
         overflow: "hidden",
-        border: `1px solid ${tokens.border}`,
+        border: `1px solid ${
+          // Remove outline on pressed Tabs in Modern themes
+          type === "tabs" && isModern && isTabsPressed ? "transparent" : tokens.border
+        }`,
         opacity: isDisabled ? 0.6 : 1,
       }}
     >
@@ -96,6 +144,8 @@ export const SplitButton = ({
           onClick={onClick}
           style={{
             ...commonButtonStyle,
+            background: buttonPartBg,
+            color: tabsTextColor,
             minWidth: 48,
             padding: "0 12px",
           }}
@@ -110,42 +160,58 @@ export const SplitButton = ({
             type="button"
             disabled={isDisabled}
             onClick={onClick}
+            aria-label="Icon action"
+            {...iconMouseProps}
             style={{
-              ...commonButtonStyle,
-              minWidth: 48,
-              padding: isModern ? "0 8px 0 2px" : "0 12px",
-              gap: 4,
+              ...iconPartStyle,
+              width: 24,
+              minWidth: 24,
+              padding: 0,
             }}
           >
-            <SvgIcon name="highlight" size={20} color={textColor} monochrome />
+            <SvgIcon name="highlight" size={20} color={iconTextColor} monochrome />
+          </button>
+
+          <button
+            type="button"
+            disabled={isDisabled}
+            onClick={onClick}
+            style={{
+              ...commonButtonStyle,
+              background: defaultBg,
+              color: isDisabled ? tokens.muted : defaultText,
+              minWidth: 48,
+              padding: "0 12px",
+              borderLeft: `1px solid ${tokens.border}`,
+            }}
+          >
             <span>{label}</span>
           </button>
+
           {isModern ? (
             <button
               type="button"
               disabled={isDisabled}
               aria-label="Open menu"
               onClick={onClick}
+              {...iconMouseProps}
               style={{
+                ...iconPartStyle,
                 width: 24,
-                height: 24,
-                border: "none",
+                minWidth: 24,
+                padding: 0,
                 borderLeft: `1px solid ${tokens.border}`,
-                background: baseBg,
-                color: textColor,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxSizing: "border-box",
-                cursor: isDisabled ? "not-allowed" : "pointer",
               }}
             >
               <SvgIcon
                 name="chevron"
                 size={8}
-                color={textColor}
+                color={iconTextColor}
                 monochrome
-                style={{ transform: isPressed ? "rotate(180deg)" : "none", transition: "transform 120ms linear" }}
+                style={{
+                  transform: isIconPressed ? "rotate(180deg)" : "none",
+                  transition: "transform 120ms linear",
+                }}
               />
             </button>
           ) : null}
@@ -160,37 +226,38 @@ export const SplitButton = ({
             onClick={onClick}
             style={{
               ...commonButtonStyle,
+              background: defaultBg,
+              color: isDisabled ? tokens.muted : defaultText,
               minWidth: 96,
               padding: "0 12px",
             }}
           >
             {label}
           </button>
+
           <button
             type="button"
             disabled={isDisabled}
             aria-label="Open menu"
             onClick={onClick}
+            {...iconMouseProps}
             style={{
+              ...iconPartStyle,
               width: 24,
-              height: 24,
-              border: "none",
+              minWidth: 24,
+              padding: 0,
               borderLeft: `1px solid ${tokens.border}`,
-              background: baseBg,
-                color: textColor,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxSizing: "border-box",
-                cursor: isDisabled ? "not-allowed" : "pointer",
             }}
           >
             <SvgIcon
               name="chevron"
               size={8}
-              color={textColor}
+              color={iconTextColor}
               monochrome
-              style={{ transform: isPressed ? "rotate(180deg)" : "none", transition: "transform 120ms linear" }}
+              style={{
+                transform: isIconPressed ? "rotate(180deg)" : "none",
+                transition: "transform 120ms linear",
+              }}
             />
           </button>
         </>

@@ -6,7 +6,7 @@ export default create({
   colorSecondary: "#4781D1",
   appBg: "#F5F7FA",
   appContentBg: "#FFFFFF",
-  appBorderColor: "rgba(4, 15, 27, 0.08)",
+  appBorderColor: "rgba(0, 0, 0, 0.15)",
   appBorderRadius: 10,
   barBg: "#FFFFFF",
   barTextColor: "#555F65",
