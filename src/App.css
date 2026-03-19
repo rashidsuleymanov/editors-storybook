@@ -8,7 +8,7 @@
   place-items: center;
   padding: 24px;
   background:
-    radial-gradient(circle at top left, rgba(74, 135, 231, 0.12), transparent 32%),
+    radial-gradient(circle at top left, rgba(54, 108, 218, 0.12), transparent 32%),
     linear-gradient(180deg, #f6f7f9 0%, #eceff3 100%);
 }
 
@@ -23,7 +23,7 @@
 
 .app-eyebrow {
   margin: 0 0 8px;
-  color: #4a87e7;
+  color: #366cda;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.22px;

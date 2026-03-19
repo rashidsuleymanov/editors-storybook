@@ -150,7 +150,7 @@ export const WithButtonsM: Story = {
   name: "WithBtn M",
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Scroll {...args} type="withButtons" size="M" theme={theme} />;
+    return <Scroll {...args} orientation="vertical" type="withButtons" size="M" theme={theme} />;
   },
   parameters: {
     docs: {
@@ -165,7 +165,7 @@ export const WithoutButtonsM: Story = {
   name: "WithoutBtn M",
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Scroll {...args} type="withoutButtons" size="M" theme={theme} />;
+    return <Scroll {...args} orientation="vertical" type="withoutButtons" size="M" theme={theme} />;
   },
   parameters: {
     docs: {
@@ -180,7 +180,7 @@ export const WithoutButtonsS: Story = {
   name: "WithoutBtn S",
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Scroll {...args} type="withoutButtons" size="S" theme={theme} />;
+    return <Scroll {...args} orientation="vertical" type="withoutButtons" size="S" theme={theme} />;
   },
   parameters: {
     docs: {
@@ -195,7 +195,7 @@ export const WithoutButtonsXS: Story = {
   name: "WithoutBtn XS",
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <Scroll {...args} type="withoutButtons" size="XS" theme={theme} />;
+    return <Scroll {...args} orientation="vertical" type="withoutButtons" size="XS" theme={theme} />;
   },
   parameters: {
     docs: {

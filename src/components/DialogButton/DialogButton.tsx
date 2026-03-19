@@ -23,6 +23,7 @@ export type DialogButtonProps = {
   isDisabled?: boolean;
   isLoading?: boolean;
   scale?: boolean;
+  minWidth?: string | number;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -77,7 +78,7 @@ const pickLoaderColor = (
   variant: DialogButtonVariant
 ): string => {
   if (variant === "primary") {
-    if (fallbackTheme === "Classic Light") return "#FFFFFF";
+    if (fallbackTheme === "Light Classic") return "#FFFFFF";
     if (fallbackTheme === "Dark") return "rgba(255, 255, 255, 0.8)";
   }
 
@@ -136,6 +137,7 @@ export const DialogButton = ({
   isDisabled = false,
   isLoading = false,
   scale = false,
+  minWidth,
   onClick,
 }: DialogButtonProps) => {
   const [hovered, setHovered] = useState(false);
@@ -187,7 +189,7 @@ export const DialogButton = ({
 
   const containerStyle: React.CSSProperties = {
     height: (container.height as number | undefined) ?? size,
-    minWidth: container.minWidth as number | undefined,
+    minWidth: minWidth ?? (container.minWidth as number | undefined),
     width: scale ? "100%" : (container.width as number | undefined) ?? "fit-content",
     paddingTop: 0,
     paddingRight: (container.paddingRight as number | undefined) ?? 32,

@@ -13,6 +13,7 @@ export type CheckboxProps = {
   theme?: string;
   interactive?: boolean;
   isHovered?: boolean;
+  truncate?: boolean;
   onChange?: (next: CheckboxSelection) => void;
 };
 
@@ -31,6 +32,7 @@ export const Checkbox = ({
   theme = "Light",
   interactive = true,
   isHovered = false,
+  truncate = false,
   onChange,
 }: CheckboxProps) => {
   const [hovered, setHovered] = useState(false);
@@ -57,7 +59,9 @@ export const Checkbox = ({
     fontWeight: 400,
     lineHeight: "16px",
     letterSpacing: resolvedTheme.startsWith("Modern") ? 0.24 : 0.22,
-    wordWrap: "break-word",
+    ...(truncate
+      ? { overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis" }
+      : { wordWrap: "break-word" }),
     textAlign: "left",
   };
 

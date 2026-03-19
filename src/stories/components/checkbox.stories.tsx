@@ -28,6 +28,7 @@ const meta: Meta<StoryArgs> = {
       description: "Allow hover and toggle behavior directly in the canvas",
     },
     isHovered: { control: "boolean", description: "Force hover appearance for review" },
+    truncate: { control: "boolean", description: "Truncate long label with ellipsis instead of wrapping" },
     themeMode: {
       name: "theme",
       control: "select",

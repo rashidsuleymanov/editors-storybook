@@ -24,7 +24,7 @@ export const tabsByTheme: Record<PluginTheme, TabsThemeTokens> = {
     text: "rgba(0, 0, 0, 0.8)",
     unselectedBg: "#EFEFEF",
     selectedBg: "#F7F7F7",
-    hoverBg: "#E0E0E0",
+    hoverBg: "#F9F9F9",
     typography: { fontSize: 11, fontWeight: 400, lineHeight: 16, letterSpacing: 0.22 },
   },
   "Light Classic": {

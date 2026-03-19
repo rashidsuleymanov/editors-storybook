@@ -171,6 +171,7 @@ export const Header = ({
               width: isModern && isPanel ? 24 : 20,
               height: isModern && isPanel ? 24 : 20,
               border: "none",
+              outline: "none",
               background: "transparent",
               padding: 0,
               cursor: canClose ? "pointer" : "default",

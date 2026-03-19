@@ -3,7 +3,7 @@ import { resolveComponentTheme } from "../shared/pluginTheme";
 import { textAreaTokens } from "../../data/text-area";
 import "./TextArea.css";
 
-export type TextAreaState = "default" | "hover" | "disabled" | "scroll" | "no-scroll";
+export type TextAreaState = "default" | "disabled" | "scroll" | "no-scroll";
 
 export type TextAreaProps = {
   label?: string;
@@ -16,20 +16,24 @@ export type TextAreaProps = {
   showLabel?: boolean;
   showCaption?: boolean;
   showCopyButton?: boolean;
-  interactive?: boolean;
-  isHovered?: boolean;
   onChange?: (next: string) => void;
   onCopy?: (value: string) => void;
 };
 
 const SAMPLE_TEXT = `The 10 most undervalued stocks from our Best Companies to Own list as of Feb. 28, 2023, were:
-Comcast CMCSA
-Taiwan Semiconductor Manufacturing TSM
-Roche Holding RHHBY
-Walt Disney DIS
-Equifax EFX
-TransUnion TRU
-International Flavors & Fragrances`;
+Comcast CMCSA — a leading global media and technology company with businesses in cable, entertainment, and theme parks.
+Taiwan Semiconductor Manufacturing TSM — the world's largest dedicated semiconductor foundry serving major chip designers.
+Roche Holding RHHBY — a global pioneer in pharmaceuticals and diagnostics focused on oncology and rare diseases.
+Walt Disney DIS — a diversified entertainment company spanning film, television, streaming, and theme park experiences.
+Equifax EFX — one of the three major credit reporting agencies providing data analytics and risk solutions worldwide.
+TransUnion TRU — a global information and insights company helping businesses manage risk and consumers manage credit.
+International Flavors & Fragrances IFF — a leading creator of flavors, fragrances, and specialty ingredients.
+Zimmer Biomet ZBH — a global medical device company specializing in musculoskeletal healthcare and reconstructive products.
+Kenvue KVUE — a consumer health company spun off from Johnson & Johnson managing iconic personal care brands.
+Anheuser-Busch InBev BUD — the world's largest brewer with a portfolio of over 500 beer brands sold globally.
+Booking Holdings BKNG — the world's leading provider of online travel and related services across 220+ countries.
+Stellantis STLA — a multinational automotive manufacturer formed from the merger of PSA Group and Fiat Chrysler.
+Medtronic MDT — a global leader in medical devices, therapies, and services for chronic disease management.`;
 
 const CopyGlyph = ({ color }: { color: string }) => (
   <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden>
@@ -73,23 +77,7 @@ const CopyGlyphModern = ({ color }: { color: string }) => (
   </svg>
 );
 
-const copyToClipboard = async (value: string) => {
-  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(value);
-    return;
-  }
-
-  if (typeof document === "undefined") return;
-  const temp = document.createElement("textarea");
-  temp.value = value;
-  temp.setAttribute("readonly", "");
-  temp.style.position = "absolute";
-  temp.style.left = "-9999px";
-  document.body.appendChild(temp);
-  temp.select();
-  document.execCommand("copy");
-  document.body.removeChild(temp);
-};
+const copyToClipboard = (value: string) => navigator.clipboard.writeText(value);
 
 export const TextArea = ({
   label = "Title",
@@ -102,14 +90,11 @@ export const TextArea = ({
   showLabel = true,
   showCaption = true,
   showCopyButton = true,
-  interactive = true,
-  isHovered = false,
   onChange,
   onCopy,
 }: TextAreaProps) => {
   const textareaId = useId();
   const captionId = useId();
-  const [hovered, setHovered] = useState(false);
   const [copied, setCopied] = useState(false);
   const [copyHovered, setCopyHovered] = useState(false);
   const resolvedTheme = resolveComponentTheme(theme);
@@ -124,8 +109,7 @@ export const TextArea = ({
   const isDisabled = state === "disabled";
   const forceScroll = state === "scroll";
   const forceNoScroll = state === "no-scroll";
-  const isHover = state === "hover" || isHovered || (interactive && hovered);
-  const borderColor = isHover && !isDisabled ? tokens.hoverBorder : tokens.border;
+  const borderColor = tokens.border;
   const copyButtonSize = tokens.copyIconStyle === "modern" ? 24 : 20;
   const copyHoverBackground =
   resolvedTheme === "Light"
@@ -144,10 +128,9 @@ export const TextArea = ({
     () =>
       ({
         "--ui-textarea-scroll-track": tokens.scrollTrack,
-        "--ui-textarea-scroll-border": tokens.scrollBorder,
         "--ui-textarea-scroll-thumb": tokens.scrollThumb,
       }) as CSSProperties,
-    [tokens.scrollTrack, tokens.scrollBorder, tokens.scrollThumb]
+    [tokens.scrollTrack, tokens.scrollThumb]
   );
 
   return (
@@ -225,8 +208,6 @@ export const TextArea = ({
           value={value}
           wrap={forceScroll ? "off" : "soft"}
           onChange={(event) => onChange?.(event.target.value)}
-          onMouseEnter={() => interactive && setHovered(true)}
-          onMouseLeave={() => interactive && setHovered(false)}
           style={{
             ...cssVars,
             width: "100%",
@@ -242,15 +223,16 @@ export const TextArea = ({
             letterSpacing: tokens.textTypography.letterSpacing,
             paddingTop: 0,
             paddingLeft: 0,
-            paddingRight: forceNoScroll ? 0 : 8,
-            paddingBottom: forceNoScroll ? 0 : 4,
+            paddingRight: forceNoScroll || isDisabled ? 0 : 3,
+            paddingBottom: forceNoScroll || isDisabled ? 0 : 4,
             margin: 0,
-            overflow: forceNoScroll ? "hidden" : forceScroll ? "scroll" : "auto",
+            overflow: isDisabled || forceNoScroll ? "hidden" : forceScroll ? "scroll" : "auto",
             whiteSpace: forceScroll ? "pre" : "pre-wrap",
             wordBreak: "break-word",
             boxSizing: "border-box",
-            scrollbarGutter: forceNoScroll ? "auto" : "stable",
-            scrollbarColor: `${tokens.scrollThumb} transparent`,
+            pointerEvents: isDisabled ? "none" : undefined,
+            scrollbarGutter: forceScroll ? "stable" : "auto",
+            scrollbarColor: `${tokens.scrollThumb} ${tokens.scrollTrack}`,
             scrollbarWidth: "thin",
           }}
         />

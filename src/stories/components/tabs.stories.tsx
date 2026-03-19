@@ -34,6 +34,7 @@ const meta: Meta<StoryArgs> = {
       description: "Allow hover and selection changes in the canvas",
     },
     withIcon: { control: "boolean", description: "Show leading icons in the tab labels" },
+    scaled: { control: "boolean", description: "Stretch tabs to fill the full container width" },
     items: { control: "object", description: "Tab definitions with ids and labels" },
     themeMode: {
       name: "theme",

@@ -40,6 +40,7 @@ export type PluginIconButtonProps = {
   interactive?: boolean;
   isHovered?: boolean;
   isClicked?: boolean;
+  tabIndex?: number;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 };
 
@@ -50,6 +51,7 @@ export const PluginIconButton = ({
   interactive = true,
   isHovered = false,
   isClicked = false,
+  tabIndex,
   onClick,
 }: PluginIconButtonProps) => {
   const [hovered, setHovered] = useState(false);
@@ -74,11 +76,12 @@ export const PluginIconButton = ({
     ({} as IconButtonToken);
 
   const buttonStyle: CSSProperties = {
-    ...(token.container ?? {}),
     boxSizing: "border-box",
     border: "none",
-    background: (token.container?.background as CSSProperties["background"]) ?? "transparent",
+    outline: "none",
+    background: "transparent",
     cursor: onClick ? "pointer" : "default",
+    ...(token.container ?? {}),
   };
 
   const iconColor = token.iconColor ?? "rgba(0, 0, 0, 0.8)";
@@ -104,6 +107,7 @@ export const PluginIconButton = ({
       onMouseDown={() => interactive && setPressed(true)}
       onMouseUp={() => interactive && setPressed(false)}
       onClick={onClick}
+      tabIndex={tabIndex}
       aria-label="Icon button"
       aria-disabled={!onClick}
     >

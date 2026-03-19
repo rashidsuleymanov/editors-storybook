@@ -135,6 +135,26 @@ export const SolidButtons: Story = {
   },
 };
 
+export const OutlineStates: Story = {
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return (
+      <div style={{ display: "flex", gap: 12 }}>
+        <PluginIconButton type="outline" state="default" interactive={false} theme={theme} />
+        <PluginIconButton type="outline" state="hover" interactive={false} theme={theme} />
+        <PluginIconButton type="outline" state="pressed" interactive={false} theme={theme} />
+      </div>
+    );
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Outline variant in all visual states: Default, Hover, and Pressed.",
+      },
+    },
+  },
+};
+
 export const SolidStates: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
@@ -164,6 +184,34 @@ export const RightExpanderButtons: Story = {
     docs: {
       description: {
         story: "Chevron-style expander used for disclosure and nested sections.",
+      },
+    },
+  },
+};
+
+export const SolidHoveredButtons: Story = {
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return <PluginIconButton type="solid" isHovered theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Solid button in forced hover state for visual review.",
+      },
+    },
+  },
+};
+
+export const SolidClickedButtons: Story = {
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return <PluginIconButton type="solid" isClicked theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Solid button in forced pressed state for visual review.",
       },
     },
   },

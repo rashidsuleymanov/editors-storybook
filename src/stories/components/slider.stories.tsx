@@ -22,6 +22,7 @@ const meta: Meta<StoryArgs> = {
     value: { control: { type: "range", min: 0, max: 100 }, description: "Current slider value" },
     min: { control: "number", description: "Minimum allowed value" },
     max: { control: "number", description: "Maximum allowed value" },
+    step: { control: "number", description: "Step increment between values" },
     showValue: { control: "boolean", description: "Show the numeric value on the right" },
     disabled: { control: "boolean", description: "Show the disabled state" },
     themeMode: {

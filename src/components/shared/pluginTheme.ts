@@ -17,6 +17,15 @@ export const resolveComponentTheme = (theme?: string): PluginTheme => {
   return THEME_ALIASES[compact] ?? "Light";
 };
 
+export const pressedBgByTheme: Record<string, string> = {
+  Light: "#CBCBCB",
+  "Light Classic": "#7D858C",
+  Dark: "#666666",
+  "Dark Contrast": "#666666",
+  "Modern Light": "#DCE7FA",
+  "Modern Dark": "#375478",
+};
+
 export const getComponentSurface = (theme?: string) => {
   const resolved = resolveComponentTheme(theme);
   const tokens = themeTokens[resolved];

@@ -20,8 +20,6 @@ const meta: Meta<StoryArgs> = {
     showLabel: true,
     showCaption: true,
     showCopyButton: true,
-    interactive: true,
-    isHovered: false,
     themeMode: "Auto",
   },
   argTypes: {
@@ -30,7 +28,7 @@ const meta: Meta<StoryArgs> = {
     value: { control: "text", description: "Current controlled text value" },
     state: {
       control: "select",
-      options: ["default", "hover", "disabled", "scroll", "no-scroll"],
+      options: ["default", "disabled", "scroll", "no-scroll"],
       description: "Rendered visual state",
     },
     width: { control: "number", description: "Outer component width" },
@@ -38,14 +36,6 @@ const meta: Meta<StoryArgs> = {
     showLabel: { control: "boolean", description: "Show the label row" },
     showCaption: { control: "boolean", description: "Show the caption below the field" },
     showCopyButton: { control: "boolean", description: "Show the copy action button" },
-    interactive: {
-      control: "boolean",
-      description: "Allow hover behavior directly in the canvas",
-    },
-    isHovered: {
-      control: "boolean",
-      description: "Force hover appearance for visual review",
-    },
     themeMode: {
       name: "theme",
       control: "select",
@@ -96,20 +86,6 @@ export const Default: Story = {
   },
 };
 
-export const HoveredArea: Story = {
-  render: (args, context) => {
-    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <InteractiveArea key="hovered-area" args={{ ...args, state: "default", interactive: false, isHovered: false }} theme={theme} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Hover is disabled for the text area. Only the copy button has hover feedback.",
-      },
-    },
-  },
-};
-
 export const ScrollArea: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
@@ -141,7 +117,7 @@ export const NoScrollArea: Story = {
 export const DisabledArea: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <TextArea {...args} state="disabled" interactive={false} theme={theme} />;
+    return <TextArea {...args} state="disabled" theme={theme} />;
   },
   parameters: {
     docs: {

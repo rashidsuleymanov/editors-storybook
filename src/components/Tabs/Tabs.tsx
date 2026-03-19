@@ -18,6 +18,7 @@ export type TabsProps = {
   theme?: string;
   interactive?: boolean;
   withIcon?: boolean;
+  scaled?: boolean;
   onChange?: (id: string) => void;
 };
 
@@ -33,6 +34,7 @@ export const Tabs = ({
   theme,
   interactive = true,
   withIcon = false,
+  scaled = false,
   onChange,
 }: TabsProps) => {
   const resolvedTheme = resolveComponentTheme(theme);
@@ -54,7 +56,8 @@ export const Tabs = ({
       className="ui-tabs"
       role="tablist"
       style={{
-        display: "inline-flex",
+        display: scaled ? "flex" : "inline-flex",
+        width: scaled ? "100%" : undefined,
         background: "transparent",
       }}
     >
@@ -105,7 +108,9 @@ export const Tabs = ({
 	            style={{
 	              appearance: "none",
 	              WebkitAppearance: "none",
+	              outline: "none",
 	              position: "relative",
+	              flex: scaled ? 1 : undefined,
 	              height: 40,
 	              padding: 0,
 	              border: `1px solid ${tokens.border}`,

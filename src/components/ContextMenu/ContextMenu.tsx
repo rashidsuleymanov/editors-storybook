@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getComponentSurface } from "../shared/pluginTheme";
+import { getComponentSurface, pressedBgByTheme } from "../shared/pluginTheme";
 import { SvgIcon } from "../shared/SvgIcon";
 
 export type ContextMenuItemType = "iconLeft" | "iconsBoth" | "noIcon";
@@ -9,6 +9,7 @@ export type ContextMenuItem = {
   label: string;
   type?: ContextMenuItemType;
   disabled?: boolean;
+  items?: ContextMenuItem[];
 };
 
 export type ContextMenuProps = {
@@ -19,6 +20,8 @@ export type ContextMenuProps = {
   isHoveredIndex?: number;
   /** Force pressed appearance for the item at this zero-based index (for docs/previews) */
   isClickedIndex?: number;
+  /** Force a submenu open by item id (for docs/previews) */
+  defaultOpenId?: string;
 };
 
 const DEFAULT_ITEMS: ContextMenuItem[] = [
@@ -28,25 +31,20 @@ const DEFAULT_ITEMS: ContextMenuItem[] = [
   { id: "4", label: "Menu item", type: "iconLeft", disabled: true },
 ];
 
+
 export const ContextMenu = ({
   items = DEFAULT_ITEMS,
   theme,
   interactive = true,
   isHoveredIndex,
   isClickedIndex,
+  defaultOpenId,
 }: ContextMenuProps) => {
   const tokens = getComponentSurface(theme);
+  const isModern = tokens.theme.includes("Modern");
   const [hovered, setHovered] = useState<string | null>(null);
   const [pressed, setPressed] = useState<string | null>(null);
-
-  const pressedBgByTheme: Record<string, string> = {
-    Light: "#CBCBCB",
-    "Light Classic": "#7D858C",
-    Dark: "#666666",
-    "Dark Contrast": "#666666",
-    "Modern Light": "#EAEAEA",
-    "Modern Dark": "#686868",
-  };
+  const [openSubmenuId, setOpenSubmenuId] = useState<string | null>(defaultOpenId ?? null);
 
   return (
     <div
@@ -61,9 +59,11 @@ export const ContextMenu = ({
       }}
     >
       {items.map((item, index) => {
+        const hasSubmenu = Boolean(item.items && item.items.length > 0);
+        const isSubmenuOpen = openSubmenuId === item.id;
         const forcedHover = typeof isHoveredIndex === "number" && isHoveredIndex === index;
         const forcedPressed = typeof isClickedIndex === "number" && isClickedIndex === index;
-        const isItemHovered = (hovered === item.id && interactive) || forcedHover;
+        const isItemHovered = (hovered === item.id && interactive) || forcedHover || isSubmenuOpen;
         const isItemPressed = (pressed === item.id && interactive) || forcedPressed;
         const iconColor = item.disabled ? tokens.muted : tokens.fg;
         const bg = item.disabled
@@ -74,13 +74,22 @@ export const ContextMenu = ({
               ? tokens.surfaceAlt
               : "transparent";
 
-        return (
+        const showRightIcon = item.type === "iconsBoth" || hasSubmenu;
+
+        const button = (
           <button
-            key={item.id}
             type="button"
             disabled={item.disabled}
-            onMouseEnter={() => interactive && !item.disabled && setHovered(item.id)}
-            onMouseLeave={() => interactive && setHovered(null)}
+            onMouseEnter={() => {
+              if (!interactive || item.disabled) return;
+              setHovered(item.id);
+              if (!hasSubmenu) setOpenSubmenuId(null);
+            }}
+            onMouseLeave={() => {
+              if (!hasSubmenu) {
+                interactive && setHovered(null);
+              }
+            }}
             onMouseDown={() => interactive && !item.disabled && setPressed(item.id)}
             onMouseUp={() => interactive && setPressed(null)}
             style={{
@@ -96,9 +105,9 @@ export const ContextMenu = ({
               gap: 4,
               boxSizing: "border-box",
               fontFamily: "Arial, Helvetica, sans-serif",
-              fontSize: 11,
+              fontSize: isModern ? 12 : 11,
               lineHeight: "16px",
-              letterSpacing: 0.22,
+              letterSpacing: isModern ? 0.24 : 0.22,
               cursor: item.disabled ? "default" : "pointer",
               textAlign: "left",
             }}
@@ -109,7 +118,7 @@ export const ContextMenu = ({
               </span>
             ) : null}
             <span style={{ flex: 1, minWidth: 0 }}>{item.label}</span>
-            {item.type === "iconsBoth" ? (
+            {showRightIcon ? (
               <span style={{ width: 20, display: "inline-flex", justifyContent: "center" }}>
                 <SvgIcon
                   name="submenu"
@@ -122,6 +131,38 @@ export const ContextMenu = ({
             ) : null}
           </button>
         );
+
+        if (hasSubmenu) {
+          return (
+            <div
+              key={item.id}
+              style={{ position: "relative" }}
+              onMouseEnter={() => {
+                if (!interactive || item.disabled) return;
+                setHovered(item.id);
+                setOpenSubmenuId(item.id);
+              }}
+              onMouseLeave={() => {
+                if (!interactive) return;
+                setHovered(null);
+                setOpenSubmenuId(null);
+              }}
+            >
+              {button}
+              {isSubmenuOpen && (
+                <div style={{ position: "absolute", left: "100%", top: 0, zIndex: 1 }}>
+                  <ContextMenu
+                    items={item.items}
+                    theme={theme}
+                    interactive={interactive}
+                  />
+                </div>
+              )}
+            </div>
+          );
+        }
+
+        return <div key={item.id}>{button}</div>;
       })}
     </div>
   );

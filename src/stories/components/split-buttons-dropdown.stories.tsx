@@ -31,12 +31,16 @@ const meta: Meta<StoryArgs> = {
     },
     type: { table: { disable: true } },
     state: { table: { disable: true } },
+    items: { table: { disable: true } },
+    isOpen: { table: { disable: true } },
+    onItemSelect: { table: { disable: true } },
     theme: { table: { disable: true } },
   },
   parameters: {
     docs: {
       description: {
-        component: "Split button with a dropdown affordance, used when the main action also exposes additional options.",
+        component:
+          "Split button with a dropdown affordance. Clicking the chevron opens a plain context-menu-style list of options.",
       },
     },
   },
@@ -50,17 +54,28 @@ const resolveStoryTheme = (argsTheme: StoryArgs["themeMode"], globalTheme: strin
   return normalizePluginTheme(globalTheme);
 };
 
-const PressedToggleDemo = ({ theme, label }: { theme: string; label: string }) => {
-  const [pressed, setPressed] = useState(false);
+const defaultItems: SplitButtonProps["items"] = [
+  { id: "1", label: "Option 1" },
+  { id: "2", label: "Option 2" },
+  { id: "3", label: "Option 3" },
+  { id: "4", label: "Disabled option", disabled: true },
+];
+
+const InteractiveDemo = ({ args, theme }: { args: StoryArgs; theme: string }) => {
+  const [label, setLabel] = useState(args.label ?? "Button");
 
   return (
     <SplitButton
       label={label}
       type="dropDown"
+      state="default"
+      interactive={args.interactive}
       theme={theme}
-      state={pressed ? "pressed" : "default"}
-      interactive={false}
-      onClick={() => setPressed((value) => !value)}
+      items={defaultItems}
+      onItemSelect={(id) => {
+        const item = defaultItems?.find((i) => i.id === id);
+        if (item) setLabel(item.label);
+      }}
     />
   );
 };
@@ -68,33 +83,35 @@ const PressedToggleDemo = ({ theme, label }: { theme: string; label: string }) =
 export const Default: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <SplitButton label={args.label} type="dropDown" state="default" interactive={args.interactive} theme={theme} />;
+    return (
+      <div style={{ paddingBottom: 120 }}>
+        <InteractiveDemo args={args} theme={theme} />
+      </div>
+    );
   },
 };
 
-export const Hovered: Story = {
+export const Open: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <SplitButton label={args.label} type="dropDown" state="default" interactive theme={theme} />;
+    return (
+      <div style={{ paddingBottom: 120 }}>
+        <SplitButton
+          label={args.label}
+          type="dropDown"
+          state="default"
+          interactive={false}
+          isOpen={true}
+          items={defaultItems}
+          theme={theme}
+        />
+      </div>
+    );
   },
   parameters: {
     docs: {
       description: {
-        story: "Interactive hover demo for the dropdown split button. Move the pointer over the control in the canvas.",
-      },
-    },
-  },
-};
-
-export const Pressed: Story = {
-  render: (args, context) => {
-    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <PressedToggleDemo label={args.label ?? "Button"} theme={theme} />;
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Pressed-state demo toggled by clicking the control.",
+        story: "Dropdown in the open state. Switch the toolbar theme to preview across themes.",
       },
     },
   },
@@ -103,7 +120,16 @@ export const Pressed: Story = {
 export const Disabled: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
-    return <SplitButton label={args.label} type="dropDown" state="disabled" interactive={false} theme={theme} />;
+    return (
+      <SplitButton
+        label={args.label}
+        type="dropDown"
+        state="disabled"
+        interactive={false}
+        items={defaultItems}
+        theme={theme}
+      />
+    );
   },
   parameters: {
     docs: {
@@ -113,6 +139,3 @@ export const Disabled: Story = {
     },
   },
 };
-
-
-

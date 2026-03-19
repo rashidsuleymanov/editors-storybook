@@ -113,6 +113,3 @@ export const Disabled: Story = {
     },
   },
 };
-
-
-

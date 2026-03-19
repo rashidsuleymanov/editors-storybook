@@ -23,7 +23,6 @@ export type TextAreaTokens = {
   copyIconColor: string;
   copyIconStyle: "classic" | "modern";
   scrollTrack: string;
-  scrollBorder: string;
   scrollThumb: string;
   radius: number;
 };
@@ -45,8 +44,7 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "rgba(0, 0, 0, 0.8)",
     copyIconStyle: "classic",
-    scrollTrack: "#F7F7F7",
-    scrollBorder: "#E0E0E0",
+    scrollTrack: "transparent",
     scrollThumb: "#E0E0E0",
     radius: 2,
   },
@@ -66,9 +64,8 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "#444444",
     copyIconStyle: "classic",
-    scrollTrack: "#F7F7F7",
-    scrollBorder: "#E0E0E0",
-    scrollThumb: "#E0E0E0",
+    scrollTrack: "transparent",
+    scrollThumb: "#CFCFCF",
     radius: 2,
   },
   Dark: {
@@ -87,9 +84,8 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "rgba(255, 255, 255, 0.8)",
     copyIconStyle: "classic",
-    scrollTrack: "#2A2A2A",
-    scrollBorder: "#4A4A4A",
-    scrollThumb: "#6E6E6E",
+    scrollTrack: "transparent",
+    scrollThumb: "#616161",
     radius: 2,
   },
   "Dark Contrast": {
@@ -108,9 +104,8 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "#E8E8E8",
     copyIconStyle: "classic",
-    scrollTrack: "#2A2A2A",
-    scrollBorder: "#4A4A4A",
-    scrollThumb: "#8B8B8B",
+    scrollTrack: "transparent",
+    scrollThumb: "#616161",
     radius: 2,
   },
   "Modern Light": {
@@ -129,9 +124,8 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "#383838",
     copyIconStyle: "modern",
-    scrollTrack: "#F7F7F7",
-    scrollBorder: "#E1E1E1",
-    scrollThumb: "#D5D5D5",
+    scrollTrack: "transparent",
+    scrollThumb: "#E1E1E1",
     radius: 2,
   },
   "Modern Dark": {
@@ -150,9 +144,8 @@ export const textAreaTokens: Record<PluginTheme, TextAreaTokens> = {
     captionTypography: { fontSize: 10, lineHeight: 12, letterSpacing: 0.2 },
     copyIconColor: "#EAEAEA",
     copyIconStyle: "modern",
-    scrollTrack: "#2A2A2A",
-    scrollBorder: "#4A4A4A",
-    scrollThumb: "#8B8B8B",
+    scrollTrack: "transparent",
+    scrollThumb: "#686868",
     radius: 2,
   },
 };

@@ -7,12 +7,12 @@ import {
 import { normalizePluginTheme } from "../_shared/theme";
 
 const meta: Meta<DialogButtonProps> = {
-  title: "Components/Buttons/Dialog Buttons/Primary",
+  title: "Components/Buttons/Dialog Buttons/Secondary",
   component: DialogButton,
   args: {
     label: "Button",
     size: 24,
-    variant: "primary",
+    variant: "secondary",
     state: "default",
     interactive: true,
     isHovered: false,
@@ -80,7 +80,7 @@ const meta: Meta<DialogButtonProps> = {
     docs: {
       description: {
         component:
-          "Primary dialog action button for the main confirm action in modal footers and compact plugin flows.",
+          "Secondary dialog action button for cancel, back, or less prominent actions in modal footers and compact plugin flows.",
       },
     },
   },
@@ -132,7 +132,7 @@ const ClickedRuntimeDemo = ({
       <DialogButton
         label="Button"
         size={22}
-        variant="primary"
+        variant="secondary"
         theme={theme}
         isClicked={smallPressed}
         onClick={() => triggerPressed(setSmallPressed)}
@@ -140,7 +140,7 @@ const ClickedRuntimeDemo = ({
       <DialogButton
         label="Button"
         size={24}
-        variant="primary"
+        variant="secondary"
         theme={theme}
         isClicked={normalPressed}
         onClick={() => triggerPressed(setNormalPressed)}
@@ -152,7 +152,7 @@ const ClickedRuntimeDemo = ({
 export const Default: Story = {
   render: (args, context) => {
     const theme = resolveTheme(String(context.globals.theme ?? "Light"));
-    return <DialogButton {...args} variant="primary" theme={theme} onClick={noop} />;
+    return <DialogButton {...args} variant="secondary" theme={theme} onClick={noop} />;
   },
 };
 
@@ -161,8 +161,8 @@ export const Hovered: Story = {
     const theme = resolveTheme(String(context.globals.theme ?? "Light"));
     return (
       <Wrapper>
-        <DialogButton label="Button" size={22} variant="primary" isHovered theme={theme} />
-        <DialogButton label="Button" size={24} variant="primary" isHovered theme={theme} />
+        <DialogButton label="Button" size={22} variant="secondary" isHovered theme={theme} />
+        <DialogButton label="Button" size={24} variant="secondary" isHovered theme={theme} />
       </Wrapper>
     );
   },
@@ -194,15 +194,15 @@ export const Disabled: Story = {
     const theme = resolveTheme(String(context.globals.theme ?? "Light"));
     return (
       <Wrapper>
-        <DialogButton label="Button" size={22} variant="primary" isDisabled theme={theme} />
-        <DialogButton label="Button" size={24} variant="primary" isDisabled theme={theme} />
+        <DialogButton label="Button" size={22} variant="secondary" isDisabled theme={theme} />
+        <DialogButton label="Button" size={24} variant="secondary" isDisabled theme={theme} />
       </Wrapper>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Disabled primary buttons keep layout but should not invite interaction.",
+        story: "Disabled secondary buttons keep layout but should not invite interaction.",
       },
     },
   },
@@ -213,15 +213,15 @@ export const Loading: Story = {
     const theme = resolveTheme(String(context.globals.theme ?? "Light"));
     return (
       <Wrapper>
-        <DialogButton label="Button" size={22} variant="primary" isLoading theme={theme} />
-        <DialogButton label="Button" size={24} variant="primary" isLoading theme={theme} />
+        <DialogButton label="Button" size={22} variant="secondary" isLoading theme={theme} />
+        <DialogButton label="Button" size={24} variant="secondary" isLoading theme={theme} />
       </Wrapper>
     );
   },
   parameters: {
     docs: {
       description: {
-        story: "Loading state while the primary action is in progress.",
+        story: "Loading state while the secondary action is in progress.",
       },
     },
   },
@@ -232,8 +232,8 @@ export const Scale: Story = {
     const theme = resolveTheme(String(context.globals.theme ?? "Light"));
     return (
       <Wrapper isScale>
-        <DialogButton label="Button" size={22} variant="primary" scale theme={theme} />
-        <DialogButton label="Button" size={24} variant="primary" scale theme={theme} />
+        <DialogButton label="Button" size={22} variant="secondary" scale theme={theme} />
+        <DialogButton label="Button" size={24} variant="secondary" scale theme={theme} />
       </Wrapper>
     );
   },

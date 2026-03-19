@@ -77,9 +77,26 @@ const noIconItems: ContextMenuProps["items"] = [
   { id: "3", label: "Disabled item", type: "noIcon", disabled: true },
 ];
 
+const submenuItems: ContextMenuProps["items"] = [
+  { id: "1", label: "Menu item", type: "iconLeft" },
+  {
+    id: "2",
+    label: "Has submenu",
+    type: "iconLeft",
+    items: [
+      { id: "2-1", label: "Submenu item 1", type: "iconLeft" },
+      { id: "2-2", label: "Submenu item 2", type: "iconLeft" },
+      { id: "2-3", label: "Disabled", type: "iconLeft", disabled: true },
+    ],
+  },
+  { id: "3", label: "Menu item", type: "noIcon" },
+  { id: "4", label: "Disabled item", type: "iconLeft", disabled: true },
+];
+
 export const Default: Story = {
   args: {
-    items: mixedItems,
+    items: submenuItems,
+    interactive: true,
   },
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
@@ -114,6 +131,63 @@ export const NoIconItems: Story = {
   render: (args, context) => {
     const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
     return <ContextMenu {...args} theme={theme} />;
+  },
+};
+
+export const HoveredItem: Story = {
+  args: {
+    items: mixedItems,
+    isHoveredIndex: 0,
+    interactive: false,
+  },
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return <ContextMenu {...args} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Force-hover on the first item. Switch theme via toolbar to preview all themes.",
+      },
+    },
+  },
+};
+
+export const PressedItem: Story = {
+  args: {
+    items: mixedItems,
+    isClickedIndex: 0,
+    interactive: false,
+  },
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return <ContextMenu {...args} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Force-pressed on the first item. Switch theme via toolbar to preview all themes.",
+      },
+    },
+  },
+};
+
+export const WithSubmenu: Story = {
+  args: {
+    items: submenuItems,
+    defaultOpenId: "2",
+    interactive: false,
+  },
+  render: (args, context) => {
+    const theme = resolveStoryTheme(args.themeMode, String(context.globals.theme ?? "Light"));
+    return <ContextMenu {...args} theme={theme} />;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: "Submenu expanded on «Has submenu» item. Switch theme in toolbar to preview across themes.",
+      },
+    },
   },
 };
 

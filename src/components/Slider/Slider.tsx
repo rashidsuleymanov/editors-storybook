@@ -6,6 +6,7 @@ export type SliderProps = {
   value?: number;
   min?: number;
   max?: number;
+  step?: number;
   disabled?: boolean;
   showValue?: boolean;
   theme?: string;
@@ -16,6 +17,7 @@ export const Slider = ({
   value = 40,
   min = 0,
   max = 100,
+  step,
   disabled = false,
   showValue = false,
   theme,
@@ -96,6 +98,7 @@ export const Slider = ({
           type="range"
           min={min}
           max={max}
+          step={step}
           value={safeValue}
           aria-label="Slider"
           disabled={disabled}

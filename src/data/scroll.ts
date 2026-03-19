@@ -24,11 +24,11 @@ export const scrollByTheme: Record<PluginTheme, ScrollThemeTokens> = {
   Light: {
     default: {
       lift: {
-        M: { bg: "#F7F7F7", border: "rgba(224, 224, 224, 0.93)", notch: "#E0E0E0" },
-        S: { bg: "#F7F7F7", border: "#E0E0E0", notch: "#E0E0E0" },
+        M: { bg: "#F7F7F7", border: "rgba(224, 224, 224, 0.93)", notch: "rgba(224, 224, 224, 0.93)" },
+        S: { bg: "#F7F7F7", border: "#E0E0E0", notch: "rgba(224, 224, 224, 0.93)" },
         XS: { bg: "rgba(224, 224, 224, 0.93)", border: "rgba(224, 224, 224, 0.93)", notch: "rgba(224, 224, 224, 0.93)" },
       },
-      button: { bg: "#F7F7F7", border: "#E0E0E0", arrow: "#ADADAD" },
+      button: { bg: "#F7F7F7", border: "rgba(224, 224, 224, 0.93)", arrow: "#ADADAD" },
     },
     hover: {
       lift: {
@@ -36,7 +36,7 @@ export const scrollByTheme: Record<PluginTheme, ScrollThemeTokens> = {
         S: { bg: "#C0C0C0", border: "#CBCBCB", notch: "#F7F7F7" },
         XS: { bg: "#CBCBCB", border: "#CBCBCB", notch: "#CBCBCB" },
       },
-      button: { bg: "#C0C0C0", border: "#E0E0E0", arrow: "#F7F7F7" },
+      button: { bg: "#C0C0C0", border: "rgba(224, 224, 224, 0.93)", arrow: "#F7F7F7" },
     },
     pressed: {
       lift: {
@@ -156,7 +156,7 @@ export const scrollByTheme: Record<PluginTheme, ScrollThemeTokens> = {
       lift: {
         M: { bg: "#404040", border: "#686868", notch: "#686868" },
         S: { bg: "#404040", border: "#686868", notch: "#686868" },
-        XS: { bg: "#404040", border: "#404040", notch: "#404040" },
+        XS: { bg: "#686868", border: "#686868", notch: "#686868" },
       },
       button: { bg: "#404040", border: "#686868", arrow: "#969696" },
     },
